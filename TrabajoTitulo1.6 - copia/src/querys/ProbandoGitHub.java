@@ -10,5 +10,7 @@ package querys;
  * @author user
  */
 public class ProbandoGitHub {
+   
     
+    //funciono la wea
 }
