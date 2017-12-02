@@ -8,7 +8,6 @@ package querys;
 import clases.Conectar;
 import clases.Persona;
 import clases.Producto;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pantasha.ven_principal;
 
 
@@ -132,6 +133,54 @@ public class Qusuario {
         return existe;
       } 
      
+      
+       public DefaultTableModel cargardatos() {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbase();
+        try {
+
+            String query = "SELECT * FROM `usuario`";
+            String[] arreglo = new String[4];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                arreglo[3] = rs.getString(4);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qcliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
+    }
+      
+      
+          private DefaultTableModel crearbase() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Id de usuario");
+        modelo.addColumn("Cargo");
+        modelo.addColumn("Nombre usuario");
+        modelo.addColumn("Password");
+        return modelo;
+    }
+      
+      
+      
+      
+      
      
  } 
 
