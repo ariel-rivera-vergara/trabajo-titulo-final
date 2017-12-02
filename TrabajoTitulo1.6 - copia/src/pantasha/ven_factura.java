@@ -35,6 +35,7 @@ public class ven_factura extends javax.swing.JFrame {
       Qproveedor qprov = new Qproveedor();
       int Total = 0;
       int quitar;
+      int sw ;
     public ven_factura() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -47,11 +48,14 @@ public class ven_factura extends javax.swing.JFrame {
         tbl_proveedor_selec.setModel(modelop);
         
         modeloFs.addColumn("Codigo");
-        modeloFs.addColumn("Nombre");
         modeloFs.addColumn("Cantidad Comprada");
         modeloFs.addColumn("Precio de Compra");
        
         tbl_productos_seleccionados.setModel(modeloFs);
+        sw=1;
+        btn_modificar.setVisible(false);
+
+        
     }
 
     ven_factura(Proveedores p) {
@@ -77,6 +81,7 @@ public class ven_factura extends javax.swing.JFrame {
         modeloFs.addColumn("Precio de Compra");
        
         tbl_productos_seleccionados.setModel(modeloFs);
+        sw=1;
     }
 
     ven_factura(FacturaCompra fc) {
@@ -84,7 +89,6 @@ public class ven_factura extends javax.swing.JFrame {
           this.setLocationRelativeTo(null);
           
         modeloFs.addColumn("Codigo");
-        modeloFs.addColumn("Nombre");
         modeloFs.addColumn("Cantidad Comprada");
         modeloFs.addColumn("Precio de Compra");
         tbl_productos_seleccionados.setModel(modeloFs);
@@ -100,6 +104,9 @@ public class ven_factura extends javax.swing.JFrame {
         txt_fecha_compra.setText(fc.getFecha_compra());
         lbl_Total.setText(String.valueOf(fc.getTotal()));
         Total = fc.getTotal(); 
+        sw=2;
+        btn_guardar.setVisible(false);
+        txt_num_factura.setEditable(false);
          
     }
 
@@ -124,9 +131,42 @@ public class ven_factura extends javax.swing.JFrame {
         txt_fecha_compra.setText(fecha_compra);
         lbl_Total.setText(String.valueOf(total));
         Total = total;
-        
+         btn_guardar.setVisible(false);
+        txt_num_factura.setEditable(false);
+        sw = 2;
     }
-
+    
+    
+     public ven_factura(String consultar,FacturaCompra fc) {
+        initComponents();
+          this.setLocationRelativeTo(null);
+         
+     
+      
+      
+        
+        tbl_productos.setModel(qp.cargardatos());
+        cmb_filtro_productos.setModel(cargarcmb_filtro());
+        tbl_proveedor_selec.setModel(qprov.cargardatosprov(fc.getCod_prov()));
+        quitar = 1;
+          
+        modeloFs = qdfc.cargardatos();
+        tbl_productos_seleccionados.setModel(modeloFs);
+        
+        txt_num_factura.setText(String.valueOf(fc.getNum_factura()));
+        txt_fecha_compra.setText(fc.getFecha_compra());
+        lbl_Total.setText(String.valueOf(fc.getTotal()));
+        Total = fc.getTotal(); 
+        
+        
+         btn_buscarp.setVisible(false);
+          txt_num_factura.setEditable(false);
+          txt_fecha_compra.setEditable(false);
+          btn_seleccionar.setVisible(false);
+          btn_quitar.setVisible(false);
+          btn_modificar.setVisible(false);
+          btn_guardar.setVisible(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -400,10 +440,16 @@ public class ven_factura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscarpMouseClicked
-        int sw = 2;
-        ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor(sw,Integer.parseInt(txt_num_factura.getText()),txt_fecha_compra.getText(),Integer.parseInt(lbl_Total.getText()));
+      if (sw==2){
+          ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor(sw,Integer.parseInt(txt_num_factura.getText()),txt_fecha_compra.getText(),Integer.parseInt(lbl_Total.getText()));
         vbuscarp.setVisible(true);
-        this.dispose();
+        this.dispose(); 
+      }else if(sw==1){
+          ven_buscar_proveedor vbuscarprov = new ven_buscar_proveedor(sw);
+          vbuscarprov.setVisible(true);
+          this.dispose();
+      }
+       
     }//GEN-LAST:event_btn_buscarpMouseClicked
 
     private void txt_filtro_productosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_productosKeyReleased
@@ -421,9 +467,8 @@ public class ven_factura extends javax.swing.JFrame {
         String[] arreglo = new String[4];
       
         arreglo[0] =  codigo;
-        arreglo[1] =  (String) tbl_productos.getValueAt(fila,1);
-        arreglo[2] = txt_cantidad.getText();
-        arreglo[3] = txt_precio.getText();
+        arreglo[1] = txt_cantidad.getText();
+        arreglo[2] = txt_precio.getText();
         modeloFs.addRow(arreglo);
         tbl_productos_seleccionados.setModel(modeloFs);
         Total = Total + (Integer.parseInt(txt_precio.getText())*Integer.parseInt(txt_cantidad.getText()));
@@ -435,8 +480,8 @@ public class ven_factura extends javax.swing.JFrame {
     private void btn_quitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_quitarMouseClicked
        int index = tbl_productos_seleccionados.getSelectedRow();
       
-     String cantidad =  (String) tbl_productos_seleccionados.getValueAt(index,2);
-      String precio = (String) tbl_productos_seleccionados.getValueAt(index,3);
+     String cantidad =  (String) tbl_productos_seleccionados.getValueAt(index,1);
+      String precio = (String) tbl_productos_seleccionados.getValueAt(index,2);
        Total = Total - (Integer.parseInt(cantidad)*Integer.parseInt(precio));
        lbl_Total.setText(String.valueOf(Total));  
        if(index >= 0){
@@ -463,8 +508,8 @@ public class ven_factura extends javax.swing.JFrame {
          int cont = 0;
         while (i>0){  
          dfc.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont,0));
-         String cantidad = ((String) tbl_productos_seleccionados.getValueAt(cont,2));
-         String precio = ((String) tbl_productos_seleccionados.getValueAt(cont, 3));
+         String cantidad = ((String) tbl_productos_seleccionados.getValueAt(cont,1));
+         String precio = ((String) tbl_productos_seleccionados.getValueAt(cont, 2));
          dfc.setCant_prod(Integer.parseInt(cantidad));
          dfc.setPrecio(Integer.parseInt(precio));
          dfc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
@@ -482,35 +527,7 @@ public class ven_factura extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-         fc.setNum_factura(Integer.parseInt(txt_num_factura.getText()));
-        fc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
-        fc.setFecha_compra(txt_fecha_compra.getText());
-        fc.setTotal(Total);
-        try {
-            qfc.agregarFacturaCompra(fc);
-        } catch (ParseException ex) {
-            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
-        
-        //-----------------------------------detalle factura compra
-        
-           int i = tbl_productos_seleccionados.getRowCount();
-         int num_factura = Integer.parseInt(txt_num_factura.getText());
-         int cont = 0;
-        while (i>0){  
-         dfc.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont,0));
-         String cantidad = ((String) tbl_productos_seleccionados.getValueAt(cont,2));
-         String precio = ((String) tbl_productos_seleccionados.getValueAt(cont, 3));
-         dfc.setCant_prod(Integer.parseInt(cantidad));
-         dfc.setPrecio(Integer.parseInt(precio));
-         dfc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
-            
-            
-         qdfc.agregarDetalleFacturaCompra(dfc,num_factura);
-          cont++;
-         i--;   
-        }
          
         ven_mantenedor_factura vmf = new ven_mantenedor_factura();
         vmf.setVisible(true);

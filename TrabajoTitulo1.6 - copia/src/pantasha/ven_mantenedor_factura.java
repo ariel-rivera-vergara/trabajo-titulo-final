@@ -6,6 +6,7 @@
 package pantasha;
 
 import clases.FacturaCompra;
+import clases.Proveedores;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QDecoderStream;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -22,9 +23,10 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
     QfacturaCompra qfc = new QfacturaCompra();
     QDetalleFacturaCompra qdfc = new QDetalleFacturaCompra();
     FacturaCompra fc = new FacturaCompra();
+
     public ven_mantenedor_factura() {
-         initComponents();
-         this.setLocationRelativeTo(null);
+        initComponents();
+        this.setLocationRelativeTo(null);
         tbl_factura_compra.setModel(qfc.cargardatos());
         cmb_factura_compra.setModel(cargarcmb_filtro());
     }
@@ -83,6 +85,11 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
         });
 
         btn_consultar.setText("Consultar");
+        btn_consultar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_consultarMouseClicked(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
 
@@ -154,55 +161,62 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_filtro_factura_compraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_factura_compraKeyReleased
-         String buscar = (String) cmb_factura_compra.getSelectedItem();
-       tbl_factura_compra.setModel(qfc.buscarDatos(txt_filtro_factura_compra.getText(), buscar));
+        String buscar = (String) cmb_factura_compra.getSelectedItem();
+        tbl_factura_compra.setModel(qfc.buscarDatos(txt_filtro_factura_compra.getText(), buscar));
     }//GEN-LAST:event_txt_filtro_factura_compraKeyReleased
 
     private void btn_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarMouseClicked
-       ven_factura vf = new ven_factura();
+        ven_factura vf = new ven_factura();
         vf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_agregarMouseClicked
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
-           int num_factura = Integer.parseInt((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(),0));
-        Boolean Existe = false;
-     try {
-          qdfc.eliminarDetalleFacturaCompra(num_factura);
-          Existe = true;  
-        }catch(Exception  e){
-        }finally{
-     }
-        
-    if (Existe == true){
-         
-          if (JOptionPane.showConfirmDialog(null, "Desea eliminar el pedido  " + num_factura, "Eliminar pedido",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION)
-         qfc.eliminarFacturaCompra(num_factura);
-          tbl_factura_compra.removeAll();
-          actualizar();
-    } 
-      
-                               
+        int num_factura = Integer.parseInt((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 0));
+        if (JOptionPane.showConfirmDialog(null, "Desea eliminar el pedido  " + num_factura, "Eliminar pedido",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+            qdfc.eliminarDetalleFacturaCompra(num_factura);
+            qfc.eliminarFacturaCompra(num_factura);
+            tbl_factura_compra.removeAll();
+            actualizar();
+        }
+
+
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-      String  num_factura;
-      String  total;
-         num_factura=(String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(),0);
-         total=(String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(),3);
-                 
+        String num_factura;
+        String total;
+        num_factura = (String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 0);
+        total = (String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 3);
+
         fc.setNum_factura(Integer.parseInt(num_factura));
-         fc.setCod_prov((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(),1));
-         fc.setFecha_compra((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(),2));
-         fc.setTotal(Integer.parseInt(total));
-         
-        
-        
+        fc.setCod_prov((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 1));
+        fc.setFecha_compra((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 2));
+        fc.setTotal(Integer.parseInt(total));
+
         ven_factura vf = new ven_factura(fc);
         vf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_modificarMouseClicked
+
+    private void btn_consultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_consultarMouseClicked
+        String num_factura;
+        String total;
+        num_factura = (String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 0);
+        total = (String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 3);
+
+        fc.setNum_factura(Integer.parseInt(num_factura));
+        fc.setCod_prov((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 1));
+        fc.setFecha_compra((String) tbl_factura_compra.getValueAt(tbl_factura_compra.getSelectedRow(), 2));
+        fc.setTotal(Integer.parseInt(total));
+
+        String consultar = "";
+
+        ven_factura venf = new ven_factura(consultar, fc);
+        venf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_consultarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -252,22 +266,19 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
     private javax.swing.JTextField txt_filtro_factura_compra;
     // End of variables declaration//GEN-END:variables
 
-   public void actualizar(){
-         DefaultTableModel modelo = new DefaultTableModel(); 
-         modelo=qfc.cargardatos();
-         tbl_factura_compra.setModel(modelo);
+    public void actualizar() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo = qfc.cargardatos();
+        tbl_factura_compra.setModel(modelo);
     }
-    
-    
-      public DefaultComboBoxModel cargarcmb_filtro(){
+
+    public DefaultComboBoxModel cargarcmb_filtro() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addElement("Numero de Factura");
-        modelo.addElement("Codigo de Proveedor");       
+        modelo.addElement("Codigo de Proveedor");
         modelo.addElement("Fecha de Compra");
         modelo.addElement("Total");
         return modelo;
     }
-
-
 
 }
