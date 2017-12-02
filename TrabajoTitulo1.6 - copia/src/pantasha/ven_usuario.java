@@ -10,18 +10,32 @@ import clases.Usuario;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.objects.NativeString.trim;
 import querys.Qpersona;
 import querys.Qusuario;
 
 /**
  *
  * @author Ivan
+ * 
+ * 
+ * 
+ * 
  */
 public class ven_usuario extends javax.swing.JFrame {
 
     /**
      * Creates new form ven_agregaru
+     * 
+     * 
+     *
      */
+    
+    
+     Qusuario qusu = new Qusuario();
+    
+    
     public ven_usuario() {
         initComponents();
     }
@@ -56,7 +70,7 @@ public class ven_usuario extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tbl_usuario = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,7 +190,7 @@ public class ven_usuario extends javax.swing.JFrame {
         jPanel1.add(jButton2);
         jButton2.setBounds(270, 273, 90, 30);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_usuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -184,7 +198,7 @@ public class ven_usuario extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tbl_usuario);
 
         jPanel1.add(jScrollPane4);
         jScrollPane4.setBounds(20, 330, 490, 100);
@@ -214,12 +228,58 @@ public class ven_usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_volverMouseClicked
 
     private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
-        Usuario usu = new Usuario();
+      
+        
+       /* Usuario usu = new Usuario();
         usu.setUsuario(txt_usu.getText());
         usu.setNom_usuario(txt_nom_usuario.getText());
         usu.setPassword(String.valueOf(jp_pass.getPassword()));
         usu.setId_cargo(txt_cargo.getText());  
+       */
        
+        Usuario usu = new Usuario();
+        usu.setUsuario(trim(txt_usu.getText()));
+           
+        
+         if  (trim(usu.getUsuario()).equals("") || trim(usu.getUsuario()).equals("")){
+              JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
+              
+          }else{
+           
+        
+              if                                  
+                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getUsuario(), "agregar usuario",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {     
+                  
+                   } else {
+                  
+                   if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getUsuario(), "agregar usuario",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+
+                usu.setId_cargo(txt_cargo.getText());
+                usu.setNom_usuario(txt_nom_usuario.getText());
+                usu.setPassword(jp_pass.getText());
+                qusu.agregarusuario(usu);
+                actualizar();
+                Limpiar();
+            }
+
+            Limpiar();
+              }    
+
+          } 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         Qusuario query = new Qusuario();   
         query.agregarusuario(usu);
@@ -275,6 +335,31 @@ public class ven_usuario extends javax.swing.JFrame {
         });
     }
 
+    
+    
+    
+    
+     public void Limpiar() {
+         
+        jp_pass.setText("");   
+        txt_usu.setText("");
+        txt_cargo.setText("");
+        txt_nom_usuario.setText("");
+        
+    }
+
+     
+    public void actualizar() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo = qusu.cargardatos();
+        tbl_usuario.setModel(modelo);
+    
+    
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_aceptar;
     private javax.swing.JButton btn_eliminar;
@@ -293,8 +378,8 @@ public class ven_usuario extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JPasswordField jp_pass;
+    private javax.swing.JTable tbl_usuario;
     private javax.swing.JTextField txt_cargo;
     private javax.swing.JTextField txt_nom_usuario;
     private javax.swing.JTextField txt_usu;
