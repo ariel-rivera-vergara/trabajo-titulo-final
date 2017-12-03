@@ -358,7 +358,7 @@ public class ven_usuario extends javax.swing.JFrame {
         modelo = qusu.cargardatos();
         tbl_usuario.setModel(modelo);
     
-    
+    }
     
     
     
