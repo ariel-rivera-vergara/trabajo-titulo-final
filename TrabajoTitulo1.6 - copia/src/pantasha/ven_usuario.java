@@ -230,13 +230,7 @@ public class ven_usuario extends javax.swing.JFrame {
     private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
       
         
-       /* Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
-        usu.setNom_usuario(txt_nom_usuario.getText());
-        usu.setPassword(String.valueOf(jp_pass.getPassword()));
-        usu.setId_cargo(txt_cargo.getText());  
-       */
-       
+      
         Usuario usu = new Usuario();
         usu.setUsuario(trim(txt_usu.getText()));
            
@@ -258,7 +252,7 @@ public class ven_usuario extends javax.swing.JFrame {
 
                 usu.setId_cargo(txt_cargo.getText());
                 usu.setNom_usuario(txt_nom_usuario.getText());
-                usu.setPassword(jp_pass.getText());
+                usu.setPassword(String.valueOf(jp_pass.getPassword()));
                 qusu.agregarusuario(usu);
                 actualizar();
                 Limpiar();
@@ -270,20 +264,10 @@ public class ven_usuario extends javax.swing.JFrame {
           } 
         
         
+    
+         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        Qusuario query = new Qusuario();   
-        query.agregarusuario(usu);
-       JOptionPane.showMessageDialog(null,"ingresado con exito");
+      
     }//GEN-LAST:event_btn_aceptarMouseClicked
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
