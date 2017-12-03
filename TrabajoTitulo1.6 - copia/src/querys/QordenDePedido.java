@@ -34,8 +34,8 @@ public class QordenDePedido {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
             //hay que cambiar los valores para integrar el idusuario
-            String query = "INSERT INTO orden_de_pedido VALUES ("
-                    + "'" + op.getCod_pedido() + "',"
+            String query = "INSERT INTO orden_de_pedido(cod_prov,id_usuario,fecha_pedido,fecha_entrega,estado_pedido) VALUES ("
+                   // + "'" + op.getCod_pedido() + "',"
                     + "'" + op.getCod_prov() + "',"
                     + "'" + "usuario" + "',"
                     + "'" + vali.ParseFecha(op.getFecha_pedido())+ "',"

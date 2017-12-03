@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import querys.QDetalleFacturaCompra;
 import querys.QfacturaCompra;
@@ -527,11 +528,48 @@ public class ven_factura extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_guardarMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
+         fc.setNum_factura(Integer.parseInt(txt_num_factura.getText()));
+        fc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
+        fc.setFecha_compra(txt_fecha_compra.getText());
+        fc.setTotal(Total);
         
+        if (JOptionPane.showConfirmDialog(null, "Desea modificar la factura  " + fc.getNum_factura(), "Modificar factura",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+        qdfc.eliminarDetalleFacturaCompra(fc.getNum_factura());
+        qfc.eliminarFacturaCompra(fc.getNum_factura());
+        
+           try {
+            qfc.agregarFacturaCompra(fc);
+        } catch (ParseException ex) {
+            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        //-----------------------------------detalle factura compra
+        
+           int i = tbl_productos_seleccionados.getRowCount();
+         int num_factura = Integer.parseInt(txt_num_factura.getText());
+         int cont = 0;
+        while (i>0){  
+         dfc.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont,0));
+         String cantidad = ((String) tbl_productos_seleccionados.getValueAt(cont,1));
+         String precio = ((String) tbl_productos_seleccionados.getValueAt(cont, 2));
+         dfc.setCant_prod(Integer.parseInt(cantidad));
+         dfc.setPrecio(Integer.parseInt(precio));
+         dfc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
+            
+            
+         qdfc.agregarDetalleFacturaCompra(dfc,num_factura);
+          cont++;
+         i--;   
+        }
          
         ven_mantenedor_factura vmf = new ven_mantenedor_factura();
         vmf.setVisible(true);
         this.dispose();
+        
+        }
+       
     }//GEN-LAST:event_btn_modificarMouseClicked
 
     private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
