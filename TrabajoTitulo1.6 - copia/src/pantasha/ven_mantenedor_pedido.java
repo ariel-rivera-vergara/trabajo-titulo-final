@@ -52,6 +52,7 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
         btn_modificar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
+        Btn_consultar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,6 +97,13 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
 
         btn_volver.setText("Volver");
 
+        Btn_consultar.setText("Consultar");
+        Btn_consultar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Btn_consultarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,6 +125,8 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
                 .addComponent(btn_modificar)
                 .addGap(53, 53, 53)
                 .addComponent(btn_eliminar)
+                .addGap(40, 40, 40)
+                .addComponent(Btn_consultar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -136,7 +146,8 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_agregar)
                     .addComponent(btn_modificar)
-                    .addComponent(btn_eliminar))
+                    .addComponent(btn_eliminar)
+                    .addComponent(Btn_consultar))
                 .addGap(85, 85, 85)
                 .addComponent(btn_volver)
                 .addGap(38, 38, 38))
@@ -168,21 +179,13 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agregarMouseClicked
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
-      // preguntar al eduardo si est bien validado 
-        
-        String codigo = (String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),0);
-        Boolean Existe = false;
-     try {
-          qdp.eliminarDetalleDePedido(codigo);
-          Existe = true;  
-        }catch(Exception  e){
-        }finally{
-     }
-        
-    if (Existe == true){
-         
-          if (JOptionPane.showConfirmDialog(null, "Desea eliminar el pedido  " + codigo, "Eliminar pedido",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION)
+      // preguntar al eduardo si est bien validado        
+       int index = tbl_ordenPedido.getSelectedRow();
+     String  codigo =  (String) tbl_ordenPedido.getValueAt(index,0);
+      
+      if (JOptionPane.showConfirmDialog(null, "Desea eliminar el pedido  " + codigo, "Eliminar pedido",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION){
+         qdp.eliminarDetalleDePedido(codigo);     
          qodp.eliminarOrdenDePedido(codigo);
           tbl_ordenPedido.removeAll();
           actualizar();
@@ -203,6 +206,19 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
         vped.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_modificarMouseClicked
+
+    private void Btn_consultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Btn_consultarMouseClicked
+      odp.setCod_pedido((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),0));
+         odp.setCod_prov((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),1));
+         odp.setId_usuario((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),2));
+         odp.setFecha_pedido((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),3));
+         odp.setFecha_entrega((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),4));
+         odp.setEstado_pedido((String) tbl_ordenPedido.getValueAt(tbl_ordenPedido.getSelectedRow(),5));
+        String consultar ="";
+        ven_pedido vped = new ven_pedido(odp,consultar);
+        vped.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_Btn_consultarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -240,6 +256,7 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btn_consultar;
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_eliminar;
     private javax.swing.JButton btn_modificar;

@@ -55,6 +55,7 @@ public class ven_usuario extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -63,14 +64,14 @@ public class ven_usuario extends javax.swing.JFrame {
         txt_cargo = new javax.swing.JTextField();
         jp_pass = new javax.swing.JPasswordField();
         btn_volver = new javax.swing.JButton();
-        btn_aceptar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txt_nom_usuario = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_consultar = new javax.swing.JButton();
+        btn_modificar = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_usuario = new javax.swing.JTable();
+        btn_agregar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -110,6 +111,8 @@ public class ven_usuario extends javax.swing.JFrame {
             }
         ));
         jScrollPane3.setViewportView(jTable3);
+
+        jButton3.setText("jButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(500, 500));
@@ -153,15 +156,6 @@ public class ven_usuario extends javax.swing.JFrame {
         jPanel1.add(btn_volver);
         btn_volver.setBounds(480, 463, 70, 30);
 
-        btn_aceptar.setText("agregar");
-        btn_aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_aceptarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btn_aceptar);
-        btn_aceptar.setBounds(20, 273, 100, 30);
-
         btn_eliminar.setText("eliminar");
         btn_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -182,13 +176,13 @@ public class ven_usuario extends javax.swing.JFrame {
         jPanel1.add(txt_nom_usuario);
         txt_nom_usuario.setBounds(170, 150, 160, 30);
 
-        jButton1.setText("consultar");
-        jPanel1.add(jButton1);
-        jButton1.setBounds(150, 273, 90, 30);
+        btn_consultar.setText("consultar");
+        jPanel1.add(btn_consultar);
+        btn_consultar.setBounds(150, 273, 90, 30);
 
-        jButton2.setText("modificar");
-        jPanel1.add(jButton2);
-        jButton2.setBounds(270, 273, 90, 30);
+        btn_modificar.setText("modificar");
+        jPanel1.add(btn_modificar);
+        btn_modificar.setBounds(270, 273, 90, 30);
 
         tbl_usuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -202,6 +196,15 @@ public class ven_usuario extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane4);
         jScrollPane4.setBounds(20, 330, 490, 100);
+
+        btn_agregar.setText("Agregar");
+        btn_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_agregarMouseClicked(evt);
+            }
+        });
+        jPanel1.add(btn_agregar);
+        btn_agregar.setBounds(40, 280, 73, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,10 +230,29 @@ public class ven_usuario extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_btn_volverMouseClicked
 
-    private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
-      
+    private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
-      
+        Usuario usu = new Usuario();
+        usu.setUsuario(txt_usu.getText());
+        Qusuario query = new Qusuario();   
+        query.eliminarusuario(usu);
+        JOptionPane.showMessageDialog(null,"eliminado con exito");
+    }//GEN-LAST:event_btn_eliminarMouseClicked
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void btn_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarMouseClicked
+         
+        
+       /* Usuario usu = new Usuario();
+        usu.setUsuario(txt_usu.getText());
+        usu.setNom_usuario(txt_nom_usuario.getText());
+        usu.setPassword(String.valueOf(jp_pass.getPassword()));
+        usu.setId_cargo(txt_cargo.getText());  
+       */
+       
         Usuario usu = new Usuario();
         usu.setUsuario(trim(txt_usu.getText()));
            
@@ -252,7 +274,7 @@ public class ven_usuario extends javax.swing.JFrame {
 
                 usu.setId_cargo(txt_cargo.getText());
                 usu.setNom_usuario(txt_nom_usuario.getText());
-                usu.setPassword(String.valueOf(jp_pass.getPassword()));
+                usu.setPassword(jp_pass.getText());
                 qusu.agregarusuario(usu);
                 actualizar();
                 Limpiar();
@@ -264,24 +286,22 @@ public class ven_usuario extends javax.swing.JFrame {
           } 
         
         
-    
-         
         
-      
-    }//GEN-LAST:event_btn_aceptarMouseClicked
-
-    private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
-        Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
+        
+        
+        
+        
+        
+        
+        
+        
+        
         Qusuario query = new Qusuario();   
-        query.eliminarusuario(usu);
-        JOptionPane.showMessageDialog(null,"eliminado con exito");
-    }//GEN-LAST:event_btn_eliminarMouseClicked
-
-    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_eliminarActionPerformed
+        query.agregarusuario(usu);
+       JOptionPane.showMessageDialog(null,"ingresado con exito");
+                   
+    }//GEN-LAST:event_btn_agregarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -339,17 +359,18 @@ public class ven_usuario extends javax.swing.JFrame {
         tbl_usuario.setModel(modelo);
     
     
+     
     
     
-    
-    
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_aceptar;
+    private javax.swing.JButton btn_agregar;
+    private javax.swing.JButton btn_consultar;
     private javax.swing.JButton btn_eliminar;
+    private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

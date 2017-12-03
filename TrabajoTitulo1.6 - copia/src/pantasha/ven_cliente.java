@@ -328,7 +328,13 @@ public class ven_cliente extends javax.swing.JFrame {
         cli.setRut_cliente(trim(txt_rut_cliente.getText()));
         cli.setNom_cliente(trim(txt_nom_cliente.getText()));
 
-        if (trim(cli.getRut_cliente()).equals("") || trim(cli.getNom_cliente()).equals("")) {
+      //  jt.getText().length() == limite)
+        
+        if (cli.getRut_cliente().length() < 9) {
+             JOptionPane.showMessageDialog(null, "el rut ingresado no es valido, reingrese");
+        } else {
+            
+        }if (trim(cli.getRut_cliente()).equals("") || trim(cli.getNom_cliente()).equals("")) {
             JOptionPane.showMessageDialog(null, "indique rut no se puede agregar un cliente sin rut o sin nombre");
 
         } else {

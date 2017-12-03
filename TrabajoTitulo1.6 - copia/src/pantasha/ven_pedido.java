@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import querys.QdetallePedido;
 import querys.QordenDePedido;
@@ -22,10 +23,7 @@ import querys.Qpedidos;
 import querys.Qproductos;
 import querys.Qproveedor;
 
-/**
- *
- * @author Ariel
- */
+
 public class ven_pedido extends javax.swing.JFrame {
 
     Qproductos qp = new Qproductos();
@@ -39,8 +37,9 @@ public class ven_pedido extends javax.swing.JFrame {
     DetallePedido dp = new DetallePedido();
     QdetallePedido qdp = new QdetallePedido();
     QordenDePedido qop = new QordenDePedido();
-    
-
+    OrdenPedido odp = new OrdenPedido(); 
+   String modificar = "";
+        String codigopedido;
     public ven_pedido() {
         initComponents();
 
@@ -56,13 +55,16 @@ public class ven_pedido extends javax.swing.JFrame {
          modeloaux.addColumn("Cod");
         modeloaux.addColumn("Nombre");
         modeloaux.addColumn("Cantidad pedida");
-
+        cmb_estado.setVisible(false);
+        lbl_estado.setVisible(false);
+        btn_modificar.setVisible(false);
+        
     }
 
     ven_pedido(Proveedores p , String text) {
    
         initComponents();
-        txt_codigo_pedido.setText(text);
+       
         this.setLocationRelativeTo(null);
         tbl_productos.setModel(qp.cargardatos());
         cmb_filtro_productos.setModel(cargarcmb_filtro());
@@ -80,6 +82,7 @@ public class ven_pedido extends javax.swing.JFrame {
         arreglo[2] = p.getFono_prov();
             modelop.addRow(arreglo);
         tbl_proveedor.setModel(modelop);
+      
     }
 
     ven_pedido(OrdenPedido odp) {
@@ -91,11 +94,83 @@ public class ven_pedido extends javax.swing.JFrame {
         tbl_proveedor.setModel(qprov.cargardatosprov(odp.getCod_prov()));
         modeloaux = qdp.cargardatos();
         tbl_productos_seleccionados.setModel(modeloaux);
-        txt_codigo_pedido.setText(odp.getCod_pedido());
+        txt_fecha_pedido.setText(odp.getFecha_pedido());
+        txt_fecha_entrega.setText(odp.getFecha_entrega());
+        
+       if(odp.getEstado_pedido().equals("E")){
+            cmb_estado.setSelectedIndex(0);
+       } else if (odp.getEstado_pedido().equals("P")){
+           cmb_estado.setSelectedIndex(2);
+       }else if (odp.getEstado_pedido().equals("R")){
+           cmb_estado.setSelectedIndex(1);
+       }
+        
+         btn_insertar.setVisible(false);
+         
+        
+         modificar = "s";
+         codigopedido = odp.getCod_pedido();
+        this.odp = odp;
+    }
+    
+     ven_pedido(OrdenPedido odp, String consultar) {
+         initComponents();
+         this.setLocationRelativeTo(null);
+        tbl_productos.setModel(qp.cargardatos());
+        cmb_filtro_productos.setModel(cargarcmb_filtro());
+        cmb_estado.setModel(cargarcmb_estado());
+        tbl_proveedor.setModel(qprov.cargardatosprov(odp.getCod_prov()));
+        modeloaux = qdp.cargardatos();
+        tbl_productos_seleccionados.setModel(modeloaux);
         txt_fecha_pedido.setText(odp.getFecha_pedido());
         txt_fecha_entrega.setText(odp.getFecha_entrega());
          cmb_estado.setSelectedItem(odp.getEstado_pedido());
+         btn_insertar.setVisible(false);
+         btn_modificar.setVisible(false);
+         btn_buscarprov.setVisible(false);
+         btn_quitar.setVisible(false);
+         btn_quitarprov.setVisible(false);
+         btn_seleccionar.setVisible(false);
+         txt_fecha_entrega.setEditable(false);
+         txt_fecha_pedido.setEditable(false);
+         cmb_estado.setEditable(false);
          
+        if(odp.getEstado_pedido().equals("E")){
+            cmb_estado.setSelectedIndex(0);
+       } else if (odp.getEstado_pedido().equals("P")){
+           cmb_estado.setSelectedIndex(2);
+       }else if (odp.getEstado_pedido().equals("R")){
+           cmb_estado.setSelectedIndex(1);
+       }
+    }
+     
+    ven_pedido(String modificar, OrdenPedido odp, Proveedores p) {
+         initComponents();
+         this.setLocationRelativeTo(null);
+          this.odp = odp;
+        tbl_productos.setModel(qp.cargardatos());
+        cmb_filtro_productos.setModel(cargarcmb_filtro());
+        cmb_estado.setModel(cargarcmb_estado());
+        tbl_proveedor.setModel(qprov.cargardatosprov(p.getCod_prov()));
+        modeloaux = qdp.cargardatos();
+        tbl_productos_seleccionados.setModel(modeloaux);
+        txt_fecha_pedido.setText(odp.getFecha_pedido());
+        txt_fecha_entrega.setText(odp.getFecha_entrega());
+        
+       if(odp.getEstado_pedido().equals("E")){
+            cmb_estado.setSelectedIndex(0);
+       } else if (odp.getEstado_pedido().equals("P")){
+           cmb_estado.setSelectedIndex(2);
+       }else if (odp.getEstado_pedido().equals("R")){
+           cmb_estado.setSelectedIndex(1);
+       }
+        
+         btn_insertar.setVisible(false);
+         
+        
+         this.modificar = "s";
+         codigopedido = odp.getCod_pedido();
+       
     }
 
     /**
@@ -108,8 +183,6 @@ public class ven_pedido extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        txt_codigo_pedido = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         btn_buscarprov = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -137,14 +210,6 @@ public class ven_pedido extends javax.swing.JFrame {
         btn_modificar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Codigo de pedido");
-
-        txt_codigo_pedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_codigo_pedidoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Proveedor");
 
@@ -251,6 +316,11 @@ public class ven_pedido extends javax.swing.JFrame {
         });
 
         btn_modificar.setText("Modificar");
+        btn_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_modificarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -280,27 +350,21 @@ public class ven_pedido extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(lbl_Fecha_Entrega))
                         .addGap(46, 46, 46)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txt_codigo_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txt_fecha_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(316, 316, 316)
-                                        .addComponent(btn_quitarprov))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(btn_buscarprov)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(txt_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addComponent(txt_fecha_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(316, 316, 316)
+                                .addComponent(btn_quitarprov))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn_buscarprov)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,11 +390,7 @@ public class ven_pedido extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_codigo_pedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -394,25 +454,33 @@ public class ven_pedido extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 15, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_codigo_pedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codigo_pedidoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_codigo_pedidoActionPerformed
-
     private void btn_seleccionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_seleccionarMouseClicked
         //DefaultTableModel modelo = new DefaultTableModel();
         // modeloaux=qpedi.Pasardatos(tbl_productos,txt_cantidad.getText());
         // tbl_productos_seleccionados.setModel(modeloaux);
+  if(modificar.equals("s")){
+       int fila = tbl_productos.getSelectedRow();
+ 
+       System.out.println("Codigo de pedido" + codigopedido);
+       String codigoprod = (String) tbl_productos.getValueAt(fila, 0);
+        String[] arreglo = new String[3];
+        arreglo[0] = codigopedido;
+        arreglo[1] = codigoprod;
+        arreglo[2] = txt_cantidad.getText();
+         modeloaux.addRow(arreglo);
+        tbl_productos_seleccionados.setModel(modeloaux);
+        txt_cantidad.setText("");
+  }else{
+      int fila = tbl_productos.getSelectedRow();
 
-        int fila = tbl_productos.getSelectedRow();
-
-        String codigo = (String) tbl_productos.getValueAt(fila, 1);
-        String nombre = (String) tbl_productos.getValueAt(fila, 0);
+        String codigo = (String) tbl_productos.getValueAt(fila, 0);
+        String nombre = (String) tbl_productos.getValueAt(fila, 1);
         String[] arreglo = new String[3];
         arreglo[1] = codigo;
         arreglo[0] = nombre;
@@ -420,12 +488,22 @@ public class ven_pedido extends javax.swing.JFrame {
         modeloaux.addRow(arreglo);
         tbl_productos_seleccionados.setModel(modeloaux);
         txt_cantidad.setText("");
+  }
+        
+        
     }//GEN-LAST:event_btn_seleccionarMouseClicked
 
     private void btn_buscarprovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscarprovMouseClicked
-        ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor(txt_codigo_pedido.getText());
+     if(modificar.equals("s")){
+         ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor(modificar,odp);
         vbuscarp.setVisible(true);
         this.dispose();
+     }else{
+          ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor();
+        vbuscarp.setVisible(true);
+        this.dispose();
+     }  
+       
 
     }//GEN-LAST:event_btn_buscarprovMouseClicked
 
@@ -444,10 +522,6 @@ public class ven_pedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_quitarMouseClicked
 
     private void btn_insertarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_insertarKeyPressed
-        
-  
-       
-        
 
     }//GEN-LAST:event_btn_insertarKeyPressed
 
@@ -464,7 +538,7 @@ public class ven_pedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_quitarprovActionPerformed
 
     private void btn_insertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertarActionPerformed
-        op.setCod_pedido(txt_codigo_pedido.getText());
+     
         op.setCod_prov((String) tbl_proveedor.getValueAt(0,0));
         op.setFecha_pedido(txt_fecha_pedido.getText());
         op.setFecha_entrega(txt_fecha_entrega.getText());
@@ -484,13 +558,13 @@ public class ven_pedido extends javax.swing.JFrame {
     //----------------------------------------la siguiente es para detalle pedido   
        
        int i = tbl_productos_seleccionados.getRowCount();
-         String codigo = txt_codigo_pedido.getText();
+      
          int cont = 0;
         while (i>0){  
          dp.setCod_producto((String) tbl_productos_seleccionados.getValueAt(cont,0));
          String cantidad = ((String) tbl_productos_seleccionados.getValueAt(cont,2));
          dp.setCantidad(Integer.parseInt(cantidad));
-         qdp.agregarDetallePedido(dp,codigo);
+         qdp.agregarDetallePedido(dp);
           cont++;
          i--;   
         }
@@ -507,9 +581,56 @@ public class ven_pedido extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_btn_volverMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
+        
+        
+
+        
+        odp.setCod_pedido((String) tbl_productos_seleccionados.getValueAt(0,0));
+        odp.setCod_prov((String) tbl_proveedor.getValueAt(0,0));
+        // recordar cambiar el usuario despues por la variable global
+        odp.setId_usuario("usuario");
+        odp.setFecha_pedido(txt_fecha_pedido.getText());
+        odp.setFecha_entrega(txt_fecha_entrega.getText());
+        if(cmb_estado.getSelectedItem().equals("Emitido")){
+              odp.setEstado_pedido("E");
+        }else if(cmb_estado.getSelectedItem().equals("Pendiente")){
+            odp.setEstado_pedido("P");
+        }else if (cmb_estado.getSelectedItem().equals("Recibido")){
+            odp.setEstado_pedido("R");
+        }
+       
+        
+          if (JOptionPane.showConfirmDialog(null, "Desea modificar el pedido  " + odp.getCod_pedido(), "Modificar pedido",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+        qdp.eliminarDetalleDePedido(odp.getCod_pedido());
+        qop.eliminarOrdenDePedido(odp.getCod_pedido());
+          }
+        
+         try {
+            qop.agregarOrdenPedidoM(odp);
+        } catch (ParseException ex) {
+            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+           int i = tbl_productos_seleccionados.getRowCount();
+         int cont = 0;
+        while (i>0){  
+            String cantidad = (String) tbl_productos_seleccionados.getValueAt(cont,2);
+        dp.setCod_pedido((String) tbl_productos_seleccionados.getValueAt(cont,0));
+        dp.setCod_producto((String) tbl_productos_seleccionados.getValueAt(cont,1));
+        dp.setCantidad(Integer.parseInt(cantidad));
+         qdp.agregarDetallePedidoM(dp);
+          cont++;
+         i--;   
+        }
+       
+        
+        
+    }//GEN-LAST:event_btn_modificarMouseClicked
+
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -552,7 +673,6 @@ public class ven_pedido extends javax.swing.JFrame {
     private javax.swing.JButton btn_volver;
     private javax.swing.JComboBox<String> cmb_estado;
     private javax.swing.JComboBox<String> cmb_filtro_productos;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -567,7 +687,6 @@ public class ven_pedido extends javax.swing.JFrame {
     private javax.swing.JTable tbl_productos_seleccionados;
     private javax.swing.JTable tbl_proveedor;
     private javax.swing.JTextField txt_cantidad;
-    private javax.swing.JTextField txt_codigo_pedido;
     private javax.swing.JTextField txt_fecha_entrega;
     private javax.swing.JTextField txt_fecha_pedido;
     private javax.swing.JTextField txt_filtro_productos;

@@ -9,7 +9,6 @@ import clases.Conectar;
 import clases.Persona;
 import clases.Producto;
 import clases.Proveedores;
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

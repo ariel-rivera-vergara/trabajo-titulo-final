@@ -21,22 +21,31 @@ import javax.swing.table.DefaultTableModel;
  * @author Ariel
  */
 public class QdetallePedido {
-    
-    
-     public void agregarDetallePedido(DetallePedido dp,String codigo) {
+
+    public void agregarDetallePedido(DetallePedido dp) {
         Conectar connection = new Conectar();//conectarme a la base de datos
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        int codigo = 0;
         try {
-            String query = "INSERT INTO detalle_pedido VALUES ("
+         
+
+            String query2 = "select max(cod_pedido) from orden_de_pedido";
+
+            Statement st = cn.createStatement();
+            
+            ResultSet rs = st.executeQuery(query2);
+            while (rs.next()) {
+                codigo = rs.getInt(1);
+            }
+            System.out.println(codigo);
+
+               String query = "INSERT INTO detalle_pedido VALUES ("
                     + "'" + codigo + "',"
                     + "'" + dp.getCod_producto() + "',"
                     + "'" + dp.getCantidad() + "'"
                     + ")";
-
-            Statement st = cn.createStatement();
             st.executeUpdate(query);
 
-       
             System.out.println("ingresado");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Codigo de producto ya ingresado");
@@ -51,8 +60,8 @@ public class QdetallePedido {
         }
 
     }
-     
-          public void eliminarDetalleDePedido(String codigo) {
+
+    public void eliminarDetalleDePedido(String codigo) {
         Conectar connection = new Conectar();//conectarme a la base de datos
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
@@ -74,9 +83,8 @@ public class QdetallePedido {
             }
         }
     }
-          
-          
-           public DefaultTableModel cargardatos() {
+
+    public DefaultTableModel cargardatos() {
         Conectar connection = new Conectar();//conectarme a la base de datos
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         DefaultTableModel modelo = crearbase();
@@ -107,8 +115,7 @@ public class QdetallePedido {
         }
         return modelo;
     }
-           
-           
+
     private DefaultTableModel crearbase() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo de pedido");
@@ -116,8 +123,32 @@ public class QdetallePedido {
         modelo.addColumn("Cantidad");
         return modelo;
     }
-        
-     
-     
-     
+
+    public void agregarDetallePedidoM(DetallePedido dp) {
+         Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+               String query = "INSERT INTO detalle_pedido VALUES ("
+                    + "'" + Integer.parseInt(dp.getCod_pedido()) + "',"
+                    + "'" + dp.getCod_producto() + "',"
+                    + "'" + dp.getCantidad() + "'"
+                    + ")";
+           Statement st = cn.createStatement();
+            st.executeUpdate(query);
+
+
+            System.out.println("ingresado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Codigo de producto ya ingresado");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }

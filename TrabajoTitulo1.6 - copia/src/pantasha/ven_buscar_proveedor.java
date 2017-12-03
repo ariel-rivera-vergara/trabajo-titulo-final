@@ -5,6 +5,7 @@
  */
 package pantasha;
 
+import clases.OrdenPedido;
 import clases.Proveedores;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,8 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
      ven_pedido ven = new ven_pedido();
      Qproveedor qp = new Qproveedor();
       Qpedidos qpedi = new Qpedidos();
+      OrdenPedido odp = new OrdenPedido();
+      String modificar;
       int sw;
      String text;
      int num_factura;
@@ -51,6 +54,14 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
         tbl_proveedores.setModel(qp.cargardatos());
         cmb_proveedor.setModel(cargarcmb_filtroproveedor());
      
+    }
+
+    ven_buscar_proveedor(String modificar, OrdenPedido odp) {
+       initComponents();
+        tbl_proveedores.setModel(qp.cargardatos());
+        cmb_proveedor.setModel(cargarcmb_filtroproveedor());
+        this.modificar = modificar;
+        this.odp = odp;
     }
 
     /**
@@ -179,6 +190,16 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
         this.dispose();
         ven_factura venf = new ven_factura(p,num_factura,fecha_compra,total);
         venf.setVisible(true);
+    }else if(modificar.equals("s")){
+          Proveedores p = new Proveedores();
+        int fila = tbl_proveedores.getSelectedRow();
+        p.setCod_prov((String)tbl_proveedores.getValueAt(fila,0));
+        p.setNom_prov((String)tbl_proveedores.getValueAt(fila,2));
+        p.setFono_prov((String)tbl_proveedores.getValueAt(fila,3));
+        this.dispose();
+          ven_pedido venp = new ven_pedido(modificar,odp,p);
+        venp.setVisible(true);
+        
     }else{
          Proveedores p = new Proveedores();
         int fila = tbl_proveedores.getSelectedRow();

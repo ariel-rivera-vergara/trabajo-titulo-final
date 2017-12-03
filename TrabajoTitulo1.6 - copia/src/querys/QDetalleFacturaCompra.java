@@ -85,17 +85,15 @@ public class QDetalleFacturaCompra {
         DefaultTableModel modelo = crearbase();
         try {
 
-            String query = "SELECT * FROM detalle_factura_compra";
-            String[] arreglo = new String[5];
+            String query = "SELECT cod_prod,cant_prod,precio FROM detalle_factura_compra";
+            String[] arreglo = new String[3];
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 arreglo[0] = rs.getString(1);
                 arreglo[1] = rs.getString(2);
-                arreglo[2] = rs.getString(3);
-                arreglo[3] = rs.getString(4);
-                arreglo[4] = rs.getString(5);
-                modelo.addRow(arreglo);
+                arreglo[2] = rs.getString(3);  
+               modelo.addRow(arreglo);
 
             }
 
@@ -116,8 +114,6 @@ public class QDetalleFacturaCompra {
            
     private DefaultTableModel crearbase() {
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Numero de Factura");
-        modelo.addColumn("Codigo de Proveedor");
         modelo.addColumn("Codigo de Producto");
         modelo.addColumn("Cantidad");
         modelo.addColumn("Precio");
