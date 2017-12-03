@@ -11,6 +11,7 @@ import clases.Proveedores;
 import clases.Validar;
 import java.text.ParseException;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -37,7 +38,8 @@ public class ven_pedido extends javax.swing.JFrame {
     QdetallePedido qdp = new QdetallePedido();
     QordenDePedido qop = new QordenDePedido();
     OrdenPedido odp = new OrdenPedido(); 
-
+   String modificar = "";
+        String codigopedido;
     public ven_pedido() {
         initComponents();
 
@@ -96,17 +98,19 @@ public class ven_pedido extends javax.swing.JFrame {
         txt_fecha_entrega.setText(odp.getFecha_entrega());
         
        if(odp.getEstado_pedido().equals("E")){
-            cmb_estado.setSelectedItem("Emitido");
+            cmb_estado.setSelectedIndex(0);
        } else if (odp.getEstado_pedido().equals("P")){
-           cmb_estado.setSelectedItem("Pendiente");
+           cmb_estado.setSelectedIndex(2);
        }else if (odp.getEstado_pedido().equals("R")){
-           cmb_estado.setSelectedItem("R");
+           cmb_estado.setSelectedIndex(1);
        }
         
          btn_insertar.setVisible(false);
          
-         System.out.println(cmb_estado.getSelectedIndex()+ "  "+cmb_estado.getSelectedItem());
-         
+        
+         modificar = "s";
+         codigopedido = odp.getCod_pedido();
+        this.odp = odp;
     }
     
      ven_pedido(OrdenPedido odp, String consultar) {
@@ -131,13 +135,42 @@ public class ven_pedido extends javax.swing.JFrame {
          txt_fecha_pedido.setEditable(false);
          cmb_estado.setEditable(false);
          
-         if(odp.getEstado_pedido().equals("E")){
-            cmb_estado.setSelectedItem("Emitido");
+        if(odp.getEstado_pedido().equals("E")){
+            cmb_estado.setSelectedIndex(0);
        } else if (odp.getEstado_pedido().equals("P")){
-           cmb_estado.setSelectedItem("Pendiente");
+           cmb_estado.setSelectedIndex(2);
        }else if (odp.getEstado_pedido().equals("R")){
-           cmb_estado.setSelectedItem("R");
+           cmb_estado.setSelectedIndex(1);
        }
+    }
+     
+    ven_pedido(String modificar, OrdenPedido odp, Proveedores p) {
+         initComponents();
+         this.setLocationRelativeTo(null);
+          this.odp = odp;
+        tbl_productos.setModel(qp.cargardatos());
+        cmb_filtro_productos.setModel(cargarcmb_filtro());
+        cmb_estado.setModel(cargarcmb_estado());
+        tbl_proveedor.setModel(qprov.cargardatosprov(p.getCod_prov()));
+        modeloaux = qdp.cargardatos();
+        tbl_productos_seleccionados.setModel(modeloaux);
+        txt_fecha_pedido.setText(odp.getFecha_pedido());
+        txt_fecha_entrega.setText(odp.getFecha_entrega());
+        
+       if(odp.getEstado_pedido().equals("E")){
+            cmb_estado.setSelectedIndex(0);
+       } else if (odp.getEstado_pedido().equals("P")){
+           cmb_estado.setSelectedIndex(2);
+       }else if (odp.getEstado_pedido().equals("R")){
+           cmb_estado.setSelectedIndex(1);
+       }
+        
+         btn_insertar.setVisible(false);
+         
+        
+         this.modificar = "s";
+         codigopedido = odp.getCod_pedido();
+       
     }
 
     /**
@@ -431,11 +464,23 @@ public class ven_pedido extends javax.swing.JFrame {
         //DefaultTableModel modelo = new DefaultTableModel();
         // modeloaux=qpedi.Pasardatos(tbl_productos,txt_cantidad.getText());
         // tbl_productos_seleccionados.setModel(modeloaux);
+  if(modificar.equals("s")){
+       int fila = tbl_productos.getSelectedRow();
+ 
+       System.out.println("Codigo de pedido" + codigopedido);
+       String codigoprod = (String) tbl_productos.getValueAt(fila, 0);
+        String[] arreglo = new String[3];
+        arreglo[0] = codigopedido;
+        arreglo[1] = codigoprod;
+        arreglo[2] = txt_cantidad.getText();
+         modeloaux.addRow(arreglo);
+        tbl_productos_seleccionados.setModel(modeloaux);
+        txt_cantidad.setText("");
+  }else{
+      int fila = tbl_productos.getSelectedRow();
 
-        int fila = tbl_productos.getSelectedRow();
-
-        String codigo = (String) tbl_productos.getValueAt(fila, 1);
-        String nombre = (String) tbl_productos.getValueAt(fila, 0);
+        String codigo = (String) tbl_productos.getValueAt(fila, 0);
+        String nombre = (String) tbl_productos.getValueAt(fila, 1);
         String[] arreglo = new String[3];
         arreglo[1] = codigo;
         arreglo[0] = nombre;
@@ -443,12 +488,22 @@ public class ven_pedido extends javax.swing.JFrame {
         modeloaux.addRow(arreglo);
         tbl_productos_seleccionados.setModel(modeloaux);
         txt_cantidad.setText("");
+  }
+        
+        
     }//GEN-LAST:event_btn_seleccionarMouseClicked
 
     private void btn_buscarprovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscarprovMouseClicked
-        ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor();
+     if(modificar.equals("s")){
+         ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor(modificar,odp);
         vbuscarp.setVisible(true);
         this.dispose();
+     }else{
+          ven_buscar_proveedor vbuscarp = new ven_buscar_proveedor();
+        vbuscarp.setVisible(true);
+        this.dispose();
+     }  
+       
 
     }//GEN-LAST:event_btn_buscarprovMouseClicked
 
@@ -467,10 +522,6 @@ public class ven_pedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_quitarMouseClicked
 
     private void btn_insertarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_insertarKeyPressed
-        
-  
-       
-        
 
     }//GEN-LAST:event_btn_insertarKeyPressed
 
@@ -531,13 +582,55 @@ public class ven_pedido extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_volverMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-      
+        
+        
+
+        
+        odp.setCod_pedido((String) tbl_productos_seleccionados.getValueAt(0,0));
+        odp.setCod_prov((String) tbl_proveedor.getValueAt(0,0));
+        // recordar cambiar el usuario despues por la variable global
+        odp.setId_usuario("usuario");
+        odp.setFecha_pedido(txt_fecha_pedido.getText());
+        odp.setFecha_entrega(txt_fecha_entrega.getText());
+        if(cmb_estado.getSelectedItem().equals("Emitido")){
+              odp.setEstado_pedido("E");
+        }else if(cmb_estado.getSelectedItem().equals("Pendiente")){
+            odp.setEstado_pedido("P");
+        }else if (cmb_estado.getSelectedItem().equals("Recibido")){
+            odp.setEstado_pedido("R");
+        }
+       
+        
+          if (JOptionPane.showConfirmDialog(null, "Desea modificar el pedido  " + odp.getCod_pedido(), "Modificar pedido",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+        qdp.eliminarDetalleDePedido(odp.getCod_pedido());
+        qop.eliminarOrdenDePedido(odp.getCod_pedido());
+          }
+        
+         try {
+            qop.agregarOrdenPedidoM(odp);
+        } catch (ParseException ex) {
+            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+           int i = tbl_productos_seleccionados.getRowCount();
+         int cont = 0;
+        while (i>0){  
+            String cantidad = (String) tbl_productos_seleccionados.getValueAt(cont,2);
+        dp.setCod_pedido((String) tbl_productos_seleccionados.getValueAt(cont,0));
+        dp.setCod_producto((String) tbl_productos_seleccionados.getValueAt(cont,1));
+        dp.setCantidad(Integer.parseInt(cantidad));
+         qdp.agregarDetallePedidoM(dp);
+          cont++;
+         i--;   
+        }
+       
+        
         
     }//GEN-LAST:event_btn_modificarMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

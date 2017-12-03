@@ -191,6 +191,38 @@ public class QordenDePedido {
         return modelo;
     
    }
+
+    public void agregarOrdenPedidoM(OrdenPedido odp) throws ParseException {
+         Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            //hay que cambiar los valores para integrar el idusuario
+            String query = "INSERT INTO orden_de_pedido VALUES ("
+                    + "'" + Integer.parseInt(odp.getCod_pedido()) + "',"
+                    + "'" + odp.getCod_prov() + "',"
+                    + "'" + odp.getId_usuario() + "',"
+                    + "'" + vali.ParseFecha(odp.getFecha_pedido())+ "',"
+                    + "'" + vali.ParseFecha(odp.getFecha_entrega())+ "',"
+                    + "'" + odp.getEstado_pedido() + "'"
+                    + ")";
+       System.out.println(odp.getEstado_pedido());
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+
+       
+            System.out.println("ingresado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Codigo de producto ya ingresado");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     
     
 }

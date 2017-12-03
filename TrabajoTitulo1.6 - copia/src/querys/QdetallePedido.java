@@ -124,4 +124,31 @@ public class QdetallePedido {
         return modelo;
     }
 
+    public void agregarDetallePedidoM(DetallePedido dp) {
+         Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+               String query = "INSERT INTO detalle_pedido VALUES ("
+                    + "'" + Integer.parseInt(dp.getCod_pedido()) + "',"
+                    + "'" + dp.getCod_producto() + "',"
+                    + "'" + dp.getCantidad() + "'"
+                    + ")";
+           Statement st = cn.createStatement();
+            st.executeUpdate(query);
+
+
+            System.out.println("ingresado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Codigo de producto ya ingresado");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
 }
