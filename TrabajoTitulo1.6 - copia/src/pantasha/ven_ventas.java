@@ -103,6 +103,11 @@ public class ven_ventas extends javax.swing.JFrame {
         });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         Atxt_receta.setColumns(20);
         Atxt_receta.setRows(5);
@@ -245,6 +250,12 @@ public class ven_ventas extends javax.swing.JFrame {
       this.dispose();
       vdv.setVisible(true);
     }//GEN-LAST:event_btn_crear_ventaMouseClicked
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+         ven_mantenedor_ventas vmv = new ven_mantenedor_ventas();
+         this.dispose();
+         vmv.setVisible(true);
+    }//GEN-LAST:event_btn_volverMouseClicked
 
     /**
      * @param args the command line arguments

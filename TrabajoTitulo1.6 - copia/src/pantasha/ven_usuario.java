@@ -233,7 +233,7 @@ public class ven_usuario extends javax.swing.JFrame {
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
         Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
+        usu.setId_usuario(txt_usu.getText());
         Qusuario query = new Qusuario();   
         query.eliminarusuario(usu);
         JOptionPane.showMessageDialog(null,"eliminado con exito");
@@ -254,22 +254,22 @@ public class ven_usuario extends javax.swing.JFrame {
        */
        
         Usuario usu = new Usuario();
-        usu.setUsuario(trim(txt_usu.getText()));
+        usu.setId_usuario(trim(txt_usu.getText()));
            
         
-         if  (trim(usu.getUsuario()).equals("") || trim(usu.getUsuario()).equals("")){
+         if  (trim(usu.getId_usuario()).equals("") || trim(usu.getNom_usuario()).equals("")){
               JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
               
           }else{
            
         
               if                                  
-                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getUsuario(), "agregar usuario",
+                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getId_usuario(), "agregar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {     
                   
                    } else {
                   
-                   if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getUsuario(), "agregar usuario",
+                   if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getId_usuario(), "agregar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
 
                 usu.setId_cargo(txt_cargo.getText());

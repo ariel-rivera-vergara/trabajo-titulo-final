@@ -107,7 +107,7 @@ public class inicio extends javax.swing.JFrame {
     private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
         Qusuario qu = new Qusuario();
         Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
+        usu.setId_usuario(txt_usu.getText());
         usu.setPassword(String.valueOf(jp_pass.getPassword()));
         if (qu.consultarusuario(usu)==1){
            ven_principal vi = new ven_principal();

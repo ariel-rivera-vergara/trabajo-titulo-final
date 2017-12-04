@@ -33,7 +33,7 @@ public class Qcliente {
 
             System.out.println("ingresado");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Codigo de producto ya ingresado");
+            JOptionPane.showMessageDialog(null, "Codigo de cliente ya ingresado");
             System.out.println("error" + e);
         } finally {
             try {

@@ -542,7 +542,6 @@ public class ven_pedido extends javax.swing.JFrame {
         op.setCod_prov((String) tbl_proveedor.getValueAt(0,0));
         op.setFecha_pedido(txt_fecha_pedido.getText());
         op.setFecha_entrega(txt_fecha_entrega.getText());
-       
         op.setEstado_pedido("E");
         
        

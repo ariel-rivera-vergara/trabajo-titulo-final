@@ -6,26 +6,40 @@
 package pantasha;
 
 import clases.Cliente;
+import clases.ProductoVenta;
+import clases.venta;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import querys.Qprod_ventas;
+import querys.Qventa;
 
 public class ven_detalle_venta extends javax.swing.JFrame {
     
     DefaultTableModel modelopsl = new DefaultTableModel();
     DefaultTableModel modelocli = new DefaultTableModel();
+    Qprod_ventas qproven = new Qprod_ventas();
+    Qventa qven = new Qventa();
     String receta;
     Calendar c2 = new GregorianCalendar();
     int total;
-    
+    venta ven = new venta();
+    ProductoVenta proven = new ProductoVenta();
     public ven_detalle_venta() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     ven_detalle_venta(DefaultTableModel modelopsl, JTextArea Atxt_receta, int total) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.modelopsl = modelopsl;
         tbl_productos_seleccionados.setModel(this.modelopsl);
         cmb_tipo_pago.setModel(cargarcmb_filtro());
@@ -42,6 +56,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
 
     ven_detalle_venta(Cliente cli,DefaultTableModel modelopsl, String receta, int total) {
          initComponents();
+         this.setLocationRelativeTo(null);
         this.modelopsl = modelopsl;
         tbl_productos_seleccionados.setModel(this.modelopsl);
          modelocli.addColumn("Rut de Cliente");
@@ -99,6 +114,8 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         btn_volver = new javax.swing.JButton();
         lbl_fecha_actual = new javax.swing.JLabel();
         lbl_saldo_pagar = new javax.swing.JLabel();
+        lbl_rut_pretira = new javax.swing.JLabel();
+        txt_rutpretira = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +137,11 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         });
 
         btn_agregar_cliente.setText("Agregar cliente");
+        btn_agregar_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_agregar_clienteMouseClicked(evt);
+            }
+        });
 
         tbl_productos_seleccionados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,23 +178,39 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         lbl_total.setText("0");
 
         btn_Generar_venta.setText("Generar Venta");
+        btn_Generar_venta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_Generar_ventaMouseClicked(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         lbl_saldo_pagar.setText("0");
+
+        lbl_rut_pretira.setText("Rut persona que retira ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(btn_buscar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addComponent(btn_buscar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_agregar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(113, 113, 113))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_agregar_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 557, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(91, 91, 91))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,17 +221,17 @@ public class ven_detalle_venta extends javax.swing.JFrame {
                                 .addComponent(lbl_nomtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(lbl_fecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_Generar_venta)
                                 .addGap(90, 90, 90))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lbl_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(lbl_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(19, 19, 19)
-                                .addComponent(lbl_fecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(txt_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
@@ -218,7 +256,13 @@ public class ven_detalle_venta extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(254, 254, 254)
                                 .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 72, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(lbl_rut_pretira, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_rutpretira, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +299,11 @@ public class ven_detalle_venta extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lbl_saldo_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbl_rut_pretira, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(txt_rutpretira, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Generar_venta)
                     .addComponent(btn_volver))
@@ -269,7 +317,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,6 +341,72 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         this.dispose();
         vbc.setVisible(true);
     }//GEN-LAST:event_btn_buscar_clienteMouseClicked
+
+    private void btn_agregar_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregar_clienteMouseClicked
+      ven_agregar_cliente vac = new ven_agregar_cliente(modelopsl,receta,total);
+      this.dispose();
+      vac.setVisible(true);
+        
+    }//GEN-LAST:event_btn_agregar_clienteMouseClicked
+
+    private void btn_Generar_ventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Generar_ventaMouseClicked
+      ven.setRut_cliente((String) tbl_cliente.getValueAt(0,0));
+      ven.setId_usuario("rutusuario");
+      ven.setFecha_rec(lbl_fecha_actual.getText());
+      ven.setFecha_ent(txt_fecha_entrega.getText());
+      ven.setAbono(Integer.parseInt(txt_abono.getText()));
+      ven.setNum_boleta(Integer.parseInt(txt_num_boleta.getText()));
+      ven.setSaldo(Integer.parseInt(lbl_saldo_pagar.getText()));
+      ven.setTotal_vent(total);
+      
+      if(cmb_tipo_pago.getSelectedItem().equals("Efectivo")){
+         ven.setTipo_pago("E");
+      }else if(cmb_tipo_pago.getSelectedItem().equals("Tarjeta")){
+          ven.setTipo_pago("T");
+      }else if(cmb_tipo_pago.getSelectedItem().equals("Cheque")){
+          ven.setTipo_pago("C");
+      }
+      ven.setRut_pretiro(txt_rutpretira.getText());
+      ven.setReceta(receta);
+      
+      
+        
+        try {
+            qven.agregarventa(ven);
+          
+        } catch (ParseException ex) {
+            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+ // -----------------------------------------------------------  
+         int i = tbl_productos_seleccionados.getRowCount();
+         int cont = 0;
+        while (i>0){  
+            String cantidad = (String) tbl_productos_seleccionados.getValueAt(cont,3);
+            String precio = (String) tbl_productos_seleccionados.getValueAt(cont,2);
+            String subtotal = (String) tbl_productos_seleccionados.getValueAt(cont,4);
+       
+         
+      proven.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont,0));
+      proven.setCant_vent(Integer.parseInt(cantidad));
+      proven.setPrecio_unit(Integer.parseInt(precio));
+      proven.setSub_total(Integer.parseInt(subtotal));
+         qproven.agregarProductoventa(proven);
+          cont++;
+         i--;   
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_btn_Generar_ventaMouseClicked
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+      ven_ventas vven = new ven_ventas();
+      this.dispose();
+      vven.setVisible(true);
+    }//GEN-LAST:event_btn_volverMouseClicked
 
     /**
      * @param args the command line arguments
@@ -344,6 +458,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_fecha_entrega;
     private javax.swing.JLabel lbl_nomtotal;
     private javax.swing.JLabel lbl_num_boleta;
+    private javax.swing.JLabel lbl_rut_pretira;
     private javax.swing.JLabel lbl_saldo;
     private javax.swing.JLabel lbl_saldo_pagar;
     private javax.swing.JLabel lbl_tipo_pago;
@@ -353,6 +468,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     private javax.swing.JTextField txt_abono;
     private javax.swing.JTextField txt_fecha_entrega;
     private javax.swing.JTextField txt_num_boleta;
+    private javax.swing.JTextField txt_rutpretira;
     // End of variables declaration//GEN-END:variables
 
     public DefaultComboBoxModel cargarcmb_filtro() {

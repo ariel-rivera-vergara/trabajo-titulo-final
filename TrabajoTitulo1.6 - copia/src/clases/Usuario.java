@@ -11,18 +11,20 @@ package clases;
  */
 public class Usuario {
     
-    private String usuario;
+    private String id_usuario;
     private String id_cargo;
     private String  nom_usuario;
     private String password;
 
-    public String getUsuario() {
-        return usuario;
+    public String getId_usuario() {
+        return id_usuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setId_usuario(String id_usuario) {
+        this.id_usuario = id_usuario;
     }
+
+  
 
     public String getId_cargo() {
         return id_cargo;

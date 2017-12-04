@@ -21,6 +21,7 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
 
     public ven_buscar_cliente(DefaultTableModel modelopsl, String receta, int total) {
         initComponents();
+        this.setLocationRelativeTo(null);
         tbl_clientes.setModel(qcli.cargardatos());
         cmb_filtro_cliente.setModel(cargarcmb_filtrocliente());
         this.modelopsl = modelopsl;
@@ -30,6 +31,7 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
 
     private ven_buscar_cliente() {
     initComponents();
+    this.setLocationRelativeTo(null);
     }
 
     /**
@@ -140,7 +142,8 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_filtro_clienteKeyReleased
 
     private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
-        ven_detalle_venta vdv = new ven_detalle_venta();
+       
+        ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
         this.dispose();
         vdv.setVisible(true);
     }//GEN-LAST:event_btn_volverMouseClicked
