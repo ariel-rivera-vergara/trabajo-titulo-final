@@ -63,8 +63,79 @@ public class Qventa {
                 Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
     }
+    
+    
+    
+    
+     public void agregarventaM(venta ven) throws ParseException {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            
+            String query = "INSERT INTO venta(id_venta,rut_cliente,id_usuario,fecha_rec,fecha_ent,abono,saldo,total_venta,tipo_pago,"
+                    + "num_boleta,rut_pretiro,receta) VALUES ("
+                     + "'" + ven.getId_venta() + "',"
+                    + "'" + ven.getRut_cliente() + "',"
+                    + "'" + ven.getId_usuario() + "',"
+                    + "'" + vali.ParseFecha(ven.getFecha_rec()) + "',"
+                    + "'" + vali.ParseFecha(ven.getFecha_ent()) + "',"
+                    + "'" + ven.getAbono() + "',"
+                    + "'" + ven.getSaldo() + "',"
+                    + "'" + ven.getTotal_vent() + "',"
+                    + "'" + ven.getTipo_pago() + "',"
+                    + "'" + ven.getNum_boleta() + "',"
+                    + "'" + ven.getRut_pretiro() + "',"
+                    + "'" + ven.getReceta() + "'"
+                    + ")";
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+
+            System.out.println("ingresado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Codigo de venta ya ingresado");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    
+     }
+    
+    
+       
+         public void eliminarVenta(String id_ventas) {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            String query = "Delete FROM venta"
+                    + " where id_venta ='" + id_ventas + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("eliminado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe ese codigo a eliminar");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QordenDePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    
 
     public DefaultTableModel cargardatos() {
         Conectar connection = new Conectar();//conectarme a la base de datos

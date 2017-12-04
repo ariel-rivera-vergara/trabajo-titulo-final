@@ -98,7 +98,7 @@ public class ven_factura extends javax.swing.JFrame {
         tbl_proveedor_selec.setModel(qprov.cargardatosprov(fc.getCod_prov()));
         quitar = 1;
           
-       modeloFs = qdfc.cargardatos();
+       modeloFs = qdfc.cargardatosEspecificos(fc);
         tbl_productos_seleccionados.setModel(modeloFs);
         
         txt_num_factura.setText(String.valueOf(fc.getNum_factura()));
@@ -151,7 +151,7 @@ public class ven_factura extends javax.swing.JFrame {
         tbl_proveedor_selec.setModel(qprov.cargardatosprov(fc.getCod_prov()));
         quitar = 1;
           
-        modeloFs = qdfc.cargardatos();
+        modeloFs = qdfc.cargardatosEspecificos(fc);
         tbl_productos_seleccionados.setModel(modeloFs);
         
         txt_num_factura.setText(String.valueOf(fc.getNum_factura()));

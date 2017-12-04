@@ -32,6 +32,9 @@ public class venta {
         this.id_venta = id_venta;
     }
 
+  
+   
+   
     public String getRut_cliente() {
         return rut_cliente;
     }

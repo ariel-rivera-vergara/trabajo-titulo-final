@@ -6,6 +6,7 @@
 package pantasha;
 
 import clases.Cliente;
+import clases.venta;
 import java.util.HashSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -17,7 +18,9 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
     Qcliente qcli = new Qcliente();
     DefaultTableModel modelopsl;
     String receta;
-    int total;
+    int total = 0;
+    String modificar = "";
+    venta ven = new venta();
 
     public ven_buscar_cliente(DefaultTableModel modelopsl, String receta, int total) {
         initComponents();
@@ -32,6 +35,20 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
     private ven_buscar_cliente() {
     initComponents();
     this.setLocationRelativeTo(null);
+    }
+
+    ven_buscar_cliente( venta ven, int total, String modificar,DefaultTableModel modelopsl) {
+          initComponents();
+        this.setLocationRelativeTo(null);
+        tbl_clientes.setModel(qcli.cargardatos());
+        cmb_filtro_cliente.setModel(cargarcmb_filtrocliente());
+        this.receta = ven.getReceta();
+        this.total = total;
+        this.modificar = modificar;
+        this.ven = ven;
+        this.modelopsl = modelopsl;
+        
+        System.out.println("venta en constructor de buscar cliente " + ven.getId_venta());
     }
 
     /**
@@ -154,10 +171,19 @@ public class ven_buscar_cliente extends javax.swing.JFrame {
         cli.setRut_cliente((String) tbl_clientes.getValueAt(fila, 0));
         cli.setNom_cliente((String) tbl_clientes.getValueAt(fila, 1));
         cli.setFono_cliente((String) tbl_clientes.getValueAt(fila, 2));
-
-        ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
+     
+        if (modificar.equals("s")){
+            System.out.println("venta antes de volver a detalle venta" + ven.getId_venta());
+              ven_detalle_venta vdv = new ven_detalle_venta(cli,ven,modificar,total,modelopsl);
         this.dispose();
         vdv.setVisible(true);
+        }else{
+              ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
+        this.dispose();
+        vdv.setVisible(true);
+        }
+          
+      
 
     }//GEN-LAST:event_btn_aceptarMouseClicked
 

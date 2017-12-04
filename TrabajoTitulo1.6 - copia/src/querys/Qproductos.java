@@ -6,6 +6,7 @@
 package querys;
 
 import clases.Conectar;
+import clases.FacturaCompra;
 import clases.Persona;
 import clases.Producto;
 import java.sql.Connection;
@@ -17,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 public class Qproductos {
  
@@ -295,4 +297,6 @@ public class Qproductos {
         return modelo;
     
    }
+
+ 
 }    

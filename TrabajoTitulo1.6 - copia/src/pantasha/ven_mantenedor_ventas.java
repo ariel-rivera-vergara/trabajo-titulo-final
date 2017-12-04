@@ -5,7 +5,11 @@
  */
 package pantasha;
 
+import clases.venta;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import querys.Qprod_ventas;
 import querys.Qventa;
 
 /**
@@ -18,9 +22,12 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
      * Creates new form ven_mantenedor_ventas
      */
     Qventa qven = new Qventa();
+    Qprod_ventas qproven = new Qprod_ventas();
+    venta ven = new venta();
+
     public ven_mantenedor_ventas() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         tbl_ventas.setModel(qven.cargardatos());
         cmb_filtro_ventas.setModel(cargarcmb_filtro());
     }
@@ -65,6 +72,11 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
         });
 
         btn_modificar.setText("Modificar");
+        btn_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_modificarMouseClicked(evt);
+            }
+        });
 
         cmb_filtro_ventas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -75,8 +87,18 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
         });
 
         btn_consultar.setText("Consultar");
+        btn_consultar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_consultarMouseClicked(evt);
+            }
+        });
 
         btn_eliminar.setText("Eliminar");
+        btn_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eliminarMouseClicked(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
 
@@ -123,7 +145,6 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_agregar)
                             .addComponent(btn_modificar)
@@ -131,7 +152,6 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
                             .addComponent(btn_eliminar))
                         .addGap(192, 192, 192))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_volver)
                         .addGap(62, 62, 62))))
         );
@@ -151,16 +171,87 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_filtro_ventasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_ventasKeyReleased
-      String buscar = (String) cmb_filtro_ventas.getSelectedItem();
+        String buscar = (String) cmb_filtro_ventas.getSelectedItem();
         Qventa qven = new Qventa();
         tbl_ventas.setModel(qven.buscarDatos(txt_filtro_ventas.getText(), buscar));
     }//GEN-LAST:event_txt_filtro_ventasKeyReleased
 
     private void btn_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarMouseClicked
-       ven_ventas vven = new ven_ventas();
-       this.dispose();
-       vven.setVisible(true); 
+        ven_ventas vven = new ven_ventas();
+        this.dispose();
+        vven.setVisible(true);
     }//GEN-LAST:event_btn_agregarMouseClicked
+
+    private void btn_consultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_consultarMouseClicked
+        String id_venta = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 0);
+        String abono = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 5);
+        String saldo = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 6);
+        String total = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 7);
+        String num_boleta  = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 9);      
+        ven.setId_venta(Integer.parseInt(id_venta));
+        ven.setRut_cliente((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 1));
+        ven.setId_usuario((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 2));
+        ven.setFecha_rec((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 3));
+        ven.setFecha_ent((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 4));
+        ven.setAbono(Integer.parseInt(abono));
+        ven.setSaldo(Integer.parseInt(saldo));
+        ven.setTotal_vent(Integer.parseInt(total));
+        ven.setTipo_pago((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 8));
+        ven.setNum_boleta(Integer.parseInt(num_boleta));
+        ven.setRut_pretiro((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 10));
+        ven.setReceta((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 11));
+
+        String consultar = "s";
+
+          ven_ventas vven = new ven_ventas(ven,consultar);
+        vven.setVisible(true);
+        this.dispose();
+        
+        
+    }//GEN-LAST:event_btn_consultarMouseClicked
+
+    private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
+        int index = tbl_ventas.getSelectedRow();
+        String id_ventas = (String) tbl_ventas.getValueAt(index, 0);
+
+        if (JOptionPane.showConfirmDialog(null, "Desea eliminar la venta  " + id_ventas, "Eliminar venta",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+            qproven.eliminarProductoVenta(id_ventas);
+            qven.eliminarVenta(id_ventas);
+            tbl_ventas.removeAll();
+            actualizar();
+        }
+    }//GEN-LAST:event_btn_eliminarMouseClicked
+
+    private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
+       
+         String id_venta = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 0);
+        String abono = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 5);
+        String saldo = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 6);
+        String total = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 7);
+        String num_boleta  = (String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 9);      
+        ven.setId_venta(Integer.parseInt(id_venta));
+        ven.setRut_cliente((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 1));
+        ven.setId_usuario((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 2));
+        ven.setFecha_rec((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 3));
+        ven.setFecha_ent((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 4));
+        ven.setAbono(Integer.parseInt(abono));
+        ven.setSaldo(Integer.parseInt(saldo));
+        ven.setTotal_vent(Integer.parseInt(total));
+        ven.setTipo_pago((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 8));
+        ven.setNum_boleta(Integer.parseInt(num_boleta));
+        ven.setRut_pretiro((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 10));
+        ven.setReceta((String) tbl_ventas.getValueAt(tbl_ventas.getSelectedRow(), 11));
+
+        String modificar = "s";
+        System.out.println(ven.getId_venta()+ "id de boton modificar mantenedor");
+          ven_ventas vven = new ven_ventas(modificar,ven);
+        vven.setVisible(true);
+        this.dispose();
+        
+        
+        
+    }//GEN-LAST:event_btn_modificarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -209,6 +300,12 @@ public class ven_mantenedor_ventas extends javax.swing.JFrame {
     private javax.swing.JTable tbl_ventas;
     private javax.swing.JTextField txt_filtro_ventas;
     // End of variables declaration//GEN-END:variables
+
+    public void actualizar() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo = qven.cargardatos();
+        tbl_ventas.setModel(modelo);
+    }
 
     public DefaultComboBoxModel cargarcmb_filtro() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();

@@ -184,12 +184,24 @@ public class Qcliente {
         return modelo;
     }
 
+    
+    
+    
+    
+    
     private DefaultTableModel crearbase() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Rut de cliente");
         modelo.addColumn("Nombre de cliente");
         modelo.addColumn("Fono de cliente");
         modelo.addColumn("Direccion de cliente");
+        return modelo;
+    }
+    private DefaultTableModel crearbaseEspecifica() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Rut de cliente");
+        modelo.addColumn("Nombre de cliente");
+        modelo.addColumn("Fono de cliente");
         return modelo;
     }
 
@@ -245,5 +257,41 @@ public class Qcliente {
         return modelo;
 
     }
+
+    public DefaultTableModel cargardatosEspecificos(String rut_cliente) {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbaseEspecifica();
+        try {
+
+             String query = "select rut_cliente,nom_cliente,fono_cliente FROM cliente"
+                    + " where rut_cliente ='" + rut_cliente + "'";
+            String[] arreglo = new String[3];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qcliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
+    }
+
+    
 
 }

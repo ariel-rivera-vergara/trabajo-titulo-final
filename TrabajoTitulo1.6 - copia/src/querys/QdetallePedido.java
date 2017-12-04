@@ -7,6 +7,7 @@ package querys;
 
 import clases.Conectar;
 import clases.DetallePedido;
+import clases.OrdenPedido;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -149,6 +150,40 @@ public class QdetallePedido {
                 Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public DefaultTableModel cargardatosEspecifico(OrdenPedido odp) {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbase();
+        try {
+
+            String query = "select * FROM detalle_pedido"
+                    + " where cod_pedido='" + odp.getCod_pedido() + "'";
+            String[] arreglo = new String[3];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QdetallePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
     }
 
 }

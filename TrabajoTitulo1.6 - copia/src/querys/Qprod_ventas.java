@@ -7,6 +7,7 @@ package querys;
 
 import clases.Conectar;
 import clases.ProductoVenta;
+import clases.venta;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -56,13 +58,47 @@ public class Qprod_ventas {
         return modelo;
     }
 
+    public DefaultTableModel cargardatosC(int id_venta) {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbase();
+        try {
+
+            String query = "SELECT * FROM `producto_venta`";
+            String[] arreglo = new String[5];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                arreglo[3] = rs.getString(4);
+                arreglo[4] = rs.getString(5);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
+    }
+
     private DefaultTableModel crearbase() {
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo de producto");
-        modelo.addColumn("id venta");
+        modelo.addColumn("Nombre");
         modelo.addColumn("cantidad");
         modelo.addColumn("precio unitario");
-        modelo.addColumn("Detalle receta");
+        modelo.addColumn("Sub total");
 
         return modelo;
     }
@@ -140,7 +176,6 @@ public class Qprod_ventas {
             while (rs.next()) {
                 codigo = rs.getInt(1);
             }
-            
 
             String query = "INSERT INTO producto_venta() VALUES ("
                     + "'" + codigo + "',"
@@ -164,6 +199,65 @@ public class Qprod_ventas {
             }
         }
 
+    }
+
+    public void eliminarProductoVenta(String id_ventas) {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            String query = "Delete FROM producto_venta"
+                    + " where id_venta ='" + id_ventas + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("eliminado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe esa venta  a eliminar");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QordenDePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public DefaultTableModel cargardatosEspecificos(venta ven) {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbase();
+        try {
+   String query = "select  vp.cod_prod,p.nom_prod, vp.cant_ven,vp.precio_unit,vp.sub_total FROM producto_venta vp , producto p"
+            +" where vp.id_venta ='"+ ven.getId_venta() +"' and vp.cod_prod = p.cod_prod";        
+           System.out.println(query); 
+            String[] arreglo = new String[5];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                arreglo[3] = rs.getString(4);
+                arreglo[4] = rs.getString(5);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QdetallePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
     }
 
 }
