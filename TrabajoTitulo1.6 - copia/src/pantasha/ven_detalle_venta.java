@@ -5,17 +5,66 @@
  */
 package pantasha;
 
-/**
- *
- * @author Ariel
- */
-public class ven_detalle_venta extends javax.swing.JFrame {
+import clases.Cliente;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form ven_detalle_venta
-     */
+public class ven_detalle_venta extends javax.swing.JFrame {
+    
+    DefaultTableModel modelopsl = new DefaultTableModel();
+    DefaultTableModel modelocli = new DefaultTableModel();
+    String receta;
+    Calendar c2 = new GregorianCalendar();
+    int total;
+    
     public ven_detalle_venta() {
         initComponents();
+    }
+    
+    ven_detalle_venta(DefaultTableModel modelopsl, JTextArea Atxt_receta, int total) {
+        initComponents();
+        this.modelopsl = modelopsl;
+        tbl_productos_seleccionados.setModel(this.modelopsl);
+        cmb_tipo_pago.setModel(cargarcmb_filtro());
+        this.receta = Atxt_receta.getText();
+        String dia = Integer.toString(c2.get(Calendar.DATE));
+        // recordar buscar como arreglar el problema de la fecha
+        String mes = Integer.toString(c2.get(Calendar.MONTH) + 1);
+        String annio = Integer.toString(c2.get(Calendar.YEAR));
+        String fecha = annio + "-" + mes + "-" + dia;
+        this.total = total;
+        lbl_total.setText(String.valueOf(total));
+        lbl_fecha_actual.setText(fecha);
+    }
+
+    ven_detalle_venta(Cliente cli,DefaultTableModel modelopsl, String receta, int total) {
+         initComponents();
+        this.modelopsl = modelopsl;
+        tbl_productos_seleccionados.setModel(this.modelopsl);
+         modelocli.addColumn("Rut de Cliente");
+        modelocli.addColumn("Nombre de Cliente");
+        modelocli.addColumn("fono");
+        String[] arreglo = new String[3];
+        arreglo[0] = cli.getRut_cliente();
+        arreglo[1] = cli.getNom_cliente();
+        arreglo[2] = cli.getFono_cliente();
+            modelocli.addRow(arreglo);
+        tbl_cliente.setModel(modelocli);
+        cmb_tipo_pago.setModel(cargarcmb_filtro());
+        System.out.println(receta);
+        String dia = Integer.toString(c2.get(Calendar.DATE));
+        // recordar buscar como arreglar el problema de la fecha
+        String mes = Integer.toString(c2.get(Calendar.MONTH) + 1);
+        String annio = Integer.toString(c2.get(Calendar.YEAR));
+        String fecha = annio + "-" + mes + "-" + dia;
+        this.total = total;
+        this.receta = receta;
+        System.out.println(fecha);
+        lbl_total.setText(String.valueOf(total));
+        lbl_fecha_actual.setText(fecha); 
     }
 
     /**
@@ -41,15 +90,15 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         lbl_saldo = new javax.swing.JLabel();
         cmb_tipo_pago = new javax.swing.JComboBox<>();
         lbl_tipo_pago = new javax.swing.JLabel();
-        txt_fecha_emision = new javax.swing.JTextField();
         txt_fecha_entrega = new javax.swing.JTextField();
         txt_num_boleta = new javax.swing.JTextField();
         txt_abono = new javax.swing.JTextField();
-        txt_saldo = new javax.swing.JTextField();
         lbl_nomtotal = new javax.swing.JLabel();
         lbl_total = new javax.swing.JLabel();
         btn_Generar_venta = new javax.swing.JButton();
         btn_volver = new javax.swing.JButton();
+        lbl_fecha_actual = new javax.swing.JLabel();
+        lbl_saldo_pagar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +113,11 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_cliente);
 
         btn_buscar_cliente.setText("Buscar cliente");
+        btn_buscar_cliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_buscar_clienteMouseClicked(evt);
+            }
+        });
 
         btn_agregar_cliente.setText("Agregar cliente");
 
@@ -91,9 +145,9 @@ public class ven_detalle_venta extends javax.swing.JFrame {
 
         lbl_tipo_pago.setText("Tipo De Pago");
 
-        txt_saldo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_saldoActionPerformed(evt);
+        txt_abono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_abonoKeyReleased(evt);
             }
         });
 
@@ -104,6 +158,8 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         btn_Generar_venta.setText("Generar Venta");
 
         btn_volver.setText("Volver");
+
+        lbl_saldo_pagar.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,35 +176,34 @@ public class ven_detalle_venta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbl_nomtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 711, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lbl_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txt_abono))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lbl_fecha_emision)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_nomtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbl_total, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btn_Generar_venta)
-                                .addGap(90, 90, 90)))
+                                .addGap(90, 90, 90))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbl_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(lbl_fecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbl_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lbl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_fecha_entrega, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                    .addComponent(txt_saldo))
+                                    .addComponent(lbl_saldo_pagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(33, 33, 33)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(lbl_num_boleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -179,23 +234,27 @@ public class ven_detalle_venta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_nomtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_total))
+                    .addComponent(lbl_total, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_num_boleta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_num_boleta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbl_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmb_tipo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbl_tipo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_abono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_fecha_emision, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_fecha_entrega, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_num_boleta, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_num_boleta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_fecha_actual, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbl_abono, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_saldo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmb_tipo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbl_tipo_pago, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_abono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lbl_saldo_pagar, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_Generar_venta)
@@ -220,9 +279,20 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_saldoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_saldoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_saldoActionPerformed
+    private void txt_abonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_abonoKeyReleased
+        if (txt_abono.getText().equals("")) {
+            txt_abono.setText(String.valueOf(0));
+        } else if (Integer.parseInt(txt_abono.getText()) > total) {
+            txt_abono.setText(String.valueOf(total));
+        }        
+        lbl_saldo_pagar.setText(String.valueOf(total - Integer.parseInt(txt_abono.getText())));
+    }//GEN-LAST:event_txt_abonoKeyReleased
+
+    private void btn_buscar_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscar_clienteMouseClicked
+        ven_buscar_cliente vbc = new ven_buscar_cliente(modelopsl,receta,total);
+        this.dispose();
+        vbc.setVisible(true);
+    }//GEN-LAST:event_btn_buscar_clienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -269,19 +339,28 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_abono;
+    private javax.swing.JLabel lbl_fecha_actual;
     private javax.swing.JLabel lbl_fecha_emision;
     private javax.swing.JLabel lbl_fecha_entrega;
     private javax.swing.JLabel lbl_nomtotal;
     private javax.swing.JLabel lbl_num_boleta;
     private javax.swing.JLabel lbl_saldo;
+    private javax.swing.JLabel lbl_saldo_pagar;
     private javax.swing.JLabel lbl_tipo_pago;
     private javax.swing.JLabel lbl_total;
     private javax.swing.JTable tbl_cliente;
     private javax.swing.JTable tbl_productos_seleccionados;
     private javax.swing.JTextField txt_abono;
-    private javax.swing.JTextField txt_fecha_emision;
     private javax.swing.JTextField txt_fecha_entrega;
     private javax.swing.JTextField txt_num_boleta;
-    private javax.swing.JTextField txt_saldo;
     // End of variables declaration//GEN-END:variables
+
+    public DefaultComboBoxModel cargarcmb_filtro() {
+        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+        modelo.addElement("Efectivo");
+        modelo.addElement("Tarjeta");
+        modelo.addElement("Cheque");
+        return modelo;
+    }
+    
 }

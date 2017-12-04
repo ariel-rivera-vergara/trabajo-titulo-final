@@ -96,6 +96,11 @@ public class ven_ventas extends javax.swing.JFrame {
         });
 
         btn_crear_venta.setText("Crear Venta");
+        btn_crear_venta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_crear_ventaMouseClicked(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
 
@@ -224,6 +229,22 @@ public class ven_ventas extends javax.swing.JFrame {
               modelopsl.removeRow(index);
           }
     }//GEN-LAST:event_btn_quitarMouseClicked
+
+    private void btn_crear_ventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_crear_ventaMouseClicked
+    
+        int total = 0 ;
+        int i = tbl_productos_seleccionados.getRowCount();
+        int cont = 0;
+        while ( i > 0){
+        String subtotal =  (String) tbl_productos_seleccionados.getValueAt(cont,4);
+            total = total + Integer.parseInt(subtotal); 
+          i --;    
+          cont++;
+         }
+        ven_detalle_venta vdv = new ven_detalle_venta(modelopsl,Atxt_receta,total);
+      this.dispose();
+      vdv.setVisible(true);
+    }//GEN-LAST:event_btn_crear_ventaMouseClicked
 
     /**
      * @param args the command line arguments
