@@ -284,19 +284,6 @@ public class ven_usuario extends javax.swing.JFrame {
               }    
 
           } 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         Qusuario query = new Qusuario();   
         query.agregarusuario(usu);
        JOptionPane.showMessageDialog(null,"ingresado con exito");
@@ -358,11 +345,15 @@ public class ven_usuario extends javax.swing.JFrame {
         modelo = qusu.cargardatos();
         tbl_usuario.setModel(modelo);
     
+
+       }
+    
+
     
      
     
     
-    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_agregar;
