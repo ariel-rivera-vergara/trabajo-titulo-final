@@ -17,7 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 /**
  *
  * @author Ariel
@@ -25,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
 public class Qventa {
 
     Validar vali = new Validar();
-
+ Calendar c2 = new GregorianCalendar();
     public void agregarventa(venta ven) throws ParseException {
 
         Conectar connection = new Conectar();//conectarme a la base de datos
@@ -292,5 +293,59 @@ public class Qventa {
         return modelo;
 
     }
+    
+    
+    
+    public DefaultTableModel cargarventasantiguas() throws ParseException {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbaseEliminarventasantiguas();
+        try {
+             String dia = Integer.toString(c2.get(Calendar.DATE));
+        // recordar buscar como arreglar el problema de la fecha
+        String mes = Integer.toString(c2.get(Calendar.MONTH) + 1);
+        String annio = Integer.toString(c2.get(Calendar.YEAR-3));
+        String fecha = annio + "-" + mes + "-" + dia;
+            String query =  "SELECT id_venta,rut_cliente,total_venta  FROM  venta"
+              + "where fecha_rec <= '" + vali.ParseFecha(fecha) + "'";
+            System.out.println(query);
+            String[] arreglo = new String[3];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QdetallePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
+    }
+
+    
+      private DefaultTableModel crearbaseEliminarventasantiguas() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Id de venta");
+        modelo.addColumn("rut de cliente");
+        modelo.addColumn("total_venta");
+        return modelo;
+    }
+    
+    
+    
+    
 
 }

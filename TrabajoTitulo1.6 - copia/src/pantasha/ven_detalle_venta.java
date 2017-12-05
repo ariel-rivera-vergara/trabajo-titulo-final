@@ -120,11 +120,11 @@ public class ven_detalle_venta extends javax.swing.JFrame {
 
     }
 
-    ven_detalle_venta(int total, venta ven, String modificar,DefaultTableModel modelopsl) {
+    ven_detalle_venta(int total, venta ven, String modificar, DefaultTableModel modelopsl) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.modificar = modificar;
-        this.ven= ven;
+        this.ven = ven;
         System.out.println("venta de constructor en detalle venta" + ven.getId_venta());
         this.total = total;
         btn_Generar_venta.setVisible(false);
@@ -152,9 +152,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     ven_detalle_venta(Cliente cli, venta ven, String modificar, int total, DefaultTableModel modelopsl) {
         initComponents();
         this.setLocationRelativeTo(null);
-        
-       
-        
+
         modelocli.addColumn("Rut de Cliente");
         modelocli.addColumn("Nombre de Cliente");
         modelocli.addColumn("fono");
@@ -164,42 +162,42 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         arreglo[2] = cli.getFono_cliente();
         modelocli.addRow(arreglo);
         tbl_cliente.setModel(modelocli);
-        
+
         this.modificar = modificar;
-         this.total = total;
+        this.total = total;
         receta = ven.getReceta();
-         this.ven = ven;
-         this.modelopsl = modelopsl;
-         System.out.println("venta en constructor de detalle despues de buscar cliente" + ven.getId_venta() );
-         btn_Generar_venta.setVisible(false);
-        
-         cmb_tipo_pago.setModel(cargarcmb_tipopago());
-        
-         tbl_productos_seleccionados.setModel(modelopsl);
-        
-         lbl_total.setText(String.valueOf(total));
-        
-         lbl_fecha_actual.setText(ven.getFecha_rec());
-        
-         txt_fecha_entrega.setText(ven.getFecha_ent());
-        
-         txt_num_boleta.setText(String.valueOf(ven.getNum_boleta()));
-        
-         txt_abono.setText(String.valueOf(ven.getAbono()));
-        
-         lbl_saldo_pagar.setText(String.valueOf(ven.getSaldo()));
-        
-         if (ven.getTipo_pago().equals("E")) {
+        this.ven = ven;
+        this.modelopsl = modelopsl;
+        System.out.println("venta en constructor de detalle despues de buscar cliente" + ven.getId_venta());
+        btn_Generar_venta.setVisible(false);
+
+        cmb_tipo_pago.setModel(cargarcmb_tipopago());
+
+        tbl_productos_seleccionados.setModel(modelopsl);
+
+        lbl_total.setText(String.valueOf(total));
+
+        lbl_fecha_actual.setText(ven.getFecha_rec());
+
+        txt_fecha_entrega.setText(ven.getFecha_ent());
+
+        txt_num_boleta.setText(String.valueOf(ven.getNum_boleta()));
+
+        txt_abono.setText(String.valueOf(ven.getAbono()));
+
+        lbl_saldo_pagar.setText(String.valueOf(ven.getSaldo()));
+
+        if (ven.getTipo_pago().equals("E")) {
             cmb_tipo_pago.setSelectedIndex(0);
-        
-         } else if (ven.getTipo_pago().equals("T")) {
+
+        } else if (ven.getTipo_pago().equals("T")) {
             cmb_tipo_pago.setSelectedIndex(1);
-        
-         } else if (ven.getTipo_pago().equals("C")) {
+
+        } else if (ven.getTipo_pago().equals("C")) {
             cmb_tipo_pago.setSelectedIndex(2);
-         }
-        
-         txt_rutpretira.setText(ven.getRut_pretiro());
+        }
+
+        txt_rutpretira.setText(ven.getRut_pretiro());
     }
 
     /**
@@ -464,22 +462,29 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_abonoKeyReleased
 
     private void btn_buscar_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscar_clienteMouseClicked
-      if(modificar.equals("s")){
-          System.out.println("venta antes de ir a buscar cliente " + ven.getId_venta());
-           ven_buscar_cliente vbc = new ven_buscar_cliente( ven, total,modificar,modelopsl);
-        this.dispose();
-        vbc.setVisible(true);
-      }else{ 
-        ven_buscar_cliente vbc = new ven_buscar_cliente(modelopsl, receta, total);
-        this.dispose();
-        vbc.setVisible(true);
-      }
+        if (modificar.equals("s")) {
+            System.out.println("venta antes de ir a buscar cliente " + ven.getId_venta());
+            ven_buscar_cliente vbc = new ven_buscar_cliente(ven, total, modificar, modelopsl);
+            this.dispose();
+            vbc.setVisible(true);
+        } else {
+            ven_buscar_cliente vbc = new ven_buscar_cliente(modelopsl, receta, total);
+            this.dispose();
+            vbc.setVisible(true);
+        }
     }//GEN-LAST:event_btn_buscar_clienteMouseClicked
 
     private void btn_agregar_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregar_clienteMouseClicked
-        ven_agregar_cliente vac = new ven_agregar_cliente(modelopsl, receta, total);
-        this.dispose();
-        vac.setVisible(true);
+
+        if (modificar.equals("s")) {
+            ven_agregar_cliente vac = new ven_agregar_cliente(ven, total, modificar, modelopsl);
+            this.dispose();
+            vac.setVisible(true);
+        } else {
+            ven_agregar_cliente vac = new ven_agregar_cliente(modelopsl, receta, total);
+            this.dispose();
+            vac.setVisible(true);
+        }
 
     }//GEN-LAST:event_btn_agregar_clienteMouseClicked
 
@@ -537,66 +542,60 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_volverMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-    String  id_ventas =  String.valueOf(ven.getId_venta());
-    
+        String id_ventas = String.valueOf(ven.getId_venta());
+
         if (JOptionPane.showConfirmDialog(null, "Desea modificar la venta  " + id_ventas, "modificar venta",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
             qproven.eliminarProductoVenta(id_ventas);
             qven.eliminarVenta(id_ventas);
-      
-             
-        ven.setRut_cliente((String) tbl_cliente.getValueAt(0, 0));
-        ven.setId_usuario("rutusuario");
-        ven.setFecha_rec(lbl_fecha_actual.getText());
-        ven.setFecha_ent(txt_fecha_entrega.getText());
-        ven.setAbono(Integer.parseInt(txt_abono.getText()));
-        ven.setNum_boleta(Integer.parseInt(txt_num_boleta.getText()));
-        ven.setSaldo(Integer.parseInt(lbl_saldo_pagar.getText()));
-        ven.setTotal_vent(total);
 
-        if (cmb_tipo_pago.getSelectedItem().equals("Efectivo")) {
-            ven.setTipo_pago("E");
-        } else if (cmb_tipo_pago.getSelectedItem().equals("Tarjeta")) {
-            ven.setTipo_pago("T");
-        } else if (cmb_tipo_pago.getSelectedItem().equals("Cheque")) {
-            ven.setTipo_pago("C");
-        }
-        ven.setRut_pretiro(txt_rutpretira.getText());
-       
-        
-        
-          try {
-            qven.agregarventaM(ven);
+            ven.setRut_cliente((String) tbl_cliente.getValueAt(0, 0));
+            ven.setId_usuario("rutusuario");
+            ven.setFecha_rec(lbl_fecha_actual.getText());
+            ven.setFecha_ent(txt_fecha_entrega.getText());
+            ven.setAbono(Integer.parseInt(txt_abono.getText()));
+            ven.setNum_boleta(Integer.parseInt(txt_num_boleta.getText()));
+            ven.setSaldo(Integer.parseInt(lbl_saldo_pagar.getText()));
+            ven.setTotal_vent(total);
 
-        } catch (ParseException ex) {
-            Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+            if (cmb_tipo_pago.getSelectedItem().equals("Efectivo")) {
+                ven.setTipo_pago("E");
+            } else if (cmb_tipo_pago.getSelectedItem().equals("Tarjeta")) {
+                ven.setTipo_pago("T");
+            } else if (cmb_tipo_pago.getSelectedItem().equals("Cheque")) {
+                ven.setTipo_pago("C");
+            }
+            ven.setRut_pretiro(txt_rutpretira.getText());
+
+            try {
+                qven.agregarventaM(ven);
+
+            } catch (ParseException ex) {
+                Logger.getLogger(ven_pedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            // -----------------------------------------------------------  
+            int i = tbl_productos_seleccionados.getRowCount();
+            int cont = 0;
+            while (i > 0) {
+                String cantidad = (String) tbl_productos_seleccionados.getValueAt(cont, 3);
+                String precio = (String) tbl_productos_seleccionados.getValueAt(cont, 2);
+                String subtotal = (String) tbl_productos_seleccionados.getValueAt(cont, 4);
+
+                proven.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont, 0));
+                proven.setCant_vent(Integer.parseInt(cantidad));
+                proven.setPrecio_unit(Integer.parseInt(precio));
+                proven.setSub_total(Integer.parseInt(subtotal));
+                qproven.agregarProductoventa(proven);
+                cont++;
+                i--;
+            }
+            ven_mantenedor_ventas vmv = new ven_mantenedor_ventas();
+            this.dispose();
+            vmv.setVisible(true);
         }
 
-        // -----------------------------------------------------------  
-        int i = tbl_productos_seleccionados.getRowCount();
-        int cont = 0;
-        while (i > 0) {
-            String cantidad = (String) tbl_productos_seleccionados.getValueAt(cont, 3);
-            String precio = (String) tbl_productos_seleccionados.getValueAt(cont, 2);
-            String subtotal = (String) tbl_productos_seleccionados.getValueAt(cont, 4);
 
-            proven.setCod_prod((String) tbl_productos_seleccionados.getValueAt(cont, 0));
-            proven.setCant_vent(Integer.parseInt(cantidad));
-            proven.setPrecio_unit(Integer.parseInt(precio));
-            proven.setSub_total(Integer.parseInt(subtotal));
-            qproven.agregarProductoventa(proven);
-            cont++;
-            i--;
-        }
-        ven_mantenedor_ventas vmv = new ven_mantenedor_ventas();
-        this.dispose();
-        vmv.setVisible(true);
-        }
-       
-        
-        
-        
-        
     }//GEN-LAST:event_btn_modificarMouseClicked
 
     /**

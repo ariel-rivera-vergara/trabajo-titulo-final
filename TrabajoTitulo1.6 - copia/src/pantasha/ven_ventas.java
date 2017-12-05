@@ -5,6 +5,7 @@
  */
 package pantasha;
 
+import clases.Usuariolog;
 import clases.venta;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +24,7 @@ public class ven_ventas extends javax.swing.JFrame {
     venta ven = new venta();
     String consultar = "";
     String modificar = "";
+    Usuariolog usulog = new Usuariolog();
 
     public ven_ventas() {
         initComponents();
@@ -34,7 +36,8 @@ public class ven_ventas extends javax.swing.JFrame {
         modelopsl.addColumn("Precio");
         modelopsl.addColumn("Cantidad");
         modelopsl.addColumn("SubTotal");
-
+        
+  
     }
 
     ven_ventas(venta ven, String consultar) {
@@ -51,7 +54,7 @@ public class ven_ventas extends javax.swing.JFrame {
         btn_quitar.setVisible(false);
         this.consultar = "s";
         this.ven = ven;
-
+ 
     }
 
     ven_ventas(String modificar, venta ven) {

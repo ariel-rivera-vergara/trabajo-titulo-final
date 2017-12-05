@@ -230,9 +230,9 @@ public class Qprod_ventas {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         DefaultTableModel modelo = crearbase();
         try {
-   String query = "select  vp.cod_prod,p.nom_prod, vp.cant_ven,vp.precio_unit,vp.sub_total FROM producto_venta vp , producto p"
-            +" where vp.id_venta ='"+ ven.getId_venta() +"' and vp.cod_prod = p.cod_prod";        
-           System.out.println(query); 
+            String query = "select  vp.cod_prod,p.nom_prod, vp.cant_ven,vp.precio_unit,vp.sub_total FROM producto_venta vp , producto p"
+                    + " where vp.id_venta ='" + ven.getId_venta() + "' and vp.cod_prod = p.cod_prod";
+            System.out.println(query);
             String[] arreglo = new String[5];
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -260,4 +260,51 @@ public class Qprod_ventas {
         return modelo;
     }
 
+
+    public DefaultTableModel cargarproductomasvendido() {
+
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        DefaultTableModel modelo = crearbaseproductomasvendido();
+        try {
+            String query =  "SELECT vp .cod_prod , p.nom_prod , MAX(vp.cant_ven),p.precio_unitprod  FROM  producto_venta vp, producto p"
+              +"WHERE vp.cod_prod  = p.cod_prod";
+            System.out.println(query);
+            String[] arreglo = new String[4];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                arreglo[3] = rs.getString(4);
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(QdetallePedido.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return modelo;
+    }
+
+    
+      private DefaultTableModel crearbaseproductomasvendido() {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Codigo de producto");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("cantidad");
+        modelo.addColumn("precio unitario");
+
+        return modelo;
+    }
+    
 }

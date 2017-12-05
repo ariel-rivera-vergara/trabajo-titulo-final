@@ -7,6 +7,7 @@
 package pantasha;
 
 import clases.Cliente;
+import clases.venta;
 import javax.swing.table.DefaultTableModel;
 import querys.Qcliente;
 
@@ -18,6 +19,8 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
    DefaultTableModel modelopsl;
    String receta;
    int total;
+   String modificar ="";
+   venta ven = new venta();
   
     public ven_agregar_cliente() {
         initComponents();
@@ -31,6 +34,19 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
         this.receta = receta;
         this.total = total;
     }
+
+    ven_agregar_cliente(venta ven, int total, String modificar, DefaultTableModel modelopsl) {
+
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.modelopsl = modelopsl;
+        this.total = total;
+        this.modificar = modificar;
+        this.ven = ven;
+    
+    }
+
+  
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -160,6 +176,11 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
         
         qcli.agregarcliente(cli);
         
+      if(modificar.equals("s")){
+          ven_detalle_venta vdv = new ven_detalle_venta(cli,ven,modificar,total,modelopsl);
+        this.dispose();
+        vdv.setVisible(true);
+      }  
         ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
         this.dispose();
         vdv.setVisible(true);
