@@ -18,9 +18,9 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
      Qproveedor qp = new Qproveedor();
       Qpedidos qpedi = new Qpedidos();
       OrdenPedido odp = new OrdenPedido();
-      String modificar;
-      int sw;
-     String text;
+      String modificar="";
+      int sw=0;
+     String text="";
      int num_factura;
      String fecha_compra;
      int total;
@@ -168,7 +168,11 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelarActionPerformed
-       this.dispose();
+       ven_pedido venp = new ven_pedido();
+        venp.setVisible(true);
+        this.dispose();
+       
+       
     }//GEN-LAST:event_btn_cancelarActionPerformed
 
     private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
@@ -206,9 +210,10 @@ public class ven_buscar_proveedor extends javax.swing.JFrame {
         p.setCod_prov((String)tbl_proveedores.getValueAt(fila,0));
         p.setNom_prov((String)tbl_proveedores.getValueAt(fila,2));
         p.setFono_prov((String)tbl_proveedores.getValueAt(fila,3));
-        this.dispose();
-        ven_pedido venp = new ven_pedido(p,text);
+         ven_pedido venp = new ven_pedido(p);
         venp.setVisible(true);
+        this.dispose();
+       
     }   
        
     }//GEN-LAST:event_btn_aceptarMouseClicked

@@ -31,7 +31,7 @@ public class Qusuario {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
             String query ="INSERT INTO usuario  VALUES ("
-                    + "'"+usu.getUsuario()+"',"
+                    + "'"+usu.getId_usuario()+"',"
                     + "'"+usu.getId_cargo()+"',"
                     + "'"+usu.getNom_usuario()+"',"
                     + "'"+usu.getPassword()+"'"
@@ -63,7 +63,7 @@ public class Qusuario {
                     + "id_cargo='"+usu.getId_cargo()+"',"
                     + "nom_usuario='"+usu.getNom_usuario()+"',"
                     + "contrasena='"+usu.getPassword()+"'"
-                    + " where id_usuario='"+usu.getUsuario()+"'"; //espacio + where para evitar error de sintaxis
+                    + " where id_usuario='"+usu.getId_usuario()+"'"; //espacio + where para evitar error de sintaxis
             
             Statement st = cn.createStatement();
             st.executeUpdate(query);
@@ -84,7 +84,7 @@ public class Qusuario {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
             String query="Delete FROM usuario"
-                    + " where id_usuario='"+usu.getUsuario()+"'"; //espacio + where para evitar error de sintaxis
+                    + " where id_usuario='"+usu.getId_usuario()+"'"; //espacio + where para evitar error de sintaxis
             
             Statement st = cn.createStatement();
             st.executeUpdate(query);
@@ -107,7 +107,7 @@ public class Qusuario {
          int existe=0;
         try {
             String query="Select * FROM usuario"
-                    + " where id_usuario='"+usu.getUsuario()+"' and contrasena ='"+ usu.getPassword()+"'"; //espacio + where para evitar error de sintaxis
+                    + " where id_usuario='"+usu.getId_usuario()+"' and contrasena ='"+ usu.getPassword()+"'"; //espacio + where para evitar error de sintaxis
             
             Statement st = cn.createStatement();
              ResultSet rs = st.executeQuery(query);

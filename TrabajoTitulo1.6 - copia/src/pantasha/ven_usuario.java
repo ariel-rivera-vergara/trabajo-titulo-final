@@ -307,6 +307,7 @@ public class ven_usuario extends javax.swing.JFrame {
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
+<<<<<<< HEAD
            Usuario usu = new Usuario();
                  usu.setUsuario(trim(txt_usu.getText()));
           if  (usu.getUsuario().equals("")){
@@ -328,6 +329,13 @@ public class ven_usuario extends javax.swing.JFrame {
         
         
         
+=======
+        Usuario usu = new Usuario();
+        usu.setId_usuario(txt_usu.getText());
+        Qusuario query = new Qusuario();   
+        query.eliminarusuario(usu);
+        JOptionPane.showMessageDialog(null,"eliminado con exito");
+>>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
@@ -345,9 +353,10 @@ public class ven_usuario extends javax.swing.JFrame {
        */
        
         Usuario usu = new Usuario();
-        usu.setUsuario(trim(txt_usu.getText()));
+        usu.setId_usuario(trim(txt_usu.getText()));
            
         
+<<<<<<< HEAD
          vali.validarRut(usu.getUsuario());
         if ( vali.validarRut(usu.getUsuario())== false){
               JOptionPane.showMessageDialog(null, "rut ingresado no valido");
@@ -359,6 +368,21 @@ public class ven_usuario extends javax.swing.JFrame {
         } else {
               
             if (JOptionPane.showConfirmDialog(null, "Desea agregar el Usuario" + usu.getUsuario(), "agregar usuario",
+=======
+         if  (trim(usu.getId_usuario()).equals("") || trim(usu.getNom_usuario()).equals("")){
+              JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
+              
+          }else{
+           
+        
+              if                                  
+                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getId_usuario(), "agregar usuario",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {     
+                  
+                   } else {
+                  
+                   if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getId_usuario(), "agregar usuario",
+>>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
 
                 usu.setNom_usuario(txt_nom_usuario.getText());

@@ -13,15 +13,16 @@ public class venta {
    
    private  int id_venta;   
    private  String rut_cliente; 
-   private  int id_usuario;      
+   private  String id_usuario;      
    private  String fecha_rec;
    private  String fecha_ent;
    private  int abono;
    private  int saldo;
    private  int total_vent;
-   private  char tipo_pago;
+   private  String tipo_pago;
    private  int num_boleta;      
-   private  String rut_pretiro;      
+   private  String rut_pretiro;
+   private String receta;
 
     public int getId_venta() {
         return id_venta;
@@ -31,6 +32,9 @@ public class venta {
         this.id_venta = id_venta;
     }
 
+  
+   
+   
     public String getRut_cliente() {
         return rut_cliente;
     }
@@ -39,13 +43,15 @@ public class venta {
         this.rut_cliente = rut_cliente;
     }
 
-    public int getId_usuario() {
+    public String getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
+    public void setId_usuario(String id_usuario) {
         this.id_usuario = id_usuario;
     }
+
+  
 
     public String getFecha_rec() {
         return fecha_rec;
@@ -87,13 +93,15 @@ public class venta {
         this.total_vent = total_vent;
     }
 
-    public char getTipo_pago() {
+    public String getTipo_pago() {
         return tipo_pago;
     }
 
-    public void setTipo_pago(char tipo_pago) {
+    public void setTipo_pago(String tipo_pago) {
         this.tipo_pago = tipo_pago;
     }
+
+ 
 
     public int getNum_boleta() {
         return num_boleta;
@@ -109,6 +117,14 @@ public class venta {
 
     public void setRut_pretiro(String rut_pretiro) {
         this.rut_pretiro = rut_pretiro;
+    }
+
+    public String getReceta() {
+        return receta;
+    }
+
+    public void setReceta(String receta) {
+        this.receta = receta;
     }
            
           

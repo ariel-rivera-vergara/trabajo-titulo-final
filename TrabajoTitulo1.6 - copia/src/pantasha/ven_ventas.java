@@ -5,8 +5,11 @@
  */
 package pantasha;
 
+import clases.Usuariolog;
+import clases.venta;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import querys.Qprod_ventas;
 import querys.Qproductos;
 
 /**
@@ -15,11 +18,17 @@ import querys.Qproductos;
  */
 public class ven_ventas extends javax.swing.JFrame {
 
-     Qproductos qp = new Qproductos();
-     DefaultTableModel modelopsl = new DefaultTableModel();
+    Qproductos qp = new Qproductos();
+    DefaultTableModel modelopsl = new DefaultTableModel();
+    Qprod_ventas qprodven = new Qprod_ventas();
+    venta ven = new venta();
+    String consultar = "";
+    String modificar = "";
+    Usuariolog usulog = new Usuariolog();
+
     public ven_ventas() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         tbl_productos.setModel(qp.cargardatos());
         cmb_filtro_productos.setModel(cargarcmb_filtro());
         modelopsl.addColumn("Codigo");
@@ -28,6 +37,37 @@ public class ven_ventas extends javax.swing.JFrame {
         modelopsl.addColumn("Cantidad");
         modelopsl.addColumn("SubTotal");
         
+  
+    }
+
+    ven_ventas(venta ven, String consultar) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        tbl_productos.setModel(qp.cargardatos());
+        Atxt_receta.setText(ven.getReceta());
+        Atxt_receta.setEditable(false);
+        modelopsl = qprodven.cargardatosEspecificos(ven);
+        tbl_productos_seleccionados.setModel(modelopsl);
+        qprodven.cargardatosEspecificos(ven);
+
+        btn_seleccionar.setVisible(false);
+        btn_quitar.setVisible(false);
+        this.consultar = "s";
+        this.ven = ven;
+ 
+    }
+
+    ven_ventas(String modificar, venta ven) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        tbl_productos.setModel(qp.cargardatos());
+        Atxt_receta.setText(ven.getReceta());
+        modelopsl = qprodven.cargardatosEspecificos(ven);
+        tbl_productos_seleccionados.setModel(modelopsl);
+        qprodven.cargardatosEspecificos(ven);
+        this.modificar = "s";
+        this.ven = ven;
+        System.out.println("id venta de constructor de venta "+ven.getId_usuario());
     }
 
     /**
@@ -103,6 +143,11 @@ public class ven_ventas extends javax.swing.JFrame {
         });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         Atxt_receta.setColumns(20);
         Atxt_receta.setRows(5);
@@ -202,14 +247,14 @@ public class ven_ventas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_seleccionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_seleccionarMouseClicked
-      int fila = tbl_productos.getSelectedRow();
+        int fila = tbl_productos.getSelectedRow();
 
-        String codigo = (String) tbl_productos.getValueAt(fila,0);
-        String SubTotal = String.valueOf(Integer.parseInt((String) tbl_productos.getValueAt(fila,2)) * Integer.parseInt(txt_cantidad.getText()));
+        String codigo = (String) tbl_productos.getValueAt(fila, 0);
+        String SubTotal = String.valueOf(Integer.parseInt((String) tbl_productos.getValueAt(fila, 2)) * Integer.parseInt(txt_cantidad.getText()));
         String[] arreglo = new String[5];
         arreglo[0] = codigo;
-        arreglo[1] = (String) tbl_productos.getValueAt(fila,1);
-        arreglo[2] = (String) tbl_productos.getValueAt(fila,2);
+        arreglo[1] = (String) tbl_productos.getValueAt(fila, 1);
+        arreglo[2] = (String) tbl_productos.getValueAt(fila, 2);
         arreglo[3] = txt_cantidad.getText();
         arreglo[4] = SubTotal;
         modelopsl.addRow(arreglo);
@@ -218,33 +263,54 @@ public class ven_ventas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_seleccionarMouseClicked
 
     private void txt_filtro_productosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_productosKeyReleased
-           String buscar = (String) cmb_filtro_productos.getSelectedItem();
+        String buscar = (String) cmb_filtro_productos.getSelectedItem();
         Qproductos qp = new Qproductos();
         tbl_productos.setModel(qp.buscarDatos(txt_filtro_productos.getText(), buscar));
     }//GEN-LAST:event_txt_filtro_productosKeyReleased
 
     private void btn_quitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_quitarMouseClicked
-       int index = tbl_productos_seleccionados.getSelectedRow(); 
-       if(index >= 0){
-              modelopsl.removeRow(index);
-          }
+        int index = tbl_productos_seleccionados.getSelectedRow();
+        if (index >= 0) {
+            modelopsl.removeRow(index);
+        }
     }//GEN-LAST:event_btn_quitarMouseClicked
 
     private void btn_crear_ventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_crear_ventaMouseClicked
-    
-        int total = 0 ;
+     ven.setReceta(Atxt_receta.getText());
+        int total = 0;
         int i = tbl_productos_seleccionados.getRowCount();
         int cont = 0;
-        while ( i > 0){
-        String subtotal =  (String) tbl_productos_seleccionados.getValueAt(cont,4);
-            total = total + Integer.parseInt(subtotal); 
-          i --;    
-          cont++;
-         }
-        ven_detalle_venta vdv = new ven_detalle_venta(modelopsl,Atxt_receta,total);
-      this.dispose();
-      vdv.setVisible(true);
+        while (i > 0) {
+            String subtotal = (String) tbl_productos_seleccionados.getValueAt(cont, 4);
+            total = total + Integer.parseInt(subtotal);
+            i--;
+            cont++;
+        }
+        if (consultar.equals("s")) {
+
+            ven_detalle_venta vdv = new ven_detalle_venta(total, consultar, ven);
+
+            this.dispose();
+            vdv.setVisible(true);
+        } else if (modificar.equals("s")) {
+            System.out.println("venta de boton generar venta en venta " + ven.getId_venta());
+            ven_detalle_venta vdv = new ven_detalle_venta(total, ven, modificar,modelopsl);
+            this.dispose();
+            vdv.setVisible(true);
+        } else {
+            ven_detalle_venta vdv = new ven_detalle_venta(modelopsl, Atxt_receta, total);
+            this.dispose();
+            vdv.setVisible(true);
+
+        }
+
     }//GEN-LAST:event_btn_crear_ventaMouseClicked
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+        ven_mantenedor_ventas vmv = new ven_mantenedor_ventas();
+        this.dispose();
+        vmv.setVisible(true);
+    }//GEN-LAST:event_btn_volverMouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,8 +366,7 @@ public class ven_ventas extends javax.swing.JFrame {
     private javax.swing.JTextField txt_filtro_productos;
     // End of variables declaration//GEN-END:variables
 
-
-public DefaultComboBoxModel cargarcmb_filtro() {
+    public DefaultComboBoxModel cargarcmb_filtro() {
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
         modelo.addElement("Codigo de producto");
         modelo.addElement("Nombre de producto");
@@ -310,8 +375,5 @@ public DefaultComboBoxModel cargarcmb_filtro() {
         modelo.addElement("Descripcion");
         return modelo;
     }
-    
-    
-
 
 }

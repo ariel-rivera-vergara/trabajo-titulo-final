@@ -27,13 +27,11 @@ public class ven_prod extends javax.swing.JFrame {
      */
     Qproductos qp = new Qproductos();
     Validar vali = new Validar(); 
-    
     public ven_prod() {
         initComponents();
         this.setLocationRelativeTo(null);
         tbl_productos.setModel(qp.cargardatos());
         cmb_filtro.setModel(cargarcmb_filtro());
-       
     }
 
     /**

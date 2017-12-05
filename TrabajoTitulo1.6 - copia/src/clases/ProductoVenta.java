@@ -15,7 +15,7 @@ public class ProductoVenta {
     private  String id_venta;
     private  int cant_vent;
     private  int precio_unit;
-    private String detalle_receta;
+    private  int sub_total;   
 
     public String getCod_prod() {
         return cod_prod;
@@ -49,15 +49,15 @@ public class ProductoVenta {
         this.precio_unit = precio_unit;
     }
 
-    public String getDetalle_receta() {
-        return detalle_receta;
+    public int getSub_total() {
+        return sub_total;
     }
 
-    public void setDetalle_receta(String detalle_receta) {
-        this.detalle_receta = detalle_receta;
+    public void setSub_total(int sub_total) {
+        this.sub_total = sub_total;
     }
+  
     
     
-     
     
 }

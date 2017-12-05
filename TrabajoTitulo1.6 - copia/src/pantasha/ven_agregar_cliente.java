@@ -6,16 +6,47 @@
 
 package pantasha;
 
+import clases.Cliente;
+import clases.venta;
+import javax.swing.table.DefaultTableModel;
+import querys.Qcliente;
+
 /**
  *
  * @author Ariel
  */
 public class ven_agregar_cliente extends javax.swing.JFrame {
-
-    /** Creates new form ven_agregar_cliente */
+   DefaultTableModel modelopsl;
+   String receta;
+   int total;
+   String modificar ="";
+   venta ven = new venta();
+  
     public ven_agregar_cliente() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
+
+    ven_agregar_cliente(DefaultTableModel modelopsl, String receta, int total) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.modelopsl = modelopsl;
+        this.receta = receta;
+        this.total = total;
+    }
+
+    ven_agregar_cliente(venta ven, int total, String modificar, DefaultTableModel modelopsl) {
+
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.modelopsl = modelopsl;
+        this.total = total;
+        this.modificar = modificar;
+        this.ven = ven;
+    
+    }
+
+  
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -27,38 +58,40 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        lbl_rut = new javax.swing.JLabel();
+        lbl_nombre = new javax.swing.JLabel();
+        lbl_fono = new javax.swing.JLabel();
+        lbl_direccion = new javax.swing.JLabel();
+        txt_rut = new javax.swing.JTextField();
+        txt_nom = new javax.swing.JTextField();
+        txt_fono = new javax.swing.JTextField();
+        txt_direccion = new javax.swing.JTextField();
+        btn_insertar = new javax.swing.JButton();
+        btn_cancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        lbl_rut.setText("Rut cliente");
 
-        jLabel2.setText("jLabel2");
+        lbl_nombre.setText("Nombre cliente");
 
-        jLabel3.setText("jLabel3");
+        lbl_fono.setText("Fono");
 
-        jLabel4.setText("jLabel4");
+        lbl_direccion.setText("Direccion");
 
-        jTextField1.setText("jTextField1");
+        btn_insertar.setText("Insertar");
+        btn_insertar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_insertarMouseClicked(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
-
-        jButton1.setText("jButton1");
-
-        jButton2.setText("jButton2");
+        btn_cancelar.setText("Cancelar");
+        btn_cancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_cancelarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,47 +101,52 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
                 .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(164, 164, 164))))
+                        .addComponent(btn_insertar)
+                        .addGap(84, 84, 84)
+                        .addComponent(btn_cancelar))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lbl_fono, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lbl_nombre)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lbl_rut, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbl_direccion, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGap(20, 20, 20)))
+                            .addGap(22, 22, 22)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_rut, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                .addComponent(txt_nom)
+                                .addComponent(txt_direccion)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGap(93, 93, 93)
+                            .addComponent(txt_fono, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_rut)
+                    .addComponent(txt_rut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_nombre)
+                    .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_fono)
+                    .addComponent(txt_fono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbl_direccion)
+                    .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_insertar)
+                    .addComponent(btn_cancelar))
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
@@ -127,6 +165,33 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_insertarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_insertarMouseClicked
+        Cliente cli = new Cliente();
+        cli.setRut_cliente(txt_rut.getText());
+        cli.setNom_cliente(txt_nom.getText());
+        cli.setFono_cliente(txt_fono.getText());
+        cli.setDir_cliente(txt_direccion.getText());
+        Qcliente qcli = new Qcliente();
+        
+        qcli.agregarcliente(cli);
+        
+      if(modificar.equals("s")){
+          ven_detalle_venta vdv = new ven_detalle_venta(cli,ven,modificar,total,modelopsl);
+        this.dispose();
+        vdv.setVisible(true);
+      }  
+        ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
+        this.dispose();
+        vdv.setVisible(true);
+    }//GEN-LAST:event_btn_insertarMouseClicked
+
+    private void btn_cancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cancelarMouseClicked
+       Cliente cli = new Cliente();
+        ven_detalle_venta vdv = new ven_detalle_venta(cli,modelopsl,receta,total);
+        this.dispose();
+        vdv.setVisible(true);
+    }//GEN-LAST:event_btn_cancelarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -164,17 +229,17 @@ public class ven_agregar_cliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton btn_cancelar;
+    private javax.swing.JButton btn_insertar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lbl_direccion;
+    private javax.swing.JLabel lbl_fono;
+    private javax.swing.JLabel lbl_nombre;
+    private javax.swing.JLabel lbl_rut;
+    private javax.swing.JTextField txt_direccion;
+    private javax.swing.JTextField txt_fono;
+    private javax.swing.JTextField txt_nom;
+    private javax.swing.JTextField txt_rut;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -6,6 +6,7 @@
 package pantasha;
 
 import clases.Usuario;
+import clases.Usuariolog;
 import clases.Validar;
 import javax.swing.JOptionPane;
 import querys.Qusuario;
@@ -16,12 +17,11 @@ import querys.Qusuario;
  */
 public class inicio extends javax.swing.JFrame {
 
-    /**
-     * Creates new form inicio
-     */
+    Usuariolog usulog = new Usuariolog();
     public inicio() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -107,9 +107,11 @@ public class inicio extends javax.swing.JFrame {
     private void btn_aceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_aceptarMouseClicked
         Qusuario qu = new Qusuario();
         Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
+        usu.setId_usuario(txt_usu.getText());
         usu.setPassword(String.valueOf(jp_pass.getPassword()));
         if (qu.consultarusuario(usu)==1){
+            usulog.setRutusuario(usu.getId_usuario());
+            usulog.setNombreusuario(usu.getNom_usuario());
            ven_principal vi = new ven_principal();
            vi.setVisible(true);
            this.dispose();

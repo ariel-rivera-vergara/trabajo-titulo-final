@@ -50,7 +50,6 @@ public class ven_pedido extends javax.swing.JFrame {
          modelop.addColumn("Codigo de proveedor");
         modelop.addColumn("Nombre de proveedor");
         modelop.addColumn("fono");
-     
         tbl_proveedor.setModel(modelop);
          modeloaux.addColumn("Cod");
         modeloaux.addColumn("Nombre");
@@ -61,7 +60,7 @@ public class ven_pedido extends javax.swing.JFrame {
         
     }
 
-    ven_pedido(Proveedores p , String text) {
+    ven_pedido(Proveedores p) {
    
         initComponents();
        
@@ -92,7 +91,7 @@ public class ven_pedido extends javax.swing.JFrame {
         cmb_filtro_productos.setModel(cargarcmb_filtro());
         cmb_estado.setModel(cargarcmb_estado());
         tbl_proveedor.setModel(qprov.cargardatosprov(odp.getCod_prov()));
-        modeloaux = qdp.cargardatos();
+        modeloaux = qdp.cargardatosEspecifico(odp);
         tbl_productos_seleccionados.setModel(modeloaux);
         txt_fecha_pedido.setText(odp.getFecha_pedido());
         txt_fecha_entrega.setText(odp.getFecha_entrega());
@@ -120,7 +119,7 @@ public class ven_pedido extends javax.swing.JFrame {
         cmb_filtro_productos.setModel(cargarcmb_filtro());
         cmb_estado.setModel(cargarcmb_estado());
         tbl_proveedor.setModel(qprov.cargardatosprov(odp.getCod_prov()));
-        modeloaux = qdp.cargardatos();
+        modeloaux = qdp.cargardatosEspecifico(odp);
         tbl_productos_seleccionados.setModel(modeloaux);
         txt_fecha_pedido.setText(odp.getFecha_pedido());
         txt_fecha_entrega.setText(odp.getFecha_entrega());
@@ -542,7 +541,6 @@ public class ven_pedido extends javax.swing.JFrame {
         op.setCod_prov((String) tbl_proveedor.getValueAt(0,0));
         op.setFecha_pedido(txt_fecha_pedido.getText());
         op.setFecha_entrega(txt_fecha_entrega.getText());
-       
         op.setEstado_pedido("E");
         
        
