@@ -43,7 +43,7 @@ public class Qajuste {
             Statement st = cn.createStatement();
             st.executeUpdate(query);
 
-          qp.modificarproducto(aj.getCod_prod(), aj.getCant_ajuste());
+          qp.modificarproducto(aj.getCod_prod(), aj.getCant_ajuste(),aj.getTipo_ajuste());
 
             System.out.println("ingresado");
         } catch (SQLException e) {
@@ -64,17 +64,25 @@ public class Qajuste {
         Conectar connection = new Conectar();//conectarme a la base de datos
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
+               String query2 = "Select * FROM `ajuste`"
+                    + " where cod_ajuste='" + aj.getCod_ajuste() + "' and cod_prod='" + aj.getCod_prod() + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+
+            ResultSet rs = st.executeQuery(query2);
+            rs.next();
+            int cant_ajuste_anterior = rs.getInt("cant_ajuste");
+           
             String query = "UPDATE ajuste SET "
                     + "tipo_ajuste='" + aj.getTipo_ajuste() + "',"
                     + "cant_ajuste='" + aj.getCant_ajuste() + "',"
                     + "fecha_ajuste='" + aj.getFecha_ajuste()+ "',"
                     + "comentario='" + aj.getComentario() + "'"
                     + " where cod_ajuste='" + aj.getCod_ajuste() + "' and cod_prod='" + aj.getCod_prod() + "'"; //espacio + where para evitar error de sintaxis
-            System.out.println(query);
-            Statement st = cn.createStatement();
+            System.out.println(query);        
             st.executeUpdate(query);
 
-//            qp.modificarproducto(aj.getCod_prod(), aj.getCant_ajuste());
+            qp.modificarproductoM( aj.getCant_ajuste(),aj.getTipo_ajuste(), aj.getCod_prod(),cant_ajuste_anterior);
 
             System.out.println("modificado");
         } catch (SQLException e) {
@@ -95,13 +103,23 @@ public class Qajuste {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
            
+               String query2 = "Select * FROM `ajuste`"
+                    + " where cod_ajuste='" + aj.getCod_ajuste() + "' and cod_prod='" + aj.getCod_prod() + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+
+            ResultSet rs = st.executeQuery(query2);
+            rs.next();
+            int cant_ajuste_anterior = rs.getInt("cant_ajuste");
+            
+            
             String query = "Delete FROM `ajuste`"
                     + " where cod_ajuste='" + aj.getCod_prod() + "' and cod_prod='" + aj.getCod_prod() + "'"; //espacio + where para evitar error de sintaxis
             System.out.println(query);
-            Statement st = cn.createStatement();
+            
             st.executeUpdate(query);
 
-         
+          qp.modificarproductoE( aj.getCant_ajuste(),aj.getTipo_ajuste(), aj.getCod_prod(),cant_ajuste_anterior);
             System.out.println("eliminado");
 
         } catch (SQLException e) {

@@ -7,10 +7,8 @@ package pantasha;
 
 import clases.Persona;
 import clases.Usuario;
-import clases.Validar;
 import java.util.HashSet;
 import java.util.Set;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static jdk.nashorn.internal.objects.NativeString.trim;
@@ -37,15 +35,9 @@ public class ven_usuario extends javax.swing.JFrame {
     
      Qusuario qusu = new Qusuario();
     
-     Validar vali = new Validar(); 
-     
     
     public ven_usuario() {
-          initComponents();
-        this.setLocationRelativeTo(null);
-        tbl_usuario.setModel(qusu.cargardatos());
-         cmb_usuario.setModel(cargarcmb_filtro());
-      
+        initComponents();
     }
 
     /**
@@ -80,9 +72,6 @@ public class ven_usuario extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_usuario = new javax.swing.JTable();
         btn_agregar = new javax.swing.JButton();
-        btn_limpiar = new javax.swing.JButton();
-        cmb_usuario = new javax.swing.JComboBox<>();
-        txt_filtro_usuario = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,7 +115,6 @@ public class ven_usuario extends javax.swing.JFrame {
         jButton3.setText("jButton3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(500, 500));
         setMinimumSize(new java.awt.Dimension(500, 500));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(500, 500));
@@ -151,27 +139,10 @@ public class ven_usuario extends javax.swing.JFrame {
                 txt_usuActionPerformed(evt);
             }
         });
-        txt_usu.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_usuKeyTyped(evt);
-            }
-        });
         jPanel1.add(txt_usu);
-        txt_usu.setBounds(170, 40, 170, 30);
-
-        txt_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_cargoKeyTyped(evt);
-            }
-        });
+        txt_usu.setBounds(170, 40, 160, 30);
         jPanel1.add(txt_cargo);
-        txt_cargo.setBounds(170, 90, 170, 30);
-
-        jp_pass.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jp_passKeyTyped(evt);
-            }
-        });
+        txt_cargo.setBounds(170, 90, 160, 30);
         jPanel1.add(jp_pass);
         jp_pass.setBounds(170, 200, 170, 30);
 
@@ -182,7 +153,7 @@ public class ven_usuario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_volver);
-        btn_volver.setBounds(440, 490, 70, 30);
+        btn_volver.setBounds(480, 463, 70, 30);
 
         btn_eliminar.setText("eliminar");
         btn_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,37 +167,21 @@ public class ven_usuario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_eliminar);
-        btn_eliminar.setBounds(400, 310, 110, 30);
+        btn_eliminar.setBounds(400, 270, 110, 30);
 
         jLabel5.setText("nombre usuario");
         jPanel1.add(jLabel5);
         jLabel5.setBounds(30, 160, 80, 14);
-
-        txt_nom_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_nom_usuarioKeyTyped(evt);
-            }
-        });
         jPanel1.add(txt_nom_usuario);
-        txt_nom_usuario.setBounds(170, 150, 170, 30);
+        txt_nom_usuario.setBounds(170, 150, 160, 30);
 
         btn_consultar.setText("consultar");
-        btn_consultar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_consultarMouseClicked(evt);
-            }
-        });
         jPanel1.add(btn_consultar);
-        btn_consultar.setBounds(180, 310, 90, 30);
+        btn_consultar.setBounds(150, 273, 90, 30);
 
         btn_modificar.setText("modificar");
-        btn_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_modificarMouseClicked(evt);
-            }
-        });
         jPanel1.add(btn_modificar);
-        btn_modificar.setBounds(290, 310, 90, 30);
+        btn_modificar.setBounds(270, 273, 90, 30);
 
         tbl_usuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -236,15 +191,10 @@ public class ven_usuario extends javax.swing.JFrame {
 
             }
         ));
-        tbl_usuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_usuarioMouseClicked(evt);
-            }
-        });
         jScrollPane4.setViewportView(tbl_usuario);
 
         jPanel1.add(jScrollPane4);
-        jScrollPane4.setBounds(20, 360, 490, 110);
+        jScrollPane4.setBounds(20, 330, 490, 100);
 
         btn_agregar.setText("Agregar");
         btn_agregar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -253,33 +203,7 @@ public class ven_usuario extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_agregar);
-        btn_agregar.setBounds(63, 310, 80, 30);
-
-        btn_limpiar.setText("Limpiar");
-        btn_limpiar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_limpiarMouseClicked(evt);
-            }
-        });
-        jPanel1.add(btn_limpiar);
-        btn_limpiar.setBounds(410, 250, 100, 23);
-
-        cmb_usuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmb_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                cmb_usuarioKeyReleased(evt);
-            }
-        });
-        jPanel1.add(cmb_usuario);
-        cmb_usuario.setBounds(370, 180, 70, 20);
-
-        txt_filtro_usuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_filtro_usuarioKeyReleased(evt);
-            }
-        });
-        jPanel1.add(txt_filtro_usuario);
-        txt_filtro_usuario.setBounds(459, 180, 90, 20);
+        btn_agregar.setBounds(40, 280, 73, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -307,35 +231,11 @@ public class ven_usuario extends javax.swing.JFrame {
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
-<<<<<<< HEAD
-           Usuario usu = new Usuario();
-                 usu.setUsuario(trim(txt_usu.getText()));
-          if  (usu.getUsuario().equals("")){
-              JOptionPane.showMessageDialog(null, "Seleccione o indique codigo del usuario a eliminar");
-              
-          }else{
-              if (JOptionPane.showConfirmDialog(null, "Desea eliminar el usuario  " + usu.getUsuario(), "Eliminar usuario",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
-                qusu.eliminarusuario(usu);
-                tbl_usuario.removeAll();
-                
-                actualizar();
-                Limpiar();
-              }
-               Limpiar();
-          } 
-
-        
-        
-        
-        
-=======
         Usuario usu = new Usuario();
         usu.setId_usuario(txt_usu.getText());
         Qusuario query = new Qusuario();   
         query.eliminarusuario(usu);
         JOptionPane.showMessageDialog(null,"eliminado con exito");
->>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
@@ -356,19 +256,6 @@ public class ven_usuario extends javax.swing.JFrame {
         usu.setId_usuario(trim(txt_usu.getText()));
            
         
-<<<<<<< HEAD
-         vali.validarRut(usu.getUsuario());
-        if ( vali.validarRut(usu.getUsuario())== false){
-              JOptionPane.showMessageDialog(null, "rut ingresado no valido");
-        }
-         
-             
-        else if (usu.getUsuario().length() < 10) {
-             JOptionPane.showMessageDialog(null, "rut no valido, reingrese");
-        } else {
-              
-            if (JOptionPane.showConfirmDialog(null, "Desea agregar el Usuario" + usu.getUsuario(), "agregar usuario",
-=======
          if  (trim(usu.getId_usuario()).equals("") || trim(usu.getNom_usuario()).equals("")){
               JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
               
@@ -382,121 +269,25 @@ public class ven_usuario extends javax.swing.JFrame {
                    } else {
                   
                    if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getId_usuario(), "agregar usuario",
->>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
 
-                usu.setNom_usuario(txt_nom_usuario.getText());
                 usu.setId_cargo(txt_cargo.getText());
-                usu.setPassword(String.valueOf(jp_pass.getPassword()));
-                
+                usu.setNom_usuario(txt_nom_usuario.getText());
+                usu.setPassword(jp_pass.getText());
                 qusu.agregarusuario(usu);
                 actualizar();
                 Limpiar();
             }
 
             Limpiar();
-        }
+              }    
+
+          } 
+        Qusuario query = new Qusuario();   
+        query.agregarusuario(usu);
+       JOptionPane.showMessageDialog(null,"ingresado con exito");
                    
     }//GEN-LAST:event_btn_agregarMouseClicked
-
-    private void txt_usuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, txt_usu,10);
-    }//GEN-LAST:event_txt_usuKeyTyped
-
-    private void txt_cargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cargoKeyTyped
-        // TODO add your handling code here:
-        vali.solonumerospositivos(evt);
-        vali.validarlargonumerico(evt, txt_cargo,1);
-    }//GEN-LAST:event_txt_cargoKeyTyped
-
-    private void txt_nom_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_usuarioKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, txt_nom_usuario,30);
-    }//GEN-LAST:event_txt_nom_usuarioKeyTyped
-
-    private void jp_passKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jp_passKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, jp_pass,10);
-    }//GEN-LAST:event_jp_passKeyTyped
-
-    private void btn_limpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseClicked
-        // TODO add your handling code here:
-        Limpiar();
-    }//GEN-LAST:event_btn_limpiarMouseClicked
-
-    private void btn_consultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_consultarMouseClicked
-        // TODO add your handling code here:
-        
-              Usuario usu = new Usuario();
-        usu.setUsuario(trim(txt_usu.getText()));  
-        
-        if(usu.getUsuario().equals("")){
-              JOptionPane.showMessageDialog(null, "indique usuario a consultar");
-        }else{
-       
-        qusu.consultarusuario(usu);
-         } 
-    }//GEN-LAST:event_btn_consultarMouseClicked
-
-    private void tbl_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_usuarioMouseClicked
-        // TODO add your handling code here:
-        
-        txt_usu.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 0).toString());
-        txt_nom_usuario.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 1).toString());
-        txt_cargo.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
-        jp_pass.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
-        
-        
-    }//GEN-LAST:event_tbl_usuarioMouseClicked
-
-    private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-        // TODO add your handling code here:
-        
-           Usuario usu = new Usuario();
-   
-             
-        usu.setUsuario(trim(txt_usu.getText()));
-
-        if (usu.getUsuario().equals("")) {
-            JOptionPane.showMessageDialog(null, "indique usuario, no se puede modifcar sin usuario");
-
-        } else {
-            if (JOptionPane.showConfirmDialog(null, "Desea modificar el usuario con codigo  " + usu.getUsuario(), "modificar usuario",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
-                // PUEDE QUE SE TENGA QUE VALIDAR CUANDO EL FONO O LA DIR ES VACIA ASIGNAR NULL HAY QUE PROBAR
-                usu.setNom_usuario(trim(txt_nom_usuario.getText()));
-                usu.setId_cargo(trim(txt_cargo.getText()));
-                usu.setPassword(String.valueOf(jp_pass.getPassword()));
-                
-                
-                qusu.modificarusuario(usu);
-                actualizar();
-                Limpiar();
-            }
-            Limpiar();
-        }
-        
-        
-        
-        
-    }//GEN-LAST:event_btn_modificarMouseClicked
-
-    private void cmb_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmb_usuarioKeyReleased
-        // TODO add your handling code here:
-        
-   
-        
-    }//GEN-LAST:event_cmb_usuarioKeyReleased
-
-    private void txt_filtro_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_usuarioKeyReleased
-        // TODO add your handling code here:
-         String buscar = (String) cmb_usuario.getSelectedItem();
-       Qusuario qusu = new  Qusuario();
-       tbl_usuario.setModel(qusu.buscarDatos(txt_filtro_usuario.getText(), buscar));
-        
-        
-    }//GEN-LAST:event_txt_filtro_usuarioKeyReleased
 
     /**
      * @param args the command line arguments
@@ -523,6 +314,8 @@ public class ven_usuario extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ven_usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -558,17 +351,6 @@ public class ven_usuario extends javax.swing.JFrame {
     
 
     
-        public DefaultComboBoxModel cargarcmb_filtro(){
-        DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        modelo.addElement("Id de usuario");
-        modelo.addElement("Cargo");       
-        modelo.addElement("Nombre de usuario");
-       
-        return modelo;
-    }
-    
-    
-    
      
     
     
@@ -578,10 +360,8 @@ public class ven_usuario extends javax.swing.JFrame {
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_consultar;
     private javax.swing.JButton btn_eliminar;
-    private javax.swing.JButton btn_limpiar;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_volver;
-    private javax.swing.JComboBox<String> cmb_usuario;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -598,7 +378,6 @@ public class ven_usuario extends javax.swing.JFrame {
     private javax.swing.JPasswordField jp_pass;
     private javax.swing.JTable tbl_usuario;
     private javax.swing.JTextField txt_cargo;
-    private javax.swing.JTextField txt_filtro_usuario;
     private javax.swing.JTextField txt_nom_usuario;
     private javax.swing.JTextField txt_usu;
     // End of variables declaration//GEN-END:variables
