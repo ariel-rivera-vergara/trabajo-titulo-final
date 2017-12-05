@@ -6,22 +6,29 @@
 package pantasha;
 
 import clases.Cargo;
+import clases.Validar;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import static jdk.nashorn.internal.objects.NativeString.trim;
 import querys.Qcargo;
 
 
 public class ven_cargo extends javax.swing.JFrame {
          
+    
+     Qcargo qp= new Qcargo();
+    Validar vali = new Validar(); 
+    
+    
     public ven_cargo() {
         initComponents();
-        
         this.setLocationRelativeTo(null);
         tbl_cargo.setModel(qp.cargardatos());
           cmb_cargo.setModel(cargarcmb_filtro());
     }
     
-    Qcargo qp= new Qcargo();
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -87,6 +94,24 @@ public class ven_cargo extends javax.swing.JFrame {
 
         lbl_desc_cargo.setText("descripción del cargo");
 
+        txt_id_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_id_cargoKeyTyped(evt);
+            }
+        });
+
+        txt_nom_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nom_cargoKeyTyped(evt);
+            }
+        });
+
+        txt_desc_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_desc_cargoKeyTyped(evt);
+            }
+        });
+
         btn_agregar_cargo.setText("agregar");
         btn_agregar_cargo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -130,11 +155,27 @@ public class ven_cargo extends javax.swing.JFrame {
 
             }
         ));
+        tbl_cargo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_cargoMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_cargo);
+
+        txt_cargo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_cargoKeyReleased(evt);
+            }
+        });
 
         cmb_cargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btn_limpiar.setText("Limpiar");
+        btn_limpiar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_limpiarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -229,50 +270,83 @@ public class ven_cargo extends javax.swing.JFrame {
 
     private void btn_agregar_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregar_cargoMouseClicked
          Cargo carg = new Cargo();
-        carg.setId_cargo(txt_id_cargo.getText());
-        carg.setNom_cargo(txt_nom_cargo.getText());
-        carg.setDesc_cargo(txt_desc_cargo.getText());  
-       
-        Qcargo query = new Qcargo();
-          query.agregarcargo(carg);
-      /*   tabla.removeAll();
-          actualizar();*/
+        carg.setId_cargo(trim(txt_id_cargo.getText()));
+        
+        
+        if (txt_id_cargo.getText().equals("")) {
+             JOptionPane.showMessageDialog(null, "cargo no valido, reingrese");
+        } else {
+              
+            if (JOptionPane.showConfirmDialog(null, "Desea agregar el cargo " + carg.getId_cargo(), "agregar cargo",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+
+                carg.setNom_cargo(txt_nom_cargo.getText());
+                carg.setDesc_cargo(txt_desc_cargo.getText());
+                qp.agregarcargo(carg);
+                actualizar();
+                Limpiar();
+            }
+
+            Limpiar();
+        }
+        
+        
     }//GEN-LAST:event_btn_agregar_cargoMouseClicked
 
     private void btn_modificar_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificar_cargoMouseClicked
          Cargo carg = new Cargo();
-        carg.setId_cargo(txt_id_cargo.getText());
-        carg.setNom_cargo(txt_nom_cargo.getText());
-        carg.setDesc_cargo(txt_desc_cargo.getText());  
-       
-        Qcargo query = new Qcargo();
-          query.modificarcargo(carg);
-       /*   tabla.removeAll();
-          actualizar();*/
+   
+             
+        carg.setId_cargo(trim(txt_id_cargo.getText()));
+
+        if (carg.getId_cargo().equals("")) {
+            JOptionPane.showMessageDialog(null, "indique cargo, no se puede modifcar sin cargo");
+
+        } else {
+            if (JOptionPane.showConfirmDialog(null, "Desea modificar el cargo con codigo  " + carg.getId_cargo(), "modificar cargo",
+                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+                // PUEDE QUE SE TENGA QUE VALIDAR CUANDO EL FONO O LA DIR ES VACIA ASIGNAR NULL HAY QUE PROBAR
+                carg.setNom_cargo(trim(txt_nom_cargo.getText()));
+                carg.setDesc_cargo(trim(txt_desc_cargo.getText()));
+                
+                qp.modificarcargo(carg);
+                actualizar();
+                Limpiar();
+            }
+            Limpiar();
+        }
+         
+         
     }//GEN-LAST:event_btn_modificar_cargoMouseClicked
 
     private void btn_consultar_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_consultar_cargoMouseClicked
         Cargo carg = new Cargo();
-        carg.setId_cargo(txt_id_cargo.getText());
-        carg.setNom_cargo(txt_nom_cargo.getText());
-        carg.setDesc_cargo(txt_desc_cargo.getText());  
+        carg.setId_cargo(trim(txt_id_cargo.getText()));  
+        
+        if(carg.getId_cargo().equals("")){
+              JOptionPane.showMessageDialog(null, "indique cargo a consultar");
+        }else{
        
-        Qcargo query = new Qcargo();
-          query.consultarcargo(carg);
-        /*  tabla.removeAll();
-          actualizar();*/
+        qp.consultarcargo(carg);
+         } 
     }//GEN-LAST:event_btn_consultar_cargoMouseClicked
 
     private void btn_eliminar_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminar_cargoMouseClicked
-        Cargo carg = new Cargo();
-        carg.setId_cargo(txt_id_cargo.getText());
-        carg.setNom_cargo(txt_nom_cargo.getText());
-        carg.setDesc_cargo(txt_desc_cargo.getText());  
+      
+         Cargo carg = new Cargo();
+         carg.setId_cargo(trim(txt_id_cargo.getText()));  
+         if (txt_id_cargo.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "indique cargo a eliminar");
+         } else{ 
        
-        Qcargo query = new Qcargo();
-          query.eliminarcargo(carg);
-        /*  tabla.removeAll();
-          actualizar();*/
+          qp.eliminarcargo(carg);
+          tbl_cargo.removeAll();
+          actualizar();
+       } 
+        
+             
+        
+      
     }//GEN-LAST:event_btn_eliminar_cargoMouseClicked
 
     private void btn_salir_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salir_cargoMouseClicked
@@ -281,6 +355,51 @@ public class ven_cargo extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_salir_cargoMouseClicked
 
+    private void txt_id_cargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_id_cargoKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_cargo,1);
+    }//GEN-LAST:event_txt_id_cargoKeyTyped
+
+    private void txt_nom_cargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_cargoKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_nom_cargo,30);
+    }//GEN-LAST:event_txt_nom_cargoKeyTyped
+
+    private void txt_desc_cargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_desc_cargoKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_desc_cargo,40);
+    }//GEN-LAST:event_txt_desc_cargoKeyTyped
+
+    private void tbl_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_cargoMouseClicked
+        // TODO add your handling code here:
+        
+         txt_id_cargo.setText(tbl_cargo.getModel().getValueAt(tbl_cargo.getSelectedRow(), 0).toString());
+        txt_nom_cargo.setText(tbl_cargo.getModel().getValueAt(tbl_cargo.getSelectedRow(), 1).toString());
+        txt_desc_cargo.setText(tbl_cargo.getModel().getValueAt(tbl_cargo.getSelectedRow(), 2).toString());
+       
+        
+    }//GEN-LAST:event_tbl_cargoMouseClicked
+
+    private void txt_cargoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cargoKeyReleased
+        // TODO add your handling code here:
+        String buscar = (String) cmb_cargo.getSelectedItem();
+       Qcargo qp = new  Qcargo();
+       tbl_cargo.setModel(qp.buscarDatos(txt_cargo.getText(), buscar));
+        
+    }//GEN-LAST:event_txt_cargoKeyReleased
+
+    private void btn_limpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseClicked
+        // TODO add your handling code here:
+        Limpiar();
+    }//GEN-LAST:event_btn_limpiarMouseClicked
+        
+  
+      
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -347,6 +466,7 @@ public class ven_cargo extends javax.swing.JFrame {
 
        public void actualizar(){
          DefaultTableModel modelo = new DefaultTableModel();
+         Qcargo qp= new Qcargo();
          modelo=qp.cargardatos();
          tbl_cargo.setModel(modelo);
     }
@@ -354,9 +474,9 @@ public class ven_cargo extends javax.swing.JFrame {
     
       public DefaultComboBoxModel cargarcmb_filtro(){
         DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-        modelo.addElement("Codigo de producto");
-        modelo.addElement("Nombre de producto");       
-        modelo.addElement("Precio");
+        modelo.addElement("Id de cargo");
+        modelo.addElement("Nombre de cargo");       
+        modelo.addElement("Descripcion de cargo");
         return modelo;
     }
 

@@ -57,7 +57,7 @@ public class Qcliente {
                     + " where rut_cliente='" + cli.getRut_cliente() + "'"; //espacio + where para evitar error de sintaxis
             Statement st = cn.createStatement();
             st.executeUpdate(query);
-            System.out.println("modificado");
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "no existe ese rut para modificar");
             System.out.println("error" + e);

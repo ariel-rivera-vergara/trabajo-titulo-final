@@ -76,11 +76,35 @@ public class ven_ajuste extends javax.swing.JFrame {
 
         lbl_ajuste.setText("codigo de ajuste");
 
+        txt_cod_ajuste.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cod_ajusteKeyTyped(evt);
+            }
+        });
+
         lbl_cod_prod.setText("codigo del producto");
+
+        txt_cod_prod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cod_prodKeyTyped(evt);
+            }
+        });
 
         lbl_tipo_ajuste.setText("tipo de ajuste");
 
+        txt_tipo_ajuste.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_tipo_ajusteKeyTyped(evt);
+            }
+        });
+
         lbl_cantidad_ajuste.setText("cantidad de ajuste");
+
+        txt_cantidad_ajuste.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cantidad_ajusteKeyTyped(evt);
+            }
+        });
 
         lbl_fecha_ajuste.setText("fecha de ajuste");
 
@@ -89,8 +113,19 @@ public class ven_ajuste extends javax.swing.JFrame {
                 txt_fecha_ajusteActionPerformed(evt);
             }
         });
+        txt_fecha_ajuste.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_ajusteKeyTyped(evt);
+            }
+        });
 
         lbl_comentario.setText("comentario");
+
+        txt_comentario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_comentarioKeyTyped(evt);
+            }
+        });
 
         btn_limpiar.setText("Limpiar");
 
@@ -167,10 +202,17 @@ public class ven_ajuste extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_ajuste, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_cantidad_ajuste, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,7 +227,7 @@ public class ven_ajuste extends javax.swing.JFrame {
                             .addComponent(txt_cod_prod, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56)
                         .addComponent(cmb_ajuste, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbl_fecha_ajuste, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_comentario, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,16 +251,7 @@ public class ven_ajuste extends javax.swing.JFrame {
                                         .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51))
+                .addComponent(txt_filtro, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,9 +296,9 @@ public class ven_ajuste extends javax.swing.JFrame {
                     .addComponent(btn_consultar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(34, 34, 34)
                 .addComponent(btn_volver)
                 .addGap(77, 77, 77))
         );
@@ -426,6 +459,38 @@ public class ven_ajuste extends javax.swing.JFrame {
             Limpiar();
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void txt_cod_ajusteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cod_ajusteKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_cod_ajuste,4);
+    }//GEN-LAST:event_txt_cod_ajusteKeyTyped
+
+    private void txt_cod_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cod_prodKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_cod_prod,30);
+    }//GEN-LAST:event_txt_cod_prodKeyTyped
+
+    private void txt_tipo_ajusteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tipo_ajusteKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_tipo_ajuste,1);
+    }//GEN-LAST:event_txt_tipo_ajusteKeyTyped
+
+    private void txt_cantidad_ajusteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidad_ajusteKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_cantidad_ajuste,4);
+    }//GEN-LAST:event_txt_cantidad_ajusteKeyTyped
+
+    private void txt_fecha_ajusteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_ajusteKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_fecha_ajuste,10);
+    }//GEN-LAST:event_txt_fecha_ajusteKeyTyped
+
+    private void txt_comentarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_comentarioKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_comentario,40);
+    }//GEN-LAST:event_txt_comentarioKeyTyped
 
     /**
      * @param args the command line arguments

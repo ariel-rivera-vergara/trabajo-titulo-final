@@ -7,6 +7,7 @@ package pantasha;
 
 import clases.Cliente;
 import clases.Persona;
+import clases.Validar;
 import java.util.HashSet;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -23,6 +24,9 @@ public class ven_cliente extends javax.swing.JFrame {
 
     Qcliente qp = new Qcliente();
 
+    Validar vali = new Validar(); 
+    
+    
     public ven_cliente() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -86,12 +90,22 @@ public class ven_cliente extends javax.swing.JFrame {
                 txt_rut_clienteActionPerformed(evt);
             }
         });
+        txt_rut_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rut_clienteKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_rut_cliente);
         txt_rut_cliente.setBounds(110, 40, 210, 30);
 
         txt_nom_cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nom_clienteActionPerformed(evt);
+            }
+        });
+        txt_nom_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nom_clienteKeyTyped(evt);
             }
         });
         jPanel1.add(txt_nom_cliente);
@@ -184,12 +198,23 @@ public class ven_cliente extends javax.swing.JFrame {
                 txt_fono_clienteActionPerformed(evt);
             }
         });
+        txt_fono_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fono_clienteKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_fono_cliente);
         txt_fono_cliente.setBounds(110, 130, 210, 30);
 
         cmb_cliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cmb_cliente);
         cmb_cliente.setBounds(330, 90, 56, 20);
+
+        txt_dir_cliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_dir_clienteKeyTyped(evt);
+            }
+        });
         jPanel1.add(txt_dir_cliente);
         txt_dir_cliente.setBounds(110, 180, 210, 30);
 
@@ -308,7 +333,7 @@ public class ven_cliente extends javax.swing.JFrame {
 
     private void tbl_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_clienteMouseClicked
         txt_rut_cliente.setText(tbl_cliente.getModel().getValueAt(tbl_cliente.getSelectedRow(), 0).toString());
-        txt_rut_cliente.setText(tbl_cliente.getModel().getValueAt(tbl_cliente.getSelectedRow(), 1).toString());
+        txt_nom_cliente.setText(tbl_cliente.getModel().getValueAt(tbl_cliente.getSelectedRow(), 1).toString());
         txt_fono_cliente.setText(tbl_cliente.getModel().getValueAt(tbl_cliente.getSelectedRow(), 2).toString());
         txt_dir_cliente.setText(tbl_cliente.getModel().getValueAt(tbl_cliente.getSelectedRow(), 3).toString());
         
@@ -327,10 +352,16 @@ public class ven_cliente extends javax.swing.JFrame {
         Cliente cli = new Cliente();
         cli.setRut_cliente(trim(txt_rut_cliente.getText()));
         cli.setNom_cliente(trim(txt_nom_cliente.getText()));
-
-      //  jt.getText().length() == limite)
         
-        if (cli.getRut_cliente().length() < 9) {
+        
+        
+        vali.validarRut(cli.getRut_cliente());
+        if ( vali.validarRut(cli.getRut_cliente())== false){
+              JOptionPane.showMessageDialog(null, "rut ingresado no valido");
+        }
+         
+             
+        else if (cli.getRut_cliente().length() < 9) {
              JOptionPane.showMessageDialog(null, "rut no valido, reingrese");
         } else {
               
@@ -364,6 +395,25 @@ public class ven_cliente extends javax.swing.JFrame {
     private void btn_limpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseClicked
         Limpiar();
     }//GEN-LAST:event_btn_limpiarMouseClicked
+
+    private void txt_rut_clienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rut_clienteKeyTyped
+        // TODO add your handling code here:
+          vali.validarlargoalfa(evt,txt_rut_cliente,10);
+    }//GEN-LAST:event_txt_rut_clienteKeyTyped
+
+    private void txt_nom_clienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_clienteKeyTyped
+        // TODO add your handling code here:
+          vali.validarlargoalfa(evt,txt_nom_cliente,40);
+    }//GEN-LAST:event_txt_nom_clienteKeyTyped
+
+    private void txt_fono_clienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fono_clienteKeyTyped
+         vali.validarlargoalfa(evt,txt_fono_cliente,12);
+    }//GEN-LAST:event_txt_fono_clienteKeyTyped
+
+    private void txt_dir_clienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_dir_clienteKeyTyped
+        // TODO add your handling code here:
+         vali.validarlargoalfa(evt,txt_dir_cliente,30);
+    }//GEN-LAST:event_txt_dir_clienteKeyTyped
 
     /**
      * @param args the command line arguments

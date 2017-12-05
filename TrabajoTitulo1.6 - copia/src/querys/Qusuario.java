@@ -177,7 +177,59 @@ public class Qusuario {
         return modelo;
     }
       
-      
+
+      public DefaultTableModel buscarDatos(String txt, String buscar){
+         DefaultTableModel modelo = crearbase(); Conectar connection = new Conectar();
+         Connection cn = connection.getconnect();
+           
+     try {
+         String query = "";
+         buscar = buscar.trim();
+         switch (buscar){
+             
+             case "Id de usuario" : query = "SELECT * FROM usuario WHERE id_usuario LIKE '%"+txt+"%'"; break;
+                            
+             case "Cargo" : query = "SELECT * FROM usuario WHERE id_cargo  LIKE '%"+txt+"%'"; break;
+                     
+             case "Nombre de usuario" : query = "SELECT * FROM usuario WHERE nom_usuario  LIKE '%"+txt+"%'"; break;
+                     
+             case "Password": query = "SELECT * FROM proveedores WHERE contrasena  LIKE '%"+txt+"%'"; break;
+                              
+             
+                              
+         }
+            String[] arreglo = new String[4];
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                arreglo[0] = rs.getString(1);
+                arreglo[1] = rs.getString(2);
+                arreglo[2] = rs.getString(3);
+                arreglo[3] = rs.getString(4);
+                
+                modelo.addRow(arreglo);
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("error" + e);
+        } finally {
+
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+               /* Logger.getLogger(Querys..class.getName()).log(Level.SEVERE, null, ex); */
+            }
+        }
+        return modelo;
+    
+   }     
+          
+          
+          
+          
+          
       
       
       

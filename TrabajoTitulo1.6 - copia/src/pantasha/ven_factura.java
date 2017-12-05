@@ -8,6 +8,7 @@ package pantasha;
 import clases.DetalleFacturaCompra;
 import clases.FacturaCompra;
 import clases.Proveedores;
+import clases.Validar;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ public class ven_factura extends javax.swing.JFrame {
 
     
     Qproductos qp = new Qproductos();
+    Validar vali = new Validar(); 
       DefaultTableModel modeloFs = new DefaultTableModel();
       DefaultTableModel modelop = new DefaultTableModel();
       FacturaCompra fc = new FacturaCompra();
@@ -228,7 +230,19 @@ public class ven_factura extends javax.swing.JFrame {
 
         lbl_num_factura.setText("Num Factura");
 
+        txt_num_factura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_num_facturaKeyTyped(evt);
+            }
+        });
+
         lbl_fecha_compra.setText("Fecha compra");
+
+        txt_fecha_compra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_compraKeyTyped(evt);
+            }
+        });
 
         tbl_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -242,9 +256,21 @@ public class ven_factura extends javax.swing.JFrame {
 
         lbl_productos.setText("Productos");
 
+        txt_precio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_precioKeyTyped(evt);
+            }
+        });
+
         lbl_precio.setText("Precio");
 
         lbl_cantidad.setText("Cantidad");
+
+        txt_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cantidadKeyTyped(evt);
+            }
+        });
 
         btn_seleccionar.setText("Seleccionar");
         btn_seleccionar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -577,6 +603,29 @@ public class ven_factura extends javax.swing.JFrame {
        vmf.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btn_volverMouseClicked
+
+    private void txt_num_facturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_facturaKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_num_factura,6);
+    }//GEN-LAST:event_txt_num_facturaKeyTyped
+
+    private void txt_fecha_compraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_compraKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_fecha_compra,10);
+    }//GEN-LAST:event_txt_fecha_compraKeyTyped
+
+    private void txt_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_precio,6);
+    }//GEN-LAST:event_txt_precioKeyTyped
+
+    private void txt_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_cantidad,3);
+    }//GEN-LAST:event_txt_cantidadKeyTyped
 
     /**
      * @param args the command line arguments

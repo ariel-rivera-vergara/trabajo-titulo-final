@@ -161,8 +161,6 @@ public class Qcargo {
         modelo.addColumn("Nombre de cargo");
         modelo.addColumn("Descripcion de cargo");
 
-      
-
         return modelo;
     }
     

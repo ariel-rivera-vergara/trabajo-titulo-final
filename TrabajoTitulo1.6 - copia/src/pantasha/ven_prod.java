@@ -431,12 +431,12 @@ public class ven_prod extends javax.swing.JFrame {
 
     private void txt_preKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_preKeyTyped
        vali.solonumerospositivos(evt);
-       vali.validarlargonumerico(evt,txt_pre,11);
+       vali.validarlargonumerico(evt,txt_pre,10);
     }//GEN-LAST:event_txt_preKeyTyped
 
     private void txt_canKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_canKeyTyped
        vali.validarstocknumerico(evt);
-       vali.validarlargonumerico(evt,txt_can,11);
+       vali.validarlargonumerico(evt,txt_can,5);
     }//GEN-LAST:event_txt_canKeyTyped
 
     private void txt_cod_prodKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cod_prodKeyTyped
@@ -456,7 +456,7 @@ public class ven_prod extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_limpiarMouseClicked
 
     private void txt_filtroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtroKeyReleased
-         String buscar = (String) cmb_filtro.getSelectedItem();
+       String buscar = (String) cmb_filtro.getSelectedItem();
        Qproductos qp = new  Qproductos();
        tbl_productos.setModel(qp.buscarDatos(txt_filtro.getText(), buscar));
     }//GEN-LAST:event_txt_filtroKeyReleased

@@ -3,19 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/clases/OrdenPedido.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_principal.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_mantenedor_factura.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_cliente.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/clases/Usuario.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_usuario.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/clases/Cliente.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/clases/Validar.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/querys/Qusuario.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_proveedor.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/querys/Qproductos.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/querys/Qcliente.java</file>
-            <file>file:/C:/Users/user/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/inicio.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_cargo.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_pedido.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_buscar_cliente.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_factura.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_agregar_cliente.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_prod.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_proveedor.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_cliente.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_ciudad.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_usuario.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/querys/Qproductos.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_principal.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_detalle_venta.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/querys/Qproveedor.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_ventas.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/inicio.java</file>
+            <file>file:/C:/Users/Ivan/Documents/GitHub/trabajo-titulo-final/TrabajoTitulo1.6%20-%20copia/src/pantasha/ven_mantenedor_factura.java</file>
         </group>
     </open-files>
 </project-private>

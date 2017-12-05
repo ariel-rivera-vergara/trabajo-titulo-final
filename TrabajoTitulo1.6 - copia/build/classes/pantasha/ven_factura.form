@@ -238,6 +238,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_num_factura">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_num_facturaKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_fecha_compra">
           <Properties>
@@ -245,6 +248,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_fecha_compra">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fecha_compraKeyTyped"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
@@ -274,6 +280,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_precio">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_precioKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_precio">
           <Properties>
@@ -286,6 +295,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_cantidad">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_cantidadKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_seleccionar">
           <Properties>
