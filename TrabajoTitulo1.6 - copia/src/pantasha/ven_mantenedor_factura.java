@@ -92,6 +92,11 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
         });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -217,6 +222,12 @@ public class ven_mantenedor_factura extends javax.swing.JFrame {
         venf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_consultarMouseClicked
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+     ven_principal vp = new ven_principal();
+        vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverMouseClicked
 
     /**
      * @param args the command line arguments

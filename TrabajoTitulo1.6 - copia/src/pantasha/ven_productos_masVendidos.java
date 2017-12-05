@@ -91,7 +91,9 @@ public class ven_productos_masVendidos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
-        // volver al menu principal
+      ven_principal vp = new ven_principal();
+        vp.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_btn_volverMouseClicked
 

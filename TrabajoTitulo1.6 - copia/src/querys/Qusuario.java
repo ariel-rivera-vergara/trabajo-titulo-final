@@ -101,6 +101,40 @@ public class Qusuario {
             }
         }
       }    
+     
+        public int consultarusuariologin(Usuario usu) {
+          Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+         int existe=0;
+        try {
+            String query="Select * FROM usuario"
+                    + " where id_usuario='"+usu.getId_usuario()+"' and contrasena ='"+ usu.getPassword()+"'"; //espacio + where para evitar error de sintaxis
+            
+            Statement st = cn.createStatement();
+             ResultSet rs = st.executeQuery(query);
+              
+            System.out.println("consulta usuario realizada");
+              rs.next();
+             if (rs.getString(1)!= null){
+                 existe=1;    
+             }
+      
+               
+     
+        } catch (SQLException e) {
+            System.out.println("error"+e);
+        } finally{
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return existe;
+      } 
+     
+
     
       public int consultarusuario(Usuario usu) {
           Conectar connection = new Conectar();//conectarme a la base de datos

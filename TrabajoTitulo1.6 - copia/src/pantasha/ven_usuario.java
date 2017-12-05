@@ -231,39 +231,11 @@ public class ven_usuario extends javax.swing.JFrame {
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
-<<<<<<< HEAD
-
-           Usuario usu = new Usuario();
-                 usu.setId_usuario(trim(txt_usu.getText()));
-          if  (usu.getId_usuario().equals("")){
-              JOptionPane.showMessageDialog(null, "Seleccione o indique codigo del usuario a eliminar");
-              
-          }else{
-              if (JOptionPane.showConfirmDialog(null, "Desea eliminar el usuario  " + usu.getId_usuario(), "Eliminar usuario",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
-                qusu.eliminarusuario(usu);
-                tbl_usuario.removeAll();
-                
-                actualizar();
-                Limpiar();
-              }
-               Limpiar();
-          } 
-
-        
-        
-        
-        
-
-       
-
-=======
         Usuario usu = new Usuario();
         usu.setId_usuario(txt_usu.getText());
         Qusuario query = new Qusuario();   
         query.eliminarusuario(usu);
         JOptionPane.showMessageDialog(null,"eliminado con exito");
->>>>>>> 1899b6fe4c5c016426c73045c46a0626e1352971
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
@@ -273,153 +245,26 @@ public class ven_usuario extends javax.swing.JFrame {
     private void btn_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarMouseClicked
          
         
+       /* Usuario usu = new Usuario();
+        usu.setUsuario(txt_usu.getText());
+        usu.setNom_usuario(txt_nom_usuario.getText());
+        usu.setPassword(String.valueOf(jp_pass.getPassword()));
+        usu.setId_cargo(txt_cargo.getText());  
+       */
        
         Usuario usu = new Usuario();
         usu.setId_usuario(trim(txt_usu.getText()));
            
         
-<<<<<<< HEAD
-
-         vali.validarRut(usu.getId_usuario());
-        if ( vali.validarRut(usu.getId_usuario())== false){
-              JOptionPane.showMessageDialog(null, "rut ingresado no valido");
-        }
-         
-             
-        else if (usu.getId_usuario().length() < 10) {
-             JOptionPane.showMessageDialog(null, "rut no valido, reingrese");
-        } else {
-              
-        
-    if  (trim(usu.getId_usuario()).equals("") || trim(usu.getId_usuario()).equals("")){
-=======
          if  (trim(usu.getId_usuario()).equals("") || trim(usu.getNom_usuario()).equals("")){
->>>>>>> 1899b6fe4c5c016426c73045c46a0626e1352971
               JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
               
           }else{
-              if(JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de codigo  " + usu.getId_usuario(), "agregar usuario",
+           
+        
+              if                                  
+                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getId_usuario(), "agregar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {     
-<<<<<<< HEAD
-                      usu.setId_cargo(trim(txt_cargo.getText()));
-                      usu.setNom_usuario(trim(txt_nom_usuario.getText()));
-                      usu.setPassword(String.valueOf(jp_pass.getPassword()));
-                      
-                                qusu.agregarusuario(usu); 
-                                    actualizar();
-                                     Limpiar();
-    }                                        
-               Limpiar();
-    
-    }
-            
-            
-            
-            
-        }        
-            
-    }//GEN-LAST:event_btn_agregarMouseClicked
-
-    private void txt_usuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, txt_usu,10);
-    }//GEN-LAST:event_txt_usuKeyTyped
-
-    private void txt_cargoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cargoKeyTyped
-        // TODO add your handling code here:
-        vali.solonumerospositivos(evt);
-        vali.validarlargonumerico(evt, txt_cargo,1);
-    }//GEN-LAST:event_txt_cargoKeyTyped
-
-    private void txt_nom_usuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nom_usuarioKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, txt_nom_usuario,30);
-    }//GEN-LAST:event_txt_nom_usuarioKeyTyped
-
-    private void jp_passKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jp_passKeyTyped
-        // TODO add your handling code here:
-        vali.validarlargoalfa(evt, jp_pass,10);
-    }//GEN-LAST:event_jp_passKeyTyped
-
-    private void btn_limpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_limpiarMouseClicked
-        // TODO add your handling code here:
-        Limpiar();
-    }//GEN-LAST:event_btn_limpiarMouseClicked
-
-    private void btn_consultarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_consultarMouseClicked
-        // TODO add your handling code here:
-        
-              Usuario usu = new Usuario();
-        usu.setId_usuario(trim(txt_usu.getText()));  
-        
-        if(usu.getId_usuario().equals("")){
-              JOptionPane.showMessageDialog(null, "indique usuario a consultar");
-        }else{
-       
-        qusu.consultarusuario(usu);
-         } 
-    }//GEN-LAST:event_btn_consultarMouseClicked
-
-    private void tbl_usuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_usuarioMouseClicked
-        // TODO add your handling code here:
-        
-        txt_usu.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 0).toString());
-        txt_cargo.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 1).toString());
-        txt_nom_usuario.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
-        jp_pass.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
-        
-        
-    }//GEN-LAST:event_tbl_usuarioMouseClicked
-
-    private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
-        // TODO add your handling code here:
-        
-           Usuario usu = new Usuario();
-   
-             
-        usu.setId_usuario(trim(txt_usu.getText()));
-
-        if (usu.getId_usuario().equals("")) {
-            JOptionPane.showMessageDialog(null, "indique usuario, no se puede modifcar sin usuario");
-
-        } else {
-            if (JOptionPane.showConfirmDialog(null, "Desea modificar el usuario con codigo  " + usu.getId_usuario(), "modificar usuario",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
-                // PUEDE QUE SE TENGA QUE VALIDAR CUANDO EL FONO O LA DIR ES VACIA ASIGNAR NULL HAY QUE PROBAR
-                usu.setNom_usuario(trim(txt_nom_usuario.getText()));
-                usu.setId_cargo(trim(txt_cargo.getText()));
-                usu.setPassword(String.valueOf(jp_pass.getPassword()));
-                
-                
-                qusu.modificarusuario(usu);
-                actualizar();
-                Limpiar();
-            }
-            Limpiar();
-        }
-        
-        
-        
-        
-    }//GEN-LAST:event_btn_modificarMouseClicked
-
-    private void cmb_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmb_usuarioKeyReleased
-        // TODO add your handling code here:
-        
-   
-        
-    }//GEN-LAST:event_cmb_usuarioKeyReleased
-
-    private void txt_filtro_usuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_filtro_usuarioKeyReleased
-        // TODO add your handling code here:
-         String buscar = (String) cmb_usuario.getSelectedItem();
-       Qusuario qusu = new  Qusuario();
-       tbl_usuario.setModel(qusu.buscarDatos(txt_filtro_usuario.getText(), buscar));
-        
-        
-    }//GEN-LAST:event_txt_filtro_usuarioKeyReleased
-
-=======
                   
                    } else {
                   
@@ -444,7 +289,6 @@ public class ven_usuario extends javax.swing.JFrame {
                    
     }//GEN-LAST:event_btn_agregarMouseClicked
 
->>>>>>> 1899b6fe4c5c016426c73045c46a0626e1352971
     /**
      * @param args the command line arguments
      */

@@ -96,6 +96,11 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
         });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         Btn_consultar.setText("Consultar");
         Btn_consultar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -219,6 +224,12 @@ public class ven_mantenedor_pedido extends javax.swing.JFrame {
         vped.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_Btn_consultarMouseClicked
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+      ven_principal vp = new ven_principal();
+        vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverMouseClicked
 
     /**
      * @param args the command line arguments

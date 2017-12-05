@@ -109,7 +109,7 @@ public class inicio extends javax.swing.JFrame {
         Usuario usu = new Usuario();
         usu.setId_usuario(txt_usu.getText());
         usu.setPassword(String.valueOf(jp_pass.getPassword()));
-        if (qu.consultarusuario(usu)==1){
+        if (qu.consultarusuariologin(usu)==1){
             
            ven_principal vi = new ven_principal();
            vi.setVisible(true);

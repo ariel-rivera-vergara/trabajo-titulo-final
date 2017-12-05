@@ -42,13 +42,14 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     public ven_detalle_venta() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txt_abono.setText(String.valueOf(0));
+      
     }
 
     ven_detalle_venta(DefaultTableModel modelopsl, JTextArea Atxt_receta, int total) {
         initComponents();
         this.setLocationRelativeTo(null);
-         txt_abono.setText(String.valueOf(0));
+        btn_modificar.setVisible(false);
+        btn_agregar_cliente.setVisible(false);
         this.modelopsl = modelopsl;
         tbl_productos_seleccionados.setModel(this.modelopsl);
         cmb_tipo_pago.setModel(cargarcmb_tipopago());
@@ -66,8 +67,8 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     ven_detalle_venta(Cliente cli, DefaultTableModel modelopsl, String receta, int total) {
         initComponents();
         this.setLocationRelativeTo(null);
-         txt_abono.setText(String.valueOf(0));
         this.modelopsl = modelopsl;
+        btn_agregar_cliente.setVisible(false);
         tbl_productos_seleccionados.setModel(this.modelopsl);
         modelocli.addColumn("Rut de Cliente");
         modelocli.addColumn("Nombre de Cliente");
@@ -95,6 +96,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     ven_detalle_venta(int total, String consultar, venta ven) {
         initComponents();
         this.setLocationRelativeTo(null);
+        btn_modificar.setVisible(false);
         cmb_tipo_pago.setModel(cargarcmb_tipopago());
         btn_buscar_cliente.setVisible(false);
         btn_agregar_cliente.setVisible(false);
@@ -130,6 +132,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.modificar = modificar;
         this.ven = ven;
+        btn_agregar_cliente.setVisible(false);
         System.out.println("venta de constructor en detalle venta" + ven.getId_venta());
         this.total = total;
         btn_Generar_venta.setVisible(false);
@@ -167,7 +170,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
         arreglo[2] = cli.getFono_cliente();
         modelocli.addRow(arreglo);
         tbl_cliente.setModel(modelocli);
-
+        btn_agregar_cliente.setVisible(false);
         this.modificar = modificar;
         this.total = total;
         receta = ven.getReceta();
@@ -644,11 +647,13 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_fecha_actualKeyTyped
 
     private void txt_abonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_abonoKeyTyped
-        // TODO add your handling code here:
+        if (txt_abono.getText().equals("")) {
+            txt_abono.setText(String.valueOf(0));
+        } else if (Integer.parseInt(txt_abono.getText()) > total) {
+            txt_abono.setText(String.valueOf(total));
+        }
+        lbl_saldo_pagar.setText(String.valueOf(total - Integer.parseInt(txt_abono.getText())));
         
-        
-        vali.solonumerospositivos(evt);
-       vali.validarlargonumerico(evt, txt_abono,6);
         lbl_saldo_pagar.setText(String.valueOf(total - Integer.parseInt(txt_abono.getText())));
     
     }//GEN-LAST:event_txt_abonoKeyTyped

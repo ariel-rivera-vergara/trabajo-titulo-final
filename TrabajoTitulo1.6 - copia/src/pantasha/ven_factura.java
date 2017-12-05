@@ -521,6 +521,20 @@ public class ven_factura extends javax.swing.JFrame {
         fc.setCod_prov((String) tbl_proveedor_selec.getValueAt(0,0));
         fc.setFecha_compra(txt_fecha_compra.getText());
         fc.setTotal(Total);
+        int error = 0;
+    if(txt_num_factura.getText().equals("")){
+        error = 1;
+    }else if(tbl_proveedor_selec.getRowCount()==0){
+        error = 1;
+    }else if(txt_fecha_compra.getText().equals("")){
+        error = 1;
+    }else if (tbl_productos_seleccionados.getRowCount()==0){
+        error = 1;
+    }    
+    
+    if(error == 1){
+        System.out.println("error");
+    }else{
         try {
             qfc.agregarFacturaCompra(fc);
         } catch (ParseException ex) {
@@ -550,7 +564,7 @@ public class ven_factura extends javax.swing.JFrame {
         ven_mantenedor_factura vmf = new ven_mantenedor_factura();
         vmf.setVisible(true);
         this.dispose();
-        
+    }    
     }//GEN-LAST:event_btn_guardarMouseClicked
 
     private void btn_modificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_modificarMouseClicked
@@ -606,24 +620,22 @@ public class ven_factura extends javax.swing.JFrame {
 
     private void txt_num_facturaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_facturaKeyTyped
         // TODO add your handling code here:
-        vali.solonumerospositivos(evt);
+  
         vali.validarlargonumerico(evt, txt_num_factura,6);
     }//GEN-LAST:event_txt_num_facturaKeyTyped
 
     private void txt_fecha_compraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_compraKeyTyped
-        // TODO add your handling code here:
+        
         vali.validarlargoalfa(evt, txt_fecha_compra,10);
     }//GEN-LAST:event_txt_fecha_compraKeyTyped
 
     private void txt_precioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_precioKeyTyped
-        // TODO add your handling code here:
-        vali.solonumerospositivos(evt);
+      
         vali.validarlargonumerico(evt, txt_precio,6);
     }//GEN-LAST:event_txt_precioKeyTyped
 
     private void txt_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyTyped
-        // TODO add your handling code here:
-        vali.solonumerospositivos(evt);
+
         vali.validarlargonumerico(evt, txt_cantidad,3);
     }//GEN-LAST:event_txt_cantidadKeyTyped
 

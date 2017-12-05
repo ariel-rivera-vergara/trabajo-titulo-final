@@ -9,6 +9,8 @@ package pantasha;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import querys.Qventa;
 
 /**
@@ -17,12 +19,9 @@ import querys.Qventa;
  */
 public class ven_eliminar_ventas_antiguas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ven_eliminar_ventas_antiguas
-     */
+     Qventa qven = new Qventa();
     public ven_eliminar_ventas_antiguas() throws ParseException {
         initComponents();
-         Qventa qven = new Qventa();
          tbl_ventas_eliminar.setModel(qven.cargarventasantiguas());
     }
 
@@ -54,8 +53,18 @@ public class ven_eliminar_ventas_antiguas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_ventas_eliminar);
 
         btn_eliminar.setText("Eliminar");
+        btn_eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eliminarMouseClicked(evt);
+            }
+        });
 
         btn_volver.setText("Volver");
+        btn_volver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_volverMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -63,26 +72,25 @@ public class ven_eliminar_ventas_antiguas extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(74, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_eliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_volver)
-                        .addGap(146, 146, 146))))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(116, 116, 116))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGap(58, 58, 58)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_eliminar)
-                    .addComponent(btn_volver))
-                .addGap(72, 72, 72))
+                    .addComponent(btn_volver, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -98,6 +106,32 @@ public class ven_eliminar_ventas_antiguas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_volverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_volverMouseClicked
+        ven_principal vp = new ven_principal();
+        vp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_volverMouseClicked
+
+    private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
+        String blanco ="";
+        if (JOptionPane.showConfirmDialog(null, "Desea eliminar las ventas  " + blanco, "Eliminar venta",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+           
+          while(tbl_ventas_eliminar.getRowCount()>0){
+              String id_ventas = (String) tbl_ventas_eliminar.getValueAt(0,0);
+            qven.eliminarVenta(id_ventas);
+            tbl_ventas_eliminar.removeAll();
+              try {
+                  actualizar();
+              } catch (ParseException ex) {
+                  Logger.getLogger(ven_eliminar_ventas_antiguas.class.getName()).log(Level.SEVERE, null, ex);
+              }
+         
+          }
+        }
+          
+    }//GEN-LAST:event_btn_eliminarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -145,4 +179,12 @@ public class ven_eliminar_ventas_antiguas extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_ventas_eliminar;
     // End of variables declaration//GEN-END:variables
+
+ public void actualizar() throws ParseException {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo = qven.cargarventasantiguas();
+        tbl_ventas_eliminar.setModel(modelo);
+    }
+
+
 }

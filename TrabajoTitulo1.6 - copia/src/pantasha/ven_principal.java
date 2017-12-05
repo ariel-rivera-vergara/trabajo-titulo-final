@@ -6,6 +6,9 @@
 package pantasha;
 
 import clases.Validar;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -42,6 +45,12 @@ public class ven_principal extends javax.swing.JFrame {
         btn_ajustes = new javax.swing.JButton();
         btn_proveedores = new javax.swing.JButton();
         btn_ciudad = new javax.swing.JButton();
+        btn_cargo = new javax.swing.JButton();
+        btn_ventas = new javax.swing.JButton();
+        btn_pedidos = new javax.swing.JButton();
+        btn_factura = new javax.swing.JButton();
+        btn_eliminarventas = new javax.swing.JButton();
+        btn_producto_mas_ven = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(600, 600));
@@ -61,7 +70,7 @@ public class ven_principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_manusu);
-        btn_manusu.setBounds(190, 120, 210, 39);
+        btn_manusu.setBounds(20, 149, 180, 40);
 
         btn_exit.setText("Cerrar Sesion");
         btn_exit.addActionListener(new java.awt.event.ActionListener() {
@@ -72,14 +81,14 @@ public class ven_principal extends javax.swing.JFrame {
         jPanel2.add(btn_exit);
         btn_exit.setBounds(460, 410, 105, 40);
 
-        btn_manper.setText("Mantenedor de personas");
+        btn_manper.setText("Mantenedor de clientes");
         btn_manper.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_manperMouseClicked(evt);
             }
         });
         jPanel2.add(btn_manper);
-        btn_manper.setBounds(190, 70, 210, 40);
+        btn_manper.setBounds(20, 80, 180, 40);
 
         btn_manpro.setText("Mantenedor de productos");
         btn_manpro.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,16 +102,16 @@ public class ven_principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_manpro);
-        btn_manpro.setBounds(190, 20, 210, 40);
+        btn_manpro.setBounds(20, 20, 180, 40);
 
-        btn_ajustes.setText("Mantendor de ajustes(productos)");
+        btn_ajustes.setText("Mantendor de ajustes");
         btn_ajustes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_ajustesMouseClicked(evt);
             }
         });
         jPanel2.add(btn_ajustes);
-        btn_ajustes.setBounds(190, 180, 210, 40);
+        btn_ajustes.setBounds(20, 210, 180, 40);
 
         btn_proveedores.setText("Mantenedor de proveedores");
         btn_proveedores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -111,9 +120,9 @@ public class ven_principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_proveedores);
-        btn_proveedores.setBounds(190, 240, 210, 40);
+        btn_proveedores.setBounds(20, 270, 180, 40);
 
-        btn_ciudad.setText("ciudad");
+        btn_ciudad.setText("Mantenedor ciudad");
         btn_ciudad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_ciudadMouseClicked(evt);
@@ -125,7 +134,61 @@ public class ven_principal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btn_ciudad);
-        btn_ciudad.setBounds(420, 330, 100, 23);
+        btn_ciudad.setBounds(20, 330, 180, 40);
+
+        btn_cargo.setText("Cargo");
+        btn_cargo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_cargoMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_cargo);
+        btn_cargo.setBounds(270, 20, 180, 40);
+
+        btn_ventas.setText("Mantenedor ventas");
+        btn_ventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_ventasMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_ventas);
+        btn_ventas.setBounds(270, 80, 180, 40);
+
+        btn_pedidos.setText("Mantenedor pedido");
+        btn_pedidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_pedidosMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_pedidos);
+        btn_pedidos.setBounds(270, 150, 180, 40);
+
+        btn_factura.setText("Mantenedor factura");
+        btn_factura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_facturaMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_factura);
+        btn_factura.setBounds(270, 210, 180, 40);
+
+        btn_eliminarventas.setText("Eliminar ventas anteriores");
+        btn_eliminarventas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_eliminarventasMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_eliminarventas);
+        btn_eliminarventas.setBounds(270, 270, 180, 40);
+
+        btn_producto_mas_ven.setText("Producto mas vendido");
+        btn_producto_mas_ven.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_producto_mas_venMouseClicked(evt);
+            }
+        });
+        jPanel2.add(btn_producto_mas_ven);
+        btn_producto_mas_ven.setBounds(270, 330, 180, 40);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(0, 0, 580, 470);
@@ -183,6 +246,48 @@ public class ven_principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_ciudadActionPerformed
 
+    private void btn_cargoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_cargoMouseClicked
+       ven_cargo vc = new ven_cargo();
+       vc.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btn_cargoMouseClicked
+
+    private void btn_ventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ventasMouseClicked
+     ven_mantenedor_ventas vmv = new ven_mantenedor_ventas();
+     vmv.setVisible(true);
+     this.dispose();
+    }//GEN-LAST:event_btn_ventasMouseClicked
+
+    private void btn_pedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pedidosMouseClicked
+     ven_mantenedor_pedido vmp = new ven_mantenedor_pedido();
+     vmp.setVisible(true);
+     this.dispose();
+    }//GEN-LAST:event_btn_pedidosMouseClicked
+
+    private void btn_facturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_facturaMouseClicked
+      ven_mantenedor_factura vmf = new ven_mantenedor_factura();
+      vmf.setVisible(true);
+      this.dispose();
+    }//GEN-LAST:event_btn_facturaMouseClicked
+
+    private void btn_eliminarventasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarventasMouseClicked
+        try {
+            ven_eliminar_ventas_antiguas veva = new ven_eliminar_ventas_antiguas();
+            veva.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(ven_principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+       this.dispose();
+    }//GEN-LAST:event_btn_eliminarventasMouseClicked
+
+    private void btn_producto_mas_venMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_producto_mas_venMouseClicked
+    ven_productos_masVendidos vpmv = new ven_productos_masVendidos();
+    vpmv.setVisible(true);
+    this.dispose();
+        
+    }//GEN-LAST:event_btn_producto_mas_venMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -221,12 +326,18 @@ public class ven_principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_ajustes;
+    private javax.swing.JButton btn_cargo;
     private javax.swing.JButton btn_ciudad;
+    private javax.swing.JButton btn_eliminarventas;
     private javax.swing.JButton btn_exit;
+    private javax.swing.JButton btn_factura;
     private javax.swing.JButton btn_manper;
     private javax.swing.JButton btn_manpro;
     private javax.swing.JButton btn_manusu;
+    private javax.swing.JButton btn_pedidos;
+    private javax.swing.JButton btn_producto_mas_ven;
     private javax.swing.JButton btn_proveedores;
+    private javax.swing.JButton btn_ventas;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
