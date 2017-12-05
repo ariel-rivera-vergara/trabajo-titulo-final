@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import static jdk.nashorn.internal.objects.NativeString.trim;
 import querys.Qcargo;
 import querys.Qciudad;
+import querys.Qproveedor;
 
 /**
  *
@@ -23,6 +24,7 @@ public class ven_ciudad extends javax.swing.JFrame {
     Ciudad ci = new Ciudad();
     Qciudad qp = new Qciudad();
     Validar vali = new Validar();
+    Qproveedor qprov = new Qproveedor();
 
     public ven_ciudad() {
         initComponents();
@@ -288,12 +290,15 @@ public class ven_ciudad extends javax.swing.JFrame {
          ci.setCod_ciudad(trim(txt_cod_ciudad.getText()));  
          if (txt_cod_ciudad.getText().equals("")) {
                  System.out.println("ingrese un codigo a eliminar");
-         } else{ 
+         } else if (JOptionPane.showConfirmDialog(null, "Si elimina la ciudad se eliminaran los proveedores con esta ciudad  " + ci.getCod_ciudad(), "Eliminar ciudad",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
+            qprov.eliminarprovporciudad(ci);
+             qp.eliminarciudad(ci);
+            tbl_ciudad.removeAll();
+            actualizar();
+        }
+          
        
-          qp.eliminarciudad(ci);
-          tbl_ciudad.removeAll();
-          actualizar();
-       } 
     }//GEN-LAST:event_btn_eliminar_ciudadMouseClicked
 
     private void btn_salir_ciudadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_salir_ciudadMouseClicked

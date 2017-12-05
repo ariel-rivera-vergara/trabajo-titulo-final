@@ -84,7 +84,7 @@ public class Qproductos {
 
     
     // este modificar Producto es para cuando se realiza un ajuste
-     public void modificarproducto(String cod_prod,int cant_ajuste) {
+     public void modificarproducto(String cod_prod,int cant_ajuste,String tipo_ajuste) {
         Conectar connection = new Conectar();//conectarme a la base de datos
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         try {
@@ -97,9 +97,14 @@ public class Qproductos {
             System.out.println(sql);
             ResultSet rs = smt.executeQuery(sql);
             rs.next();
-            
+            int ajuste_total = 0;
             String cant = rs.getString("existencia");       
-             int ajuste_total = Integer.parseInt(cant) + cant_ajuste;
+            if(tipo_ajuste.equals("G")){
+                 ajuste_total = Integer.parseInt(cant) + cant_ajuste;
+            }else if (tipo_ajuste.equals("P")){
+                 ajuste_total = Integer.parseInt(cant) - cant_ajuste;
+            }
+             
             String query = "UPDATE producto SET "             
                     + "existencia='" + ajuste_total + "'"                 
                     + " where cod_prod='" + cod_prod + "'"; //espacio + where para evitar error de sintaxis
@@ -297,6 +302,91 @@ public class Qproductos {
         return modelo;
     
    }
+
+    void modificarproductoM(int cant_ajuste, String tipo_ajuste, String cod_prod,int cant_ajuste_anterior) {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            
+           
+             String sql = "Select * FROM producto "
+                    + " where cod_prod='" + cod_prod + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement smt = cn.createStatement();
+            System.out.println(sql);
+            ResultSet rs = smt.executeQuery(sql);
+            rs.next();
+            int ajuste_total = 0;
+            String cant = rs.getString("existencia");       
+            if(tipo_ajuste.equals("G")){
+                 ajuste_total = Integer.parseInt(cant) - cant_ajuste_anterior + cant_ajuste;
+            }else if (tipo_ajuste.equals("P")){
+                 ajuste_total = Integer.parseInt(cant) + cant_ajuste_anterior - cant_ajuste;
+            }
+             
+            String query = "UPDATE producto SET "             
+                    + "existencia='" + ajuste_total + "'"                 
+                    + " where cod_prod='" + cod_prod + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+           
+            System.out.println("modificado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe ese codigo para modificar");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+
+    void modificarproductoE(int cant_ajuste, String tipo_ajuste, String cod_prod, int cant_ajuste_anterior) {
+          Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            
+           
+             String sql = "Select * FROM producto "
+                    + " where cod_prod='" + cod_prod + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement smt = cn.createStatement();
+            System.out.println(sql);
+            ResultSet rs = smt.executeQuery(sql);
+            rs.next();
+            int ajuste_total = 0;
+            String cant = rs.getString("existencia");       
+            if(tipo_ajuste.equals("G")){
+                 ajuste_total = Integer.parseInt(cant) - cant_ajuste_anterior;
+            }else if (tipo_ajuste.equals("P")){
+                 ajuste_total = Integer.parseInt(cant) + cant_ajuste_anterior;
+            }
+             
+            String query = "UPDATE producto SET "             
+                    + "existencia='" + ajuste_total + "'"                 
+                    + " where cod_prod='" + cod_prod + "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+           
+            System.out.println("modificado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe ese codigo para modificar");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproductos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 
  
 }    

@@ -5,6 +5,7 @@
  */
 package querys;
 
+import clases.Ciudad;
 import clases.Conectar;
 import clases.Persona;
 import clases.Producto;
@@ -313,5 +314,37 @@ public class Qproveedor {
         return modelo;
     
    }
-}    
+   
+   
+   
+   
+    public void eliminarprovporciudad(Ciudad ci) {
+        Conectar connection = new Conectar();//conectarme a la base de datos
+        Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
+        try {
+            String query = "Delete FROM `proveedores`"
+                    + " where cod_ciudad='" + ci.getCod_ciudad()+ "'"; //espacio + where para evitar error de sintaxis
+
+            Statement st = cn.createStatement();
+            st.executeUpdate(query);
+            System.out.println("eliminado");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe ese codigo a eliminar");
+            System.out.println("error" + e);
+        } finally {
+            try {
+                connection.cerrar();
+                cn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Qproveedor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+}
+   
+   
+   
+   
+   
 
