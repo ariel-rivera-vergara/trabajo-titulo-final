@@ -236,6 +236,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_fecha_pedido">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fecha_pedidoKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_quitarprov">
           <Properties>
@@ -251,6 +254,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_fecha_entrega">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_fecha_entregaKeyTyped"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
@@ -280,6 +286,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_cantidad">
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_cantidadKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_seleccionar">
           <Properties>

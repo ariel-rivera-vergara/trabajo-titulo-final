@@ -305,10 +305,10 @@ public class Qventa {
              String dia = Integer.toString(c2.get(Calendar.DATE));
         // recordar buscar como arreglar el problema de la fecha
         String mes = Integer.toString(c2.get(Calendar.MONTH) + 1);
-        String annio = Integer.toString(c2.get(Calendar.YEAR-3));
+        String annio = Integer.toString(c2.get(Calendar.YEAR)-3);
         String fecha = annio + "-" + mes + "-" + dia;
-            String query =  "SELECT id_venta,rut_cliente,total_venta  FROM  venta"
-              + "where fecha_rec <= '" + vali.ParseFecha(fecha) + "'";
+            String query =  "SELECT id_venta,rut_cliente,total_venta  FROM  venta "
+              + "where fecha_rec <= '" + vali.ParseFecha(fecha) +"'";
             System.out.println(query);
             String[] arreglo = new String[3];
             Statement st = cn.createStatement();

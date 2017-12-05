@@ -7,6 +7,7 @@ package pantasha;
 
 import clases.Cliente;
 import clases.ProductoVenta;
+import clases.Validar;
 import clases.venta;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -36,15 +37,18 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     venta ven = new venta();
     ProductoVenta proven = new ProductoVenta();
     String modificar = "";
-
+    Validar vali = new Validar();
+    
     public ven_detalle_venta() {
         initComponents();
         this.setLocationRelativeTo(null);
+        txt_abono.setText(String.valueOf(0));
     }
 
     ven_detalle_venta(DefaultTableModel modelopsl, JTextArea Atxt_receta, int total) {
         initComponents();
         this.setLocationRelativeTo(null);
+         txt_abono.setText(String.valueOf(0));
         this.modelopsl = modelopsl;
         tbl_productos_seleccionados.setModel(this.modelopsl);
         cmb_tipo_pago.setModel(cargarcmb_tipopago());
@@ -62,6 +66,7 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     ven_detalle_venta(Cliente cli, DefaultTableModel modelopsl, String receta, int total) {
         initComponents();
         this.setLocationRelativeTo(null);
+         txt_abono.setText(String.valueOf(0));
         this.modelopsl = modelopsl;
         tbl_productos_seleccionados.setModel(this.modelopsl);
         modelocli.addColumn("Rut de Cliente");
@@ -286,9 +291,24 @@ public class ven_detalle_venta extends javax.swing.JFrame {
 
         lbl_tipo_pago.setText("Tipo De Pago");
 
+        txt_fecha_entrega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_entregaKeyTyped(evt);
+            }
+        });
+
+        txt_num_boleta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_num_boletaKeyTyped(evt);
+            }
+        });
+
         txt_abono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_abonoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_abonoKeyTyped(evt);
             }
         });
 
@@ -310,9 +330,26 @@ public class ven_detalle_venta extends javax.swing.JFrame {
             }
         });
 
+        lbl_fecha_actual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                lbl_fecha_actualKeyTyped(evt);
+            }
+        });
+
         lbl_saldo_pagar.setText("0");
+        lbl_saldo_pagar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                lbl_saldo_pagarKeyTyped(evt);
+            }
+        });
 
         lbl_rut_pretira.setText("Rut persona que retira ");
+
+        txt_rutpretira.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rutpretiraKeyTyped(evt);
+            }
+        });
 
         btn_modificar.setText("Modificar");
         btn_modificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -453,12 +490,8 @@ public class ven_detalle_venta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_abonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_abonoKeyReleased
-        if (txt_abono.getText().equals("")) {
-            txt_abono.setText(String.valueOf(0));
-        } else if (Integer.parseInt(txt_abono.getText()) > total) {
-            txt_abono.setText(String.valueOf(total));
-        }
-        lbl_saldo_pagar.setText(String.valueOf(total - Integer.parseInt(txt_abono.getText())));
+       
+     
     }//GEN-LAST:event_txt_abonoKeyReleased
 
     private void btn_buscar_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_buscar_clienteMouseClicked
@@ -598,6 +631,45 @@ public class ven_detalle_venta extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_modificarMouseClicked
 
+    private void txt_fecha_entregaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_entregaKeyTyped
+        // TODO add your handling code here:
+
+        vali.validarlargoalfa(evt, txt_fecha_entrega,10);
+        
+        
+    }//GEN-LAST:event_txt_fecha_entregaKeyTyped
+
+    private void lbl_fecha_actualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbl_fecha_actualKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_fecha_actualKeyTyped
+
+    private void txt_abonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_abonoKeyTyped
+        // TODO add your handling code here:
+        
+        
+        vali.solonumerospositivos(evt);
+       vali.validarlargonumerico(evt, txt_abono,6);
+        lbl_saldo_pagar.setText(String.valueOf(total - Integer.parseInt(txt_abono.getText())));
+    
+    }//GEN-LAST:event_txt_abonoKeyTyped
+
+    private void txt_rutpretiraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rutpretiraKeyTyped
+        // TODO add your handling code here:
+        vali.validarlargoalfa(evt, txt_rutpretira,10);
+    }//GEN-LAST:event_txt_rutpretiraKeyTyped
+
+    private void lbl_saldo_pagarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbl_saldo_pagarKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lbl_saldo_pagarKeyTyped
+
+    private void txt_num_boletaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_num_boletaKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_abono,6);
+    }//GEN-LAST:event_txt_num_boletaKeyTyped
+
+    
+    
     /**
      * @param args the command line arguments
      */

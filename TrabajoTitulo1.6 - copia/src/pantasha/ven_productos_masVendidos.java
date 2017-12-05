@@ -17,7 +17,7 @@ public class ven_productos_masVendidos extends javax.swing.JFrame {
    
     public ven_productos_masVendidos() {
         initComponents();
-        
+        tbl_productomasvendido.setModel(qprodven.cargarproductomasvendido());
     }
 
     /**

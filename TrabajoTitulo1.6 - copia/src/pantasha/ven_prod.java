@@ -291,7 +291,7 @@ public class ven_prod extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agregarMouseClicked
 
                Limpiar();
-    }  
+         }  
           } 
                  
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked

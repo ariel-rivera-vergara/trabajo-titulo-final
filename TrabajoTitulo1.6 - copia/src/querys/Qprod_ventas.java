@@ -267,8 +267,8 @@ public class Qprod_ventas {
         Connection cn = connection.getconnect(); // tener un elemento cn con el cual nos permite hacer la sentencias.
         DefaultTableModel modelo = crearbaseproductomasvendido();
         try {
-            String query =  "SELECT vp .cod_prod , p.nom_prod , MAX(vp.cant_ven),p.precio_unitprod  FROM  producto_venta vp, producto p"
-              +"WHERE vp.cod_prod  = p.cod_prod";
+            String query =  "SELECT vp.cod_prod , p.nom_prod , MAX(vp.cant_ven),p.precio_unitprod  FROM  producto_venta vp, producto p"
+              +" WHERE vp.cod_prod = p.cod_prod";
             System.out.println(query);
             String[] arreglo = new String[4];
             Statement st = cn.createStatement();

@@ -41,6 +41,7 @@ public class Qusuario {
             st.executeUpdate(query);
             System.out.println("ingresado con exito");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Usuario ya existe");
             System.out.println("error"+e);
         } finally{
             try {
@@ -107,20 +108,28 @@ public class Qusuario {
          int existe=0;
         try {
             String query="Select * FROM usuario"
-                    + " where id_usuario='"+usu.getId_usuario()+"' and contrasena ='"+ usu.getPassword()+"'"; //espacio + where para evitar error de sintaxis
+                    + " where id_usuario='"+usu.getId_usuario()+"'";  //espacio + where para evitar error de sintaxis
             
             Statement st = cn.createStatement();
              ResultSet rs = st.executeQuery(query);
               
             System.out.println("consulta usuario realizada");
               rs.next();
-             if (rs.getString(1)!= null){
-                 existe=1;    
-             }
-      
+              
+            String id_usuario = rs.getString("id_usuario");
+            String id_cargo = rs.getString("id_cargo");
+            String nom_usuario = rs.getString("nom_usuario");
+            String contrasena = rs.getString("contrasena");
+            
+            
+            JOptionPane.showMessageDialog(null, " codigo de usuario: " + usu.getId_usuario()+ " \n " + "id de cargo: " + id_cargo + " \n " + "nombre del usuario: " + nom_usuario);
+                      
+
+
                
      
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "no existe ese usuario");
             System.out.println("error"+e);
         } finally{
             try {

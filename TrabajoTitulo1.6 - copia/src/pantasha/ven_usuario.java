@@ -307,14 +307,14 @@ public class ven_usuario extends javax.swing.JFrame {
 
     private void btn_eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_eliminarMouseClicked
         
-<<<<<<< HEAD
+
            Usuario usu = new Usuario();
-                 usu.setUsuario(trim(txt_usu.getText()));
-          if  (usu.getUsuario().equals("")){
+                 usu.setId_usuario(trim(txt_usu.getText()));
+          if  (usu.getId_usuario().equals("")){
               JOptionPane.showMessageDialog(null, "Seleccione o indique codigo del usuario a eliminar");
               
           }else{
-              if (JOptionPane.showConfirmDialog(null, "Desea eliminar el usuario  " + usu.getUsuario(), "Eliminar usuario",
+              if (JOptionPane.showConfirmDialog(null, "Desea eliminar el usuario  " + usu.getId_usuario(), "Eliminar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
                 qusu.eliminarusuario(usu);
                 tbl_usuario.removeAll();
@@ -329,13 +329,9 @@ public class ven_usuario extends javax.swing.JFrame {
         
         
         
-=======
-        Usuario usu = new Usuario();
-        usu.setId_usuario(txt_usu.getText());
-        Qusuario query = new Qusuario();   
-        query.eliminarusuario(usu);
-        JOptionPane.showMessageDialog(null,"eliminado con exito");
->>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
+
+       
+
     }//GEN-LAST:event_btn_eliminarMouseClicked
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
@@ -345,58 +341,46 @@ public class ven_usuario extends javax.swing.JFrame {
     private void btn_agregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_agregarMouseClicked
          
         
-       /* Usuario usu = new Usuario();
-        usu.setUsuario(txt_usu.getText());
-        usu.setNom_usuario(txt_nom_usuario.getText());
-        usu.setPassword(String.valueOf(jp_pass.getPassword()));
-        usu.setId_cargo(txt_cargo.getText());  
-       */
        
         Usuario usu = new Usuario();
         usu.setId_usuario(trim(txt_usu.getText()));
            
         
-<<<<<<< HEAD
-         vali.validarRut(usu.getUsuario());
-        if ( vali.validarRut(usu.getUsuario())== false){
+
+         vali.validarRut(usu.getId_usuario());
+        if ( vali.validarRut(usu.getId_usuario())== false){
               JOptionPane.showMessageDialog(null, "rut ingresado no valido");
         }
          
              
-        else if (usu.getUsuario().length() < 10) {
+        else if (usu.getId_usuario().length() < 10) {
              JOptionPane.showMessageDialog(null, "rut no valido, reingrese");
         } else {
               
-            if (JOptionPane.showConfirmDialog(null, "Desea agregar el Usuario" + usu.getUsuario(), "agregar usuario",
-=======
-         if  (trim(usu.getId_usuario()).equals("") || trim(usu.getNom_usuario()).equals("")){
+        
+    if  (trim(usu.getId_usuario()).equals("") || trim(usu.getId_usuario()).equals("")){
               JOptionPane.showMessageDialog(null, "indique codigo no se puede agregar un usuario sin codigo");
               
           }else{
-           
-        
-              if                                  
-                      (JOptionPane.showConfirmDialog(null, "Desea agregar el codigo  " + usu.getId_usuario(), "agregar usuario",
+              if(JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de codigo  " + usu.getId_usuario(), "agregar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {     
-                  
-                   } else {
-                  
-                   if (JOptionPane.showConfirmDialog(null, "Desea agregar el usuario de Id  " + usu.getId_usuario(), "agregar usuario",
->>>>>>> 5aa465b18e0cfdddb6e0680e031d841b2c4839c2
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
-
-                usu.setNom_usuario(txt_nom_usuario.getText());
-                usu.setId_cargo(txt_cargo.getText());
-                usu.setPassword(String.valueOf(jp_pass.getPassword()));
-                
-                qusu.agregarusuario(usu);
-                actualizar();
-                Limpiar();
-            }
-
-            Limpiar();
-        }
-                   
+                      usu.setId_cargo(trim(txt_cargo.getText()));
+                      usu.setNom_usuario(trim(txt_nom_usuario.getText()));
+                      usu.setPassword(String.valueOf(jp_pass.getPassword()));
+                      
+                                qusu.agregarusuario(usu); 
+                                    actualizar();
+                                     Limpiar();
+    }                                        
+               Limpiar();
+    
+    }
+            
+            
+            
+            
+        }        
+            
     }//GEN-LAST:event_btn_agregarMouseClicked
 
     private void txt_usuKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_usuKeyTyped
@@ -429,9 +413,9 @@ public class ven_usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         
               Usuario usu = new Usuario();
-        usu.setUsuario(trim(txt_usu.getText()));  
+        usu.setId_usuario(trim(txt_usu.getText()));  
         
-        if(usu.getUsuario().equals("")){
+        if(usu.getId_usuario().equals("")){
               JOptionPane.showMessageDialog(null, "indique usuario a consultar");
         }else{
        
@@ -443,8 +427,8 @@ public class ven_usuario extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         txt_usu.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 0).toString());
-        txt_nom_usuario.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 1).toString());
-        txt_cargo.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
+        txt_cargo.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 1).toString());
+        txt_nom_usuario.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
         jp_pass.setText(tbl_usuario.getModel().getValueAt(tbl_usuario.getSelectedRow(), 2).toString());
         
         
@@ -456,13 +440,13 @@ public class ven_usuario extends javax.swing.JFrame {
            Usuario usu = new Usuario();
    
              
-        usu.setUsuario(trim(txt_usu.getText()));
+        usu.setId_usuario(trim(txt_usu.getText()));
 
-        if (usu.getUsuario().equals("")) {
+        if (usu.getId_usuario().equals("")) {
             JOptionPane.showMessageDialog(null, "indique usuario, no se puede modifcar sin usuario");
 
         } else {
-            if (JOptionPane.showConfirmDialog(null, "Desea modificar el usuario con codigo  " + usu.getUsuario(), "modificar usuario",
+            if (JOptionPane.showConfirmDialog(null, "Desea modificar el usuario con codigo  " + usu.getId_usuario(), "modificar usuario",
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null) == JOptionPane.OK_OPTION) {
                 // PUEDE QUE SE TENGA QUE VALIDAR CUANDO EL FONO O LA DIR ES VACIA ASIGNAR NULL HAY QUE PROBAR
                 usu.setNom_usuario(trim(txt_nom_usuario.getText()));

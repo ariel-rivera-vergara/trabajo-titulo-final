@@ -231,6 +231,12 @@ public class ven_pedido extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha pedido");
 
+        txt_fecha_pedido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_pedidoKeyTyped(evt);
+            }
+        });
+
         btn_quitarprov.setText("Quitar");
         btn_quitarprov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -239,6 +245,12 @@ public class ven_pedido extends javax.swing.JFrame {
         });
 
         lbl_Fecha_Entrega.setText("Fecha entrega");
+
+        txt_fecha_entrega.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fecha_entregaKeyTyped(evt);
+            }
+        });
 
         tbl_productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -251,6 +263,12 @@ public class ven_pedido extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tbl_productos);
 
         lbl_cantidad.setText("Cantidad");
+
+        txt_cantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_cantidadKeyTyped(evt);
+            }
+        });
 
         btn_seleccionar.setText("Seleccionar");
         btn_seleccionar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -627,6 +645,20 @@ public class ven_pedido extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btn_modificarMouseClicked
+
+    private void txt_fecha_pedidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_pedidoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fecha_pedidoKeyTyped
+
+    private void txt_fecha_entregaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fecha_entregaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fecha_entregaKeyTyped
+
+    private void txt_cantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_cantidadKeyTyped
+        // TODO add your handling code here:
+        vali.solonumerospositivos(evt);
+        vali.validarlargonumerico(evt, txt_cantidad,3);
+    }//GEN-LAST:event_txt_cantidadKeyTyped
 
   
     public static void main(String args[]) {
